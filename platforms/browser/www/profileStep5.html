@@ -20,8 +20,6 @@
   <script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
   <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
   <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
-
-  <script type="text/javascript" src="lib/CryptoJS/rollups/md5.js"></script>
   <!-- Path to customize CSS-->
   <link rel="stylesheet" href="css/customize.css">
   <!-- Path to Angular JS -->
@@ -72,89 +70,92 @@
   <!--Page content goes here, fixed elements go above the all elements class-->
   <div class="material-container full-bottom">
     <div class="sidebar-divider" style="padding-left: 0px">
-      Let we know more about you (1/3)
+      Tell about your education and job
     </div>
     <!-- <div class="page-profile-header container-fullscreen">
     <img src="img/5s.jpg" alt="img">
   </div> -->
   <div class="contact-form no-bottom">
     <fieldset>
-      <div class="formFieldWrap">
-        <!-- <label class="field-title contactNameField" for="contactNameField">Name:<span>(required)</span></label> -->
-        <input type="text" placeholder="First Name" name="contactNameField" value="" class="contactField requiredField" id="txtFisrtName" maxlength="10"/>
-      </div>
-      <div class="formFieldWrap">
-        <input type="text" placeholder="Middle Name" name="contactNameField" value="" class="contactField requiredField" id="txtMiddleName" maxlength="10"/>
+      <div class="formTextareaWrap">
+        <select class="contactField2" name="education" id="txtLitteracy">
+          <option value="" disabled selected style="display: none;">Highest Literacy</option>
+          <option value="Primary school">Primary school</option>
+          <option value="High school">High school</option>
+          <option value="Vocational">Vocational</option>
+          <option value="College">College</option>
+          <option value="University">University</option>
+          <option value="Masters">Masters</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Associate professor">Associate professor</option>
+          <option value="Professor">Professor</option>
+        </select>
       </div>
       <div class="formTextareaWrap">
-        <input type="text" placeholder="Last Name" name="contactNameField" value="" class="contactField requiredField" id="txtLastName" maxlength="10"/>
+        <select class="contactField2" name="work-in" id="txtWork">
+          <option value="" disabled selected style="display: none;">You work for?</option>
+          <option value="Goverment">Goverment</option>
+          <option value="Private company">Private company</option>
+          <option value="State enterprise">State enterprise</option>
+          <option value="Multinational enterprises">Multinational enterprises</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Self employed">Self employed</option>
+        </select>
       </div>
       <div class="formTextareaWrap">
-        <input type="text" placeholder="Birthday" onfocus="(this.type='date')" onblur="(this.type='text')" class="contactField" id="txtBirthday"/>
+        <select class="contactField2" name="occupation" id="txtOccupation">
+          <option value="" disabled selected style="display: none;">Occupation</option>
+          <option value="Staff">Staff</option>
+          <option value="Manager">Manager</option>
+          <option value="Vice president">Vice president</option>
+          <option value="Director">Director</option>
+          <option value="Chairman">Chairman</option>
+          <option value="Singer">Singer</option>
+          <option value="Actor">Actor</option>
+          <option value="Dancer">Dancer</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Police">Police</option>
+          <option value="Fireman">Fireman</option>
+          <option value="Athletes">Athletes</option>
+          <option value="Other">Other</option>
+          <option value="Not Specified">Not Specified</option>
+        </select>
       </div>
       <div class="formTextareaWrap">
-        <!-- <input type="text" placeholder="Gender" name="contactNameField" value="" class="contactField requiredField" id="txtGender"/> -->
-        <select class="contactField2" name="event-type" id="txtGender">
-        <option value="" disabled selected style="display: none;">Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
-    </div>
-    <div class="formTextareaWrap">
-      <input type="number" placeholder="Phone number" name="contactNameField" value="" class="contactField requiredField" id="txtPhone"/>
-    </div>
-    <div class="formSubmitButtonErrorsWrap contactFormButton">
-      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
-    </div>
-  </fieldset>
+        <input type="number" placeholder="Monthly income ($)" name="contactNameField" value="" class="contactField requiredField" id="txtIncome"/>
+      </div>
+      <div class="formSubmitButtonErrorsWrap contactFormButton">
+        <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+      </div>
+    </fieldset>
+  </div>
 </div>
-</div>
-<!-- Fname require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="fnRequire">
+<!-- Education require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="litteracyRequire">
   <p>
-    First name is require!
+    Highest literacy is require!
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
-<!-- Lname require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="lnRequire">
+<!-- Work require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="workRequire">
   <p>
-    Last name is require!
+    Work for is require!
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
-<!-- birthday require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="birthdayRequire">
+<!-- Income require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="incomeRequire">
   <p>
-    Birthday is require!
+    Monthly income is require!
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
-<!-- Gender require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="genderRequire">
+<!-- Income wrong -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="wrongIncome">
   <p>
-    Gender is require!
-  </p>
-  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-</div>
-<!-- Phone require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="phoneRequire">
-  <p>
-    Phone number is require!
-  </p>
-  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-</div>
-<!-- Phone lenght -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="phoneLenght">
-  <p>
-    Phone number from 10 - 15 numbers!
-  </p>
-  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-</div>
-<!-- wrong birthday -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="birhdayError">
-  <p>
-    Your birthday is not valid!
+    Monthly income must large than 0!
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
@@ -174,6 +175,7 @@
 </div>
 
 <script>
+
 // handler next button
 function nextButtonHandler(){
   disableAll();
@@ -196,44 +198,31 @@ function nextButtonHandler(){
 };
 
 function checkInput() {
-  if ($("#txtFisrtName").val()=="") {
-    showMessage("fnRequire");
+
+  if ($("#txtLitteracy option:selected").val()=="") {
+    showMessage("litteracyRequire");
     return false;
-  }else if ($("#txtLastName").val()=="") {
-    showMessage("lnRequire");
+  }else if ($("#txtWork option:selected").val()=="") {
+    showMessage("workRequire");
     return false;
-  }else if ($("#txtBirthday").val()=="") {
-    showMessage("birthdayRequire");
+  }else if ($("#txtIncome").val()=="") {
+    showMessage("incomeRequire");
     return false;
-  }else if ($("#txtGender option:selected").val()=="") {
-    showMessage("genderRequire");
+  }else if (parseInt($("#txtIncome").val(), 10) <= 0) {
+    showMessage("wrongIncome");
     return false;
-  }else if ($("#txtPhone").val()=="") {
-    showMessage("phoneRequire");
-    return false;
-  }else if ($("#txtPhone").val().length < 10 || $("#txtPhone").val().length > 15) {
-    showMessage("phoneLenght");
-    return false;
-  }else if (checkBirthday($("#txtBirthday").val())) {
-    return true;
   }else {
-    showMessage("birhdayError");
-    return false;
+    return true;
   }
-}
+};
 
 function saveToServer() {
   var userName = window.localStorage.getItem("username");
-  var fname = $("#txtFisrtName").val();
-  var mname  = $("#txtMiddleName").val();
-  var lname = $("#txtLastName").val();
-  var gender = $("#txtGender option:selected").val();
-  var phone = $("#txtPhone").val();
-  var birthday = $("#txtBirthday").val();
-  var birthdayArr = birthday.split("-");
-  var formatedBirhday = birthdayArr[1]+"/"+birthdayArr[2]+"/"+birthdayArr[0];
-  console.log(formatedBirhday);
-  var dataString="&userName="+userName+"&fname="+fname+"&mname="+mname+"&lname="+lname+"&birthday="+formatedBirhday+"&gender="+gender+"&phone="+phone+"&savestep1=";
+  var litteracy = $("#txtLitteracy option:selected").val();
+  var workFor = $("#txtWork option:selected").val();
+  var occupation = $("#txtOccupation option:selected").val();
+  var income = $("#txtIncome").val();
+  var dataString="&userName="+userName+"&litteracy="+litteracy+"&work="+workFor+"&occupation="+occupation+"&income="+income+"&savestep5=";
   console.log(dataString);
   $.ajax({
     type: "POST",
@@ -247,8 +236,7 @@ function saveToServer() {
       // save success
       if (data=="saveSuccess") {
         enableAll();
-        window.location.replace("profileStep2.html");
-        console.log(dataString);
+        window.location.replace("profileStep6.html");
       }else if (data=="saveError") {
         // save error
         enableAll();
@@ -256,20 +244,6 @@ function saveToServer() {
       }
     }
   });
-}
-
-function checkBirthday(birthday) {
-  var currentDate = new Date();
-  var currentYear = parseInt(currentDate.getFullYear());
-  var birthdayArr = birthday.split("-");
-  var inputYear = parseInt(birthdayArr[0]);
-  var age = currentYear - inputYear;
-  console.log('age: ' + age);
-  if (age <= 0 || age > 110) {
-    return false;
-  }else {
-    return true;
-  }
 }
 
 // disable all when processing
@@ -290,56 +264,36 @@ function checkInternetConnection() {
     return false;
   }
 }
+
 // Show message
 function showMessage(messType) {
   switch(messType) {
-    case 'fnRequire':
+    case 'litteracyRequire':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#fnRequire').slideDown(200);
+    $('#litteracyRequire').slideDown(200);
     setTimeout(function(){
-      $('#fnRequire').slideUp(200);
+      $('#litteracyRequire').slideUp(200);
     }, 4000);
     break;
-    case 'lnRequire':
+    case 'workRequire':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#lnRequire').slideDown(200);
+    $('#workRequire').slideDown(200);
     setTimeout(function(){
-      $('#lnRequire').slideUp(200);
+      $('#workRequire').slideUp(200);
     }, 4000);
     break;
-    case 'birthdayRequire':
+    case 'incomeRequire':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#birthdayRequire').slideDown(200);
+    $('#incomeRequire').slideDown(200);
     setTimeout(function(){
-      $('#birthdayRequire').slideUp(200);
+      $('#incomeRequire').slideUp(200);
     }, 4000);
     break;
-    case 'genderRequire':
+    case 'wrongIncome':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#genderRequire').slideDown(200);
+    $('#wrongIncome').slideDown(200);
     setTimeout(function(){
-      $('#genderRequire').slideUp(200);
-    }, 4000);
-    break;
-    case 'phoneRequire':
-    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#phoneRequire').slideDown(200);
-    setTimeout(function(){
-      $('#phoneRequire').slideUp(200);
-    }, 4000);
-    break;
-    case 'phoneLenght':
-    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#phoneLenght').slideDown(200);
-    setTimeout(function(){
-      $('#phoneLenght').slideUp(200);
-    }, 4000);
-    break;
-    case 'birhdayError':
-    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#birhdayError').slideDown(200);
-    setTimeout(function(){
-      $('#birhdayError').slideUp(200);
+      $('#wrongIncome').slideUp(200);
     }, 4000);
     break;
     case 'connectionError':
@@ -349,25 +303,11 @@ function showMessage(messType) {
       $('#errorConnection').slideUp(200);
     }, 4000);
     break;
-    case 'successResend':
-    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#successResend').slideDown(200);
-    setTimeout(function(){
-      $('#successResend').slideUp(200);
-    }, 4000);
-    break;
     case 'otherError':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
     $('#otherError').slideDown(200);
     setTimeout(function(){
       $('#otherError').slideUp(200);
-    }, 4000);
-    break;
-    case 'invalidCodeLenght':
-    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#invalidCodeLenght').slideDown(200);
-    setTimeout(function(){
-      $('#invalidCodeLenght').slideUp(200);
     }, 4000);
     break;
     default:

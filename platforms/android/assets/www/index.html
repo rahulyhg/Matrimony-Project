@@ -167,6 +167,7 @@
                 // Account is not active
                 window.localStorage.setItem("username", name);
                 window.localStorage.setItem("email", dataSelected.Result[0].email);
+                window.localStorage.setItem("profileStep", dataSelected.Result[0].settingAccountStep);
                 console.log('not active');
                 // Redirect to active account
                 window.location.replace("activeAccount.html");
@@ -183,9 +184,11 @@
                     break;
                     case 1:
                     // Redirect to step 2 page
+                    window.location.replace("profileStep2.html");
                     break;
                     case 2:
                     // Redirect to step 3 page
+                    window.location.replace("profileStep3.html");
                     break;
                     default:
                     return false;

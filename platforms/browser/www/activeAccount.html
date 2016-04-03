@@ -312,21 +312,8 @@
       $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
       $('#success').slideDown(200);
       setTimeout(function(){
-        // Check profile information step
-          switch(dataSelected.Result[0].settingAccountStep) {
-            case 0:
-            // Redirect to step 1 page
-            window.location.replace("profileStep1.html");
-            break;
-            case 1:
-            // Redirect to step 2 page
-            break;
-            case 2:
-            // Redirect to step 3 page
-            break;
-            default:
-            return false;
-        }
+        // Redirect to profile step 1
+        window.location.replace("profileStep1.html");
       }, 4000);
       break;
       case 'otherError':

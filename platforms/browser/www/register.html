@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Path to matterTheme Library CSS-->
+  <link href="lib/matterTheme/styles/style.css"           rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/framework.css"       rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/font-awesome.css"    rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/animate.css"         rel="stylesheet" type="text/css">
+
+  <link rel="shortcut icon" href="lib/matterTheme/images/splash/favicon.ico" type="image/x-icon" />
+
+  <!-- Path to matterTheme Library JS-->
+  <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
+
+  <!-- Path to customize CSS-->
+  <link rel="stylesheet" href="css/customize.css">
+  <script type="text/javascript" src="js/mysql.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/rollups/md5.js"></script>
+  <!-- Path to Angular JS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script type="text/javascript">
+  function onLoad(){
+    document.addEventListener("deviceready",onDeviceReady, true);
+    document.addEventListener("backbutton", onBackKeyDown, false);
+  }
+
+  function onDeviceReady(){
+    // navigator.notification.alert("PhoneGap is working!!");
+    console.log('onready');
+  }
+
+  function onBackKeyDown(e) {
+    console.log('back button pressed!');
+    window.location.replace("index.html");
+  }
+  </script>
+  <title>Register</title>
+</head>
+<body onload="onLoad()">
+
+  <!-- <script src="scripts/index.js"></script> -->
+  <!-- -->
+  <!-- Register page -->
+  <div id="content" class="snap-content">
+    <div class="pageapp-signup bg-5 cover-screen">
+      <div class="pageapp-signup-content cover-center">
+        <div class="unboxed-layout">
+          <a class="pageapp-signup-logo" href="#"></a>
+          <div class="pageapp-signup-field">
+            <i class="fa fa-user"></i>
+            <input id="userName" maxlength="25" onfocus="if (this.value=='Username') this.value = ''" onblur="if (this.value=='') this.value = 'Username'" type="text" value="Username">
+          </div>
+          <div class="pageapp-signup-field">
+            <i class="fa fa-envelope-o"></i>
+            <input id="email" maxlength="50" onfocus="if (this.value=='E-Mail') this.value = ''" onblur="if (this.value=='') this.value = 'E-Mail'" type="email" value="E-Mail">
+          </div>
+          <div class="pageapp-signup-field">
+            <i class="fa fa-lock"></i>
+            <input id="password" maxlength="18" onfocus="if (this.value=='password') this.value = ''" onblur="if (this.value=='') this.value = 'password'" type="password" value="password">
+          </div>
+          <a href="#" id="btnRegister" class="pageapp-signup-button button button-small button-green button-fullscreen">Register</a>
+          <a href="#" id="btnGoLogin" class="pageapp-signup-button button button-small button-red button-fullscreen">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Invalid input -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="invalidInput">
+    <p>
+      Username only alow alpabet, number and "_"
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Invalid email -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="invalidEmail">
+    <p>
+      Email has existed!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Invalid email format -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="invalidEmailFormat">
+    <p>
+      Invalid email format!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Invalid account -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="userExists">
+    <p>
+      Username has existed!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Invalid account lenght -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="lengthError">
+    <p>
+      Username must from 6-25 charractor!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Register success -->
+  <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+    <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    <p>
+      Registed, please check your email to get active code!
+    </p>
+  </div>
+  <!-- Connection error -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="errorConnection">
+    <p>
+      Can't connect to server, please check your internet connection!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Other error -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="otherError">
+    <p>
+      An error has occurred!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+
+  <script>
+  $("#btnGoLogin").click(function(){
+    window.location.replace("index.html");
+  });
+
+  $("#btnRegister").click(function(){
+    var userName=$("#userName").val();
+    var passw=$("#password").val();
+    var email=$("#email").val();
+    // Check input username
+    if (checkInputUsername(userName)) {
+      // check username length
+      if (checkUsernameLenght(userName)) {
+        // Check input email
+        if (checkInputEmail(email)) {
+          // Register start
+          console.log('Registering')
+          var dataString="&userName="+userName+"&password="+passw+"&email="+email+"&insert=";
+          console.log(dataString);
+          if($.trim(userName).length>0 & $.trim(email).length>0)
+          {
+            $.ajax({
+              type: "POST",
+              url:"http://139.59.254.92/insert.php",
+              data: dataString,
+              crossDomain: true,
+              cache: false,
+              beforeSend: function(){ $("#btnRegister").val('Registering...');},
+              success: function(data){
+                // When email has exists
+                console.log(data);
+                if (data=="existEmail") {
+                  $("#btnRegister").val('Register');
+                  showMessage('invalidEmail');
+                  // When username has exists
+                }else if (data=="existUser") {
+                  $("#btnRegister").val('Register');
+                  showMessage('userExists');
+                  // When done
+                }else if (data.substr(0, 15)=="registerSuccess") {
+                  $("#btnRegister").val('Register');
+                  showMessage('success');
+                  // make new request to send email
+                  var code = data.substr(15, 6);
+                  dataString="&user="+userName+"&email="+email+"&type=newreg&password="+passw+"&code="+code+"&sendmail=";
+                  console.log(dataString);
+                  var xhr = $.ajax({
+                    type: "POST",
+                    url:"http://139.59.254.92/sendmail.php",
+                    data: dataString,
+                    crossDomain: true,
+                    timeout: 10000,
+                    cache: false,
+                    beforeSend: function(){ console.log('sending...');},
+                    success: function(data){
+                      console.log(data);
+                    }
+                  });
+                  // xhr.abort();
+                  console.log('stop call');
+                  // When other error
+                }else if (data=="registerError") {
+                  $("#btnRegister").val('Register');
+                  showMessage('otherError');
+                }
+              }
+            });
+          }return false;
+        }else {
+          showMessage('invalidEmailFormat');
+        }
+      }else {
+        showMessage('lengthError');
+      }
+
+    }else {
+      showMessage('invalidInput');
+    }
+  });
+
+  // Check input username
+  function checkInputUsername(username) {
+    if (/[a-zA-Z0-9_]+$/i.test(username)) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
+  function checkUsernameLenght(username) {
+    if (username.length < 6) {
+      return false;
+    }else {
+      return true;
+    }
+  }
+
+  // Check input email format
+  function checkInputEmail(email) {
+    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (regex.test(email)) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
+  // Show message
+  function showMessage(messType) {
+    switch(messType) {
+      case 'lengthError':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#lengthError').slideDown(200);
+      setTimeout(function(){
+        $('#lengthError').slideUp(200);
+      }, 4000);
+      break;
+      case 'invalidEmail':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#invalidEmail').slideDown(200);
+      setTimeout(function(){
+        $('#invalidEmail').slideUp(200);
+      }, 4000);
+      break;
+      case 'userExists':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#userExists').slideDown(200);
+      setTimeout(function(){
+        $('#userExists').slideUp(200);
+      }, 4000);
+      break;
+      case 'connectionError':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#errorConnection').slideDown(200);
+      setTimeout(function(){
+        $('#errorConnection').slideUp(200);
+      }, 4000);
+      break;
+      case 'success':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#success').slideDown(200);
+      setTimeout(function(){
+        $('#success').slideUp(200);
+      }, 4000);
+      break;
+      case 'otherError':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#otherError').slideDown(200);
+      setTimeout(function(){
+        $('#otherError').slideUp(200);
+      }, 4000);
+      break;
+      case 'invalidInput':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#invalidInput').slideDown(200);
+      setTimeout(function(){
+        $('#invalidInput').slideUp(200);
+      }, 4000);
+      break;
+      case 'invalidEmailFormat':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#invalidEmailFormat').slideDown(200);
+      setTimeout(function(){
+        $('#invalidEmailFormat').slideUp(200);
+      }, 4000);
+      break;
+      default:
+      return false;
+    }
+  }
+  </script>
+
+  <!-- <script type="text/javascript" src="controller/loginController.js"></script> -->
+  <!-- Cordova reference -->
+  <script type="text/javascript" src="cordova.js"></script>
+  <!-- <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript">
+  app.initialize();
+</script>  -->
+</body>
+</html>

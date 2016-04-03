@@ -3,35 +3,9 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-  <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
-
-  <!-- Path to Framework7 Library CSS-->
-  <!-- <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
-  <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css"> -->
-
-  <!-- JS dependencies for onsenUI -->
-  <script src="js/platformOverrides.js"></script>
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/onsen/js/onsenui.js"></script>
-
-  <!-- CSS dependencies for onsenUI -->
-  <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
-  <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
-
-  <!-- CSP support mode (required for Windows Universal apps) for onsenUI -->
-  <link rel="stylesheet" href="lib/angular/angular-csp.css" />
-
-
-  <!-- --------------- App init --------------- -->
-  <script src="controller/app.js"></script>
 
   <!-- Path to matterTheme Library CSS-->
   <link href="lib/matterTheme/styles/style.css"           rel="stylesheet" type="text/css">
@@ -39,24 +13,7 @@
   <link href="lib/matterTheme/styles/font-awesome.css"    rel="stylesheet" type="text/css">
   <link href="lib/matterTheme/styles/animate.css"         rel="stylesheet" type="text/css">
 
-  <link rel="icon" type="image/png" href="images/splash/android-chrome-192x192.png" sizes="192x192">
-  <link rel="apple-touch-icon" sizes="196x196" href="lib/matterTheme/images/splash/apple-touch-icon-196x196.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="lib/matterTheme/images/splash/apple-touch-icon-180x180.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="lib/matterTheme/images/splash/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="lib/matterTheme/images/splash/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="lib/matterTheme/images/splash/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="lib/matterTheme/images/splash/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="lib/matterTheme/images/splash/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="lib/matterTheme/images/splash/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="lib/matterTheme/images/splash/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="57x57" href="lib/matterTheme/images/splash/apple-touch-icon-57x57.png">
-  <link rel="icon" type="image/png" href="lib/matterTheme/images/splash/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="lib/matterTheme/images/splash/favicon-32x32.png" sizes="32x32">
-  <link rel="icon"   type="image/png" href="lib/matterTheme/images/splash/favicon-16x16.png" sizes="16x16">
   <link rel="shortcut icon" href="lib/matterTheme/images/splash/favicon.ico" type="image/x-icon" />
-
-  <!-- Path to customize CSS-->
-  <link rel="stylesheet" href="css/customize.css">
 
   <!-- Path to matterTheme Library JS-->
   <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
@@ -64,62 +21,255 @@
   <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
   <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
 
-  <!-- Scripts -->
+  <!-- Path to customize CSS-->
+  <link rel="stylesheet" href="css/customize.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <script type="text/javascript" src="js/mysql.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/rollups/md5.js"></script>
+  <script type="text/javascript" src="js/customJS.js"></script>
+  <!-- Path to Angular JS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script type="text/javascript">
+  function onLoad(){
+    document.addEventListener("deviceready",onDeviceReady, true);
+    document.addEventListener("backbutton", onBackKeyDown, false);
+  }
+
+  function onDeviceReady(){
+    // navigator.notification.alert("PhoneGap is working!!");
+    console.log('onready');
+  }
+  // Handler Back button
+  function onBackKeyDown(e) {
+    console.log('back button pressed!');
+    navigator.app.exitApp();
+  }
+  </script>
   <title>Login</title>
 </head>
-<body ng-controller="AppController">
-  <ons-navigator var="navi" page="login.html">
-  </ons-navigator>
-  <ons-template id="login.html">
-    <ons-page>
-      <div id="content" class="snap-content">
-        <div class="pageapp-login bg-5 cover-screen full-bottom material-container bodyCustom" style="height:100%">
-          <div class="pageapp-login-content cover-center">
-            <div class="unboxed-layout page-login">
-              <a class="pageapp-login-logo" href="#"></a>
-              <div class="pageapp-login-field">
-                <i class="fa fa-user"></i>
-                <input type="text" id="txtUsername" value="Username" onfocus="if (this.value=='Username') this.value = ''" onblur="if (this.value=='') this.value = 'Username'">
-              </div>
-              <div class="pageapp-login-field">
-                <i class="fa fa-lock"></i>
-                <input type="password" id="txtPassword" value="password" onfocus="if (this.value=='password') this.value = ''" onblur="if (this.value=='') this.value = 'password'">
-              </div>
-              <a href="#" class="page-login login-forgot"><i class="fa fa-eye"></i>Forgot password?</a>
-              <a href="#detailsPage" class="page-login login-create">Signup<i class="fa fa-user"></i></a>
-              <a href="#" id="btnLogin" class="pageapp-login-button button button-small button-green button-fullscreen loginButton">Login</a>
-              <div class="decoration"></div>
-              <a href="#" class="facebook-login facebook-color"><i class="fa fa-facebook"></i>Login with Facebook</a>
-              <!-- <a href="#" class="twitter-login twitter-color no-bottom"><i class="fa fa-twitter"></i>Signin with Twitter</a> -->
-              <script>
-              $("#btnLogin").click(function(){
-                $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-                $('#error').slideDown(200);
-              })
-              </script>
-              <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="error">
-                <p>
-                  Invalid username or password
-                </p>
-                <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
-              </div>
-            </div>
+<body onload="onLoad()">
+  <!-- <script src="scripts/index.js"></script> -->
+  <!-- -->
+  <!-- Login page -->
+  <div id="content" class="snap-content">
+    <div class="pageapp-login bg-5 cover-screen page-login">
+      <div class="pageapp-login-content cover-center">
+        <div class="unboxed-layout">
+          <a class="pageapp-login-logo" href="#"></a>
+          <div class="pageapp-login-field">
+            <i class="fa fa-user loginIcon" style="color:#595959"></i>
+            <input type="text" id="username" value="Username" maxlength="25" onfocus="if (this.value=='Username') this.value = ''" onblur="if (this.value=='') this.value = 'Username'">
           </div>
+          <div class="pageapp-login-field">
+            <i class="fa fa-lock loginIcon" style="color:#595959"></i>
+            <input type="password" id="password" value="password" maxlength="18" onfocus="if (this.value=='password') this.value = ''" onblur="if (this.value=='') this.value = 'password'">
+          </div>
+          <a href="#" id="btnLogin" class="pageapp-login-button button button-small button-green button-fullscreen loginButton" onclick="checkInternetConnection()">Login</a>
+          <a href="#" id="linkForgotPass" class="page-login login-forgot"><i class="fa fa-eye"></i>Forgot password?</a>
+          <a href="#" id="linkSignup" class="page-login login-create">Signup<i class="fa fa-user"></i></a>
+          <div class="decoration"></div>
+          <a href="#" class="facebook-login facebook-color"><i class="fa fa-facebook"></i>Login with Facebook</a>
         </div>
       </div>
-    </ons-page>
-  </ons-template>
+    </div>
+  </div>
+  <!-- Invalid input -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="invalidInput">
+    <p>
+      Username only alow alpabet, number and "_"
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Invalid account message -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="error">
+    <p>
+      Invalid username or password
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Connection error message -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="errorConnection">
+    <p>
+      Can't connect to server, please check your internet connection
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+  <!-- Blocked account message -->
+  <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="blockedAccount">
+    <p>
+      Your account has been blocked!
+    </p>
+    <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+  </div>
+
+  <script>
+  // $("#btnLogin").click(function(){
+  //   checkData();
+  // })
+
+  $("#linkSignup").click(function(){
+    window.location.replace("register.html");
+  })
+
+  $('#linkForgotPass').click(function () {
+    window.location.replace("forgotpass.html");
+  })
+
+  function checkData() {
+    var name = document.getElementById("username").value;
+    var pass = CryptoJS.MD5(document.getElementById("password").value);
+    // Check input data
+    if (checkInputData(name)) {
+      console.log("checking...");
+      var btn = document.getElementById("btnLogin");
+      btn.innerHTML = "Connectting...";
+      // Disable Login button
+      $("#btnLogin").attr("onclick","return false;");
+      // Create sql query
+      var query = "select * from Account_TBL where userName = '" +name+ "' and password = '" + pass + "';";
+      console.log(query);
+      // Execute sql query
+      MySql.Execute(
+        "139.59.254.92",
+        "root",
+        "thjnhkmbbkt9",
+        "matrimonydb",
+        query,
+        function (data) {
+          // check return data on console
+          console.log(JSON.stringify(data,null,2));
+          // parse return data to JSON
+          dataSelected = JSON.parse(JSON.stringify(data,null,2));
+          console.log(dataSelected.Success + dataSelected.Result.length);
+          if (parseInt(dataSelected.Result.length) == 0) {
+            // When login fail
+            console.log('wrong');
+            btn.innerHTML = "Login";
+            // Enable Login button
+            $("#btnLogin").attr("onclick","checkInternetConnection()");
+            // Give error message
+            showMessage('wrongAccount');
+          }else {
+            // When login success
+            console.log('success');
+            // Enable Login button
+            $("#btnLogin").attr("onclick","checkInternetConnection()");
+            btn.innerHTML = "Login";
+            // check blocked account
+            if (dataSelected.Result[0].isBlock == 1) {
+              // Account is blocked
+              console.log('blocked');
+              // Give error message
+              showMessage('blockAccount');
+            }else {
+              // Account not block, check active status
+              if (dataSelected.Result[0].isActive == 0) {
+                // Account is not active
+                window.localStorage.setItem("username", name);
+                window.localStorage.setItem("email", dataSelected.Result[0].email);
+                console.log('not active');
+                // Redirect to active account
+                window.location.replace("activeAccount.html");
+              }else {
+                // Account is actived!
+                window.localStorage.setItem("username", name);
+                console.log('actived');
+                console.log('profile complete step: ' + dataSelected.Result[0].settingAccountStep);
+                // Check profile information step
+                  switch(dataSelected.Result[0].settingAccountStep) {
+                    case 0:
+                    // Redirect to step 1 page
+                    window.location.replace("profileStep1.html");
+                    break;
+                    case 1:
+                    // Redirect to step 2 page
+                    break;
+                    case 2:
+                    // Redirect to step 3 page
+                    break;
+                    default:
+                    return false;
+                }
+              }
+            }
+          }
+        });
+      }else {
+        console.log(name);
+        console.log(checkInputData(name));
+        showMessage('invalidInput');
+      }
+    }
 
 
-  <!-- Path to Framework7 Library JS-->
-  <!-- <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script> -->
-  <!-- Path to your app js-->
-  <!-- <script type="text/javascript" src="controller/my-app.js"></script> -->
-  <!-- <script type="text/javascript" src="controller/loginController.js"></script> -->
-  <!-- <script type="text/javascript" src="cordova.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
-  <script type="text/javascript">
-  app.initialize();
-</script> -->
-</body>
-</html>
+
+      function checkInternetConnection() {
+        $.ajax({
+          url: "http://139.59.254.92/insert.php",
+          timeout: 5000,
+          error: function(jqXHR) {
+            if(jqXHR.status==0) {
+              $("#btnLogin").attr("onclick","checkInternetConnection()");
+              // Give error message
+              showMessage('connectionError');
+            }
+          },
+          success: function() {
+            $("#btnLogin").attr("onclick","checkInternetConnection()");
+            checkData();
+          }
+        });
+      }
+
+      function checkInputData(field) {
+        if (/[a-zA-Z0-9_]+$/i.test(field)) {
+          return true;
+        }else {
+          return false;
+        }
+      }
+
+      function showMessage(messType) {
+        switch(messType) {
+          case 'invalidInput':
+          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+          $('#invalidInput').slideDown(200);
+          setTimeout(function(){
+            $('#invalidInput').slideUp(200);
+          }, 4000);
+          break;
+          case 'wrongAccount':
+          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+          $('#error').slideDown(200);
+          setTimeout(function(){
+            $('#error').slideUp(200);
+          }, 4000);
+          break;
+          case 'connectionError':
+          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+          $('#errorConnection').slideDown(200);
+          setTimeout(function(){
+            $('#errorConnection').slideUp(200);
+          }, 4000);
+          break;
+          case 'blockAccount':
+          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+          $('#blockedAccount').slideDown(200);
+          setTimeout(function(){
+            $('#blockedAccount').slideUp(200);
+          }, 4000);
+          break;
+          default:
+          return false;
+        }
+      }
+      </script>
+      <!-- Cordova reference -->
+      <script type="text/javascript" src="cordova.js"></script>
+      <!-- <script src="NativePageTransitions.js"></script> -->
+      <!-- <script type="text/javascript" src="js/index.js"></script> -->
+      <!-- <script type="text/javascript">
+      app.initialize();
+    </script> -->
+  </body>
+  </html>

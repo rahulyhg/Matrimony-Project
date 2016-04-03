@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Hello World</name>
+<widget id="com.tinysoft.tinymatrimony" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Tiny Matrimony</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Tiny matrimony make people easier go meet their mate.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="ndthinh94@gmail.com" href="#">
+        Tiny Dev
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
@@ -41,6 +41,8 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="com.telerik.plugins.nativepagetransitions" spec="0.2.2" source="pgb" />
+    <gap:plugin name="com.sharinglabs.cordova.plugin.datepicker" />
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
     <icon gap:platform="android" gap:qualifier="mdpi" src="www/res/icon/android/icon-48-mdpi.png" />

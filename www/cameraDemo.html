@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Path to matterTheme Library CSS-->
+  <link href="lib/matterTheme/styles/style.css"           rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/framework.css"       rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/font-awesome.css"    rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/animate.css"         rel="stylesheet" type="text/css">
+
+  <link rel="shortcut icon" href="lib/matterTheme/images/splash/favicon.ico" type="image/x-icon" />
+
+  <!-- Path to matterTheme Library JS-->
+  <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
+
+  <!-- Path to customize CSS-->
+  <link rel="stylesheet" href="css/customize.css">
+  <script type="text/javascript" src="js/mysql.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/rollups/md5.js"></script>
+  <!-- Path to Angular JS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script type="text/javascript">
+  var pictureSource; // picture source
+  var destinationType; // sets the format of returned value
+  function onLoad(){
+    document.addEventListener("deviceready",onDeviceReady, true);
+    document.addEventListener("backbutton", onBackKeyDown, false);
+  }
+
+  function onDeviceReady(){
+    // navigator.notification.alert("PhoneGap is working!!");
+    console.log('onready');
+    pictureSource = navigator.camera.PictureSourceType;
+    destinationType = navigator.camera.DestinationType;
+    console.log('API ready');
+  }
+
+  // Called when a photo is successfully retrieved
+  function onPhotoDataSuccess(imageURI) {
+    // Uncomment to view the base64-encoded image data
+    console.log(imageURI);
+    // Get image handle
+    var cameraImage = document.getElementById('image');
+    // Unhide image elements
+    cameraImage.style.display = 'block';
+    // Show the captured photo
+    // The inline CSS rules are used to resize the image
+    //
+    cameraImage.src = imageURI;
+  }
+  // Called when a photo is successfully retrieved
+  //
+  function capturePhoto() {
+    // Take picture using device camera and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+      quality: 30,
+      targetWidth: 600,
+      targetHeight: 600,
+      destinationType: destinationType.FILE_URI,
+      saveToPhotoAlbum: true
+    });
+  }
+  // A button will call this function
+  //
+
+  function getPhoto(source) {
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+      quality: 30,
+      targetWidth: 600,
+      targetHeight: 600,
+      destinationType: destinationType.FILE_URI,
+      sourceType: source
+    });
+  }
+  // Called if something bad happens.
+  //
+
+  function onFail(message) {
+    //alert('Failed because: ' + message);
+  }
+  function onPhotoURISuccess(imageURI) {
+    // Uncomment to view the image file URI
+    console.log(imageURI);
+    // Get image handle
+    //
+    var galleryImage = document.getElementById('image');
+    // Unhide image elements
+    //
+    galleryImage.style.display = 'block';
+    // Show the captured photo
+    // The inline CSS rules are used to resize the image
+    //
+    galleryImage.src = imageURI;
+  }
+  function upload() {
+    var img = document.getElementById('image');
+    var imageURI = img.src;
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    var params = new Object();
+    options.params = params;
+    options.chunkedMode = false;
+    var ft = new FileTransfer();
+    ft.upload(imageURI, "http://139.59.254.92/uploadDemo.php", win, fail,options);
+  }
+
+  function win(r) {
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+  }
+
+  function fail(error) {
+    alert("An error has occurred: Code = " + error.code);
+    console.log("upload error source " + error.source);
+    console.log("upload error target " + error.target);
+  }
+  // Handler Back button
+  function onBackKeyDown(e) {
+    console.log('back button pressed!');
+    // navigator.app.exitApp();
+  }
+  </script>
+  <title>Login</title>
+</head>
+<body onload="onLoad()">
+  <a id="test" value=""></a>
+  <script>
+  var user = window.localStorage.getItem("username");
+  alert(user + " is not active");
+  </script>
+  <!-- -->
+  <!-- Active page -->
+  <button onclick="capturePhoto();">Capture Photo</button><br>
+  <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo
+    Library</button><br>
+    <img id="image" src="" style="display:none;width:100%;">
+    <button onclick="upload();">Upload</button>
+    <!-- <script type="text/javascript" src="controller/loginController.js"></script> -->
+    <!-- Cordova reference -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <!-- <script type="text/javascript" src="js/index.js"></script> -->
+    <script type="text/javascript">
+    app.initialize();
+    </script>
+  </body>
+  </html>

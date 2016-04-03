@@ -1,0 +1,34 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.onsen.helloworld"
+        },
+        "com.telerik.plugins.nativepagetransitions": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        },
+        "com.bikasv.plugins.datepicker": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        },
+        "nl.moreapps.datepicker": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        }
+    }
+}

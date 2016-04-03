@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Cac Module trong AngularJS</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="ungdungAngularjs.js"></script>
+<script src="sinhvienController.js"></script>
+<style>
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>
+</head>
+<body>
+<h2>Ung dung AngularJS</h2>
+<div ng-app="ungdungAngularjs" ng-controller="sinhvienController">
+<table border="0">
+<tr><td>Nhap ho:</td><td><input type="text" ng-model="sinhvien.ho"></td></tr>
+<tr><td>Nhap ten: </td><td><input type="text" ng-model="sinhvien.ten"></td></tr>
+<tr><td>Ho va Ten: </td><td>{{sinhvien.hoten()}}</td></tr>
+<tr><td>Mon hoc:</td><td>
+<table>
+   <tr>
+      <th>Ten</th>
+      <th>Diem thi</th>
+   </tr>
+   <tr ng-repeat="monhoc in sinhvien.tenMonHoc">
+      <td>{{ monhoc.ten }}</td>
+      <td>{{ monhoc.diemthi }}</td>
+   </tr>
+</table>
+</td></tr>
+</table>
+</div>
+</body>
+</html>

@@ -23,6 +23,7 @@
 
   <!-- Path to customize CSS-->
   <link rel="stylesheet" href="css/customize.css">
+  <link rel="stylesheet" href="css/animate.css">
   <script type="text/javascript" src="js/mysql.js"></script>
   <script type="text/javascript" src="lib/CryptoJS/rollups/md5.js"></script>
   <!-- Path to Angular JS -->
@@ -211,8 +212,8 @@
   });
 
   // Check input username
-  function checkInputUsername(username) {
-    if (/[a-zA-Z0-9_]+$/i.test(username)) {
+  function checkInputUsername(field) {
+    if (/^\S[a-zA-Z0-9_^\S]+$/i.test(field)) {
       return true;
     }else {
       return false;

@@ -1,1 +1,1 @@
-var loginApp = angular.module("loginApp", []);
+var matrimony = angular.module("ungdungAngularjs", []);

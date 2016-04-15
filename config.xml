@@ -4,14 +4,14 @@
     <description>
         Tiny matrimony make people easier go meet their mate.
     </description>
-    <author email="ndthinh94@gmail.com" href="#">
+    <author email="ndthinh94@gmail.com">
         Tiny Dev
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
+    <!-- <preference name="fullscreen" value="true" /> -->
     <preference name="webviewbounce" value="true" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />

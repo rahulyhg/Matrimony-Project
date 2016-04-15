@@ -2030,8 +2030,8 @@ ul.tabs li.active-tab{
     -ms-transition: all 250ms ease;
     -o-transition: all 250ms ease;
     transition: all 250ms ease;
-    -webkit-box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2)!important;
-            box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2)!important;
+    -webkit-box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2);
 }
 
 
@@ -2039,8 +2039,8 @@ ul.tabs li.active-tab{
     display: none;
     background: rgba(255,255,255,1);
     padding: 15px;
-    -webkit-box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2)!important;
-            box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2)!important;
+    -webkit-box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px 1px rgba(0,0,0,0.2);
 }
 
 .active-tab-content{
@@ -4831,10 +4831,10 @@ ul.tabs li.active-tab{
 /*------------------*/
 
 .page-profile-header{
-    /*padding-top:120px;
+    padding-top:120px;
     padding-bottom:30px;
     background-image:url(../images/pictures/3.jpg);
-    background-size:cover;*/
+    background-size:cover;
 }
 
 .page-profile-header .overlay{
@@ -4865,7 +4865,52 @@ ul.tabs li.active-tab{
     transition:all 200ms ease;
 }
 
+/*
+.page-profile-header .follow-buttons a{
+    float:left;
+    text-align:center;
+    margin-top:30px;
+    color:#595959;
+    border:solid 2px rgb(39, 174, 96);
+    width:100px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-radius:25px;
+    margin-left:10px;
+    margin-right:10px;
+    font-size:12px;
+    opacity:0.8;
+    transition:all 200ms ease;
+}*/
+
 .page-profile-header .follow-buttons a:hover{
+    background-color:rgba(255,255,255,0.1);
+    opacity:1;
+    transition:all 200ms ease;
+}
+
+.page-profile-header .follow-buttons input{
+    float:left;
+    text-align:center;
+    margin-top:30px;
+    color:#595959;
+    border:solid 2px rgb(39, 174, 96);
+    width:100px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-radius:25px;
+    margin-left:10px;
+    margin-right:10px;
+    font-size:12px;
+    opacity:0.8;
+    transition:all 200ms ease;
+}
+
+.page-profile-header .follow-buttons input:hover{
     background-color:rgba(255,255,255,0.1);
     opacity:1;
     transition:all 200ms ease;
@@ -4881,11 +4926,11 @@ ul.tabs li.active-tab{
     width:100px;
     height:100px;
     border-radius:120px;
-    margin-bottom:30px;
+    /*margin-bottom:30px;*/
     margin-left:auto;
     margin-right:auto;
     z-index:4;
-    border:solid 2px rgb(39, 174, 96);
+    border:solid 4px rgba(0,0,0,0.2);
 }
 
 .page-profile-header h3{

@@ -78,7 +78,7 @@
   <div class="contact-form no-bottom">
     <fieldset>
       <div class="formTextareaWrap">
-        <select class="contactField2" name="education" id="txtType">
+        <select class="contactField2" name="education" id="txtLitteracy">
           <option value="" disabled selected style="display: none;">Highest Literacy</option>
           <option value="Primary school">Primary school</option>
           <option value="High school">High school</option>
@@ -100,21 +100,26 @@
           <option value="Multinational enterprises">Multinational enterprises</option>
           <option value="Agriculture">Agriculture</option>
           <option value="Self employed">Self employed</option>
-          <option value="Not working">Not working</option>
         </select>
       </div>
       <div class="formTextareaWrap">
         <select class="contactField2" name="occupation" id="txtOccupation">
-          <option value="" disabled selected style="display: none;">With what occupation?</option>
-          <option value="Low">Low</option>
-          <option value="Middle">Middle</option>
-          <option value="Top">Top</option>
-          <option value="Low">Low</option>
-          <option value="Middle">Middle</option>
-          <option value="Top">Top</option>
-          <option value="Low">Low</option>
-          <option value="Middle">Middle</option>
-          <option value="Top">Top</option>
+          <option value="" disabled selected style="display: none;">Occupation</option>
+          <option value="Staff">Staff</option>
+          <option value="Manager">Manager</option>
+          <option value="Vice president">Vice president</option>
+          <option value="Director">Director</option>
+          <option value="Chairman">Chairman</option>
+          <option value="Singer">Singer</option>
+          <option value="Actor">Actor</option>
+          <option value="Dancer">Dancer</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Police">Police</option>
+          <option value="Fireman">Fireman</option>
+          <option value="Athletes">Athletes</option>
+          <option value="Other">Other</option>
+          <option value="Not Specified">Not Specified</option>
         </select>
       </div>
       <div class="formTextareaWrap">
@@ -126,10 +131,31 @@
     </fieldset>
   </div>
 </div>
-<!-- All require -->
-<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="allRequire">
+<!-- Education require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="litteracyRequire">
   <p>
-    All fields are require!
+    Highest literacy is require!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Work require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="workRequire">
+  <p>
+    Work for is require!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Income require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="incomeRequire">
+  <p>
+    Monthly income is require!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Income wrong -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="wrongIncome">
+  <p>
+    Monthly income must large than 0!
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
@@ -172,9 +198,18 @@ function nextButtonHandler(){
 };
 
 function checkInput() {
-  console.log($("#txtheight").val() + "====");
-  if ($("#txtType option:selected").val()=="" || $("#txtCaste option:selected").val()=="" || $("#txtTrend option:selected").val()=="") {
-    showMessage("allRequire");
+
+  if ($("#txtLitteracy option:selected").val()=="") {
+    showMessage("litteracyRequire");
+    return false;
+  }else if ($("#txtWork option:selected").val()=="") {
+    showMessage("workRequire");
+    return false;
+  }else if ($("#txtIncome").val()=="") {
+    showMessage("incomeRequire");
+    return false;
+  }else if (parseInt($("#txtIncome").val(), 10) <= 0) {
+    showMessage("wrongIncome");
     return false;
   }else {
     return true;
@@ -183,10 +218,11 @@ function checkInput() {
 
 function saveToServer() {
   var userName = window.localStorage.getItem("username");
-  var type = $("#txtType option:selected").val();
-  var caste = $("#txtCaste option:selected").val();
-  var trend = $("#txtTrend option:selected").val();
-  var dataString="&userName="+userName+"&type="+type+"&caste="+caste+"&trend="+trend+"&savestep4=";
+  var litteracy = $("#txtLitteracy option:selected").val();
+  var workFor = $("#txtWork option:selected").val();
+  var occupation = $("#txtOccupation option:selected").val();
+  var income = $("#txtIncome").val();
+  var dataString="&userName="+userName+"&litteracy="+litteracy+"&work="+workFor+"&occupation="+occupation+"&income="+income+"&savestep5=";
   console.log(dataString);
   $.ajax({
     type: "POST",
@@ -200,7 +236,7 @@ function saveToServer() {
       // save success
       if (data=="saveSuccess") {
         enableAll();
-        window.location.replace("profileStep5.html");
+        window.location.replace("profileStep6.html");
       }else if (data=="saveError") {
         // save error
         enableAll();
@@ -228,14 +264,36 @@ function checkInternetConnection() {
     return false;
   }
 }
+
 // Show message
 function showMessage(messType) {
   switch(messType) {
-    case 'allRequire':
+    case 'litteracyRequire':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-    $('#allRequire').slideDown(200);
+    $('#litteracyRequire').slideDown(200);
     setTimeout(function(){
-      $('#allRequire').slideUp(200);
+      $('#litteracyRequire').slideUp(200);
+    }, 4000);
+    break;
+    case 'workRequire':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#workRequire').slideDown(200);
+    setTimeout(function(){
+      $('#workRequire').slideUp(200);
+    }, 4000);
+    break;
+    case 'incomeRequire':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#incomeRequire').slideDown(200);
+    setTimeout(function(){
+      $('#incomeRequire').slideUp(200);
+    }, 4000);
+    break;
+    case 'wrongIncome':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#wrongIncome').slideDown(200);
+    setTimeout(function(){
+      $('#wrongIncome').slideUp(200);
     }, 4000);
     break;
     case 'connectionError':

@@ -95,19 +95,19 @@
       <div class="formTextareaWrap">
         <!-- <input type="text" placeholder="Gender" name="contactNameField" value="" class="contactField requiredField" id="txtGender"/> -->
         <select class="contactField2" name="event-type" id="txtGender">
-        <option value="" disabled selected style="display: none;">Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
-    </div>
-    <div class="formTextareaWrap">
-      <input type="number" placeholder="Phone number" name="contactNameField" value="" class="contactField requiredField" id="txtPhone"/>
-    </div>
-    <div class="formSubmitButtonErrorsWrap contactFormButton">
-      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
-    </div>
-  </fieldset>
-</div>
+          <option value="" disabled selected style="display: none;">Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="formTextareaWrap">
+        <input type="number" placeholder="Phone number" name="contactNameField" value="" class="contactField requiredField" id="txtPhone"/>
+      </div>
+      <div class="formSubmitButtonErrorsWrap contactFormButton">
+        <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+      </div>
+    </fieldset>
+  </div>
 </div>
 <!-- Fname require -->
 <div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="fnRequire">
@@ -232,8 +232,14 @@ function saveToServer() {
   var birthday = $("#txtBirthday").val();
   var birthdayArr = birthday.split("-");
   var formatedBirhday = birthdayArr[1]+"/"+birthdayArr[2]+"/"+birthdayArr[0];
+  var userYear = parseInt(birthdayArr[0]);
+  console.log("user year: " + userYear);
+  var currentDate = new Date();
+  var currentYear = parseInt(currentDate.getFullYear());
+  age = currentYear - userYear;
+  console.log(age);
   console.log(formatedBirhday);
-  var dataString="&userName="+userName+"&fname="+fname+"&mname="+mname+"&lname="+lname+"&birthday="+formatedBirhday+"&gender="+gender+"&phone="+phone+"&savestep1=";
+  var dataString="&userName="+userName+"&fname="+fname+"&mname="+mname+"&lname="+lname+"&birthday="+formatedBirhday+"&age="+age+"&gender="+gender+"&phone="+phone+"&savestep1=";
   console.log(dataString);
   $.ajax({
     type: "POST",

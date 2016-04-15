@@ -64,7 +64,7 @@
             <i class="fa fa-lock loginIcon" style="color:#595959"></i>
             <input type="password" id="password" value="password" maxlength="18" onfocus="if (this.value=='password') this.value = ''" onblur="if (this.value=='') this.value = 'password'">
           </div>
-          <a href="#" id="btnLogin" class="pageapp-login-button button button-small button-green button-fullscreen loginButton" onclick="checkInternetConnection()">Login</a>
+          <a href="#" id="btnLogin" class="pageapp-login-button button button-small button-green button-fullscreen loginButton" onclick="checkData()">Login</a>
           <a href="#" id="linkForgotPass" class="page-login login-forgot"><i class="fa fa-eye"></i>Forgot password?</a>
           <a href="#" id="linkSignup" class="page-login login-create">Signup<i class="fa fa-user"></i></a>
           <div class="decoration"></div>
@@ -119,65 +119,48 @@
     var name = document.getElementById("username").value;
     var pass = CryptoJS.MD5(document.getElementById("password").value);
     // Check input data
+    // var patt = /[a-zA-Z0-9_]+$/i;
+    // console.log("---" + patt.test(name));
     if (checkInputData(name)) {
-      console.log("checking...");
-      var btn = document.getElementById("btnLogin");
-      btn.innerHTML = "Connectting...";
-      // Disable Login button
-      $("#btnLogin").attr("onclick","return false;");
-      // Create sql query
-      var query = "select * from Account_TBL where userName = '" +name+ "' and password = '" + pass + "';";
-      console.log(query);
-      // Execute sql query
-      MySql.Execute(
-        "139.59.254.92",
-        "root",
-        "thjnhkmbbkt9",
-        "matrimonydb",
-        query,
-        function (data) {
-          // check return data on console
-          console.log(JSON.stringify(data,null,2));
-          // parse return data to JSON
-          dataSelected = JSON.parse(JSON.stringify(data,null,2));
-          console.log(dataSelected.Success + dataSelected.Result.length);
-          if (parseInt(dataSelected.Result.length) == 0) {
-            // When login fail
-            console.log('wrong');
-            btn.innerHTML = "Login";
-            // Enable Login button
-            $("#btnLogin").attr("onclick","checkInternetConnection()");
-            // Give error message
-            showMessage('wrongAccount');
-          }else {
-            // When login success
-            console.log('success');
-            // Enable Login button
-            $("#btnLogin").attr("onclick","checkInternetConnection()");
-            btn.innerHTML = "Login";
-            // check blocked account
-            if (dataSelected.Result[0].isBlock == 1) {
-              // Account is blocked
-              console.log('blocked');
-              // Give error message
-              showMessage('blockAccount');
-            }else {
-              // Account not block, check active status
-              if (dataSelected.Result[0].isActive == 0) {
-                // Account is not active
-                window.localStorage.setItem("username", name);
-                window.localStorage.setItem("email", dataSelected.Result[0].email);
-                window.localStorage.setItem("profileStep", dataSelected.Result[0].settingAccountStep);
-                console.log('not active');
-                // Redirect to active account
-                window.location.replace("activeAccount.html");
+      // Check connectionStatus
+      // if (checkInternetConnection()) {
+        var btn = document.getElementById("btnLogin");
+        btn.innerHTML = "Connectting...";
+        // Disable Login button
+        $("#btnLogin").attr("onclick","return false;");
+        // Create data string
+        var dataString="&userName="+name+"&password="+pass+"&login=";
+        console.log(dataString);
+        // Call ajax
+        $.ajax({
+          type: "POST",
+          url:"http://139.59.254.92/checklogin.php",
+          data: dataString,
+          crossDomain: true,
+          cache: false,
+          beforeSend: function(){ console.log('saving...');},
+          success: function(data){
+            console.log('ok');
+            dataSelected = JSON.parse(data);
+            console.log(dataSelected.length);
+            // check login
+            if (dataSelected.length != 0) {
+              btn.innerHTML = "Login";
+              // Enable Login button
+              $("#btnLogin").attr("onclick","checkData()");
+              window.localStorage.setItem("username", dataSelected[0]["userName"]);
+              window.localStorage.setItem("email", dataSelected[0]["email"]);
+              // window.localStorage.setItem("avatarUrl", dataSelected[0]["avatarUrl"]);
+              // login success, check block status
+              if (dataSelected[0]['isBlock'] == 1) {
+                // Account is blocked
+                showMessage('blockAccount');
               }else {
-                // Account is actived!
-                window.localStorage.setItem("username", name);
-                console.log('actived');
-                console.log('profile complete step: ' + dataSelected.Result[0].settingAccountStep);
-                // Check profile information step
-                  switch(dataSelected.Result[0].settingAccountStep) {
+                // Account not block, check active status
+                if (dataSelected[0]["isActive"] == 1) {
+                  // Account is active, check profile
+                  console.log(parseInt(dataSelected[0]["settingAccountStep"]));
+                  switch(parseInt(dataSelected[0]["settingAccountStep"])) {
                     case 0:
                     // Redirect to step 1 page
                     window.location.replace("profileStep1.html");
@@ -190,89 +173,111 @@
                     // Redirect to step 3 page
                     window.location.replace("profileStep3.html");
                     break;
+                    case 3:
+                    // Redirect to step 4 page
+                    window.location.replace("profileStep4.html");
+                    break;
+                    case 4:
+                    // Redirect to step 5 page
+                    window.location.replace("profileStep5.html");
+                    break;
+                    case 5:
+                    // Redirect to step 6 page
+                    window.location.replace("profileStep6.html");
+                    break;
+                    case 6:
+                    // Redirect to step 7 page
+                    window.location.replace("profileStep7.html");
+                    break;
+                    case 7:
+                    // Redirect to step home page
+                    window.location.replace("home.html");
+                    break;
                     default:
                     return false;
+                  }
+                }else {
+                  // Account not active, redirect to active page
+                  window.location.replace("activeAccount.html");
                 }
               }
+
+            }else {
+              // Login fail
+              btn.innerHTML = "Login";
+              // Enable Login button
+              $("#btnLogin").attr("onclick","checkData()");
+              showMessage('wrongAccount');
             }
           }
         });
-      }else {
-        console.log(name);
-        console.log(checkInputData(name));
-        showMessage('invalidInput');
-      }
+      // }else {
+      //   showMessage("connectionError");
+      // }
+    }else {
+      showMessage('invalidInput');
     }
+  }
 
+  // check connection
+  function checkInternetConnection() {
+    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    if (connectionStatus=='online') {
+      return true;
+    }else if (connectionStatus=='offline') {
+      return false;
+    }
+  }
 
+  function checkInputData(field) {
+    if (/^\S[a-zA-Z0-9_^\S]+$/i.test(field)) {
+      return true;
+    }else {
+      return false;
+    }
+  }
 
-      function checkInternetConnection() {
-        $.ajax({
-          url: "http://139.59.254.92/insert.php",
-          timeout: 5000,
-          error: function(jqXHR) {
-            if(jqXHR.status==0) {
-              $("#btnLogin").attr("onclick","checkInternetConnection()");
-              // Give error message
-              showMessage('connectionError');
-            }
-          },
-          success: function() {
-            $("#btnLogin").attr("onclick","checkInternetConnection()");
-            checkData();
-          }
-        });
-      }
-
-      function checkInputData(field) {
-        if (/[a-zA-Z0-9_]+$/i.test(field)) {
-          return true;
-        }else {
-          return false;
-        }
-      }
-
-      function showMessage(messType) {
-        switch(messType) {
-          case 'invalidInput':
-          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-          $('#invalidInput').slideDown(200);
-          setTimeout(function(){
-            $('#invalidInput').slideUp(200);
-          }, 4000);
-          break;
-          case 'wrongAccount':
-          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-          $('#error').slideDown(200);
-          setTimeout(function(){
-            $('#error').slideUp(200);
-          }, 4000);
-          break;
-          case 'connectionError':
-          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-          $('#errorConnection').slideDown(200);
-          setTimeout(function(){
-            $('#errorConnection').slideUp(200);
-          }, 4000);
-          break;
-          case 'blockAccount':
-          $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
-          $('#blockedAccount').slideDown(200);
-          setTimeout(function(){
-            $('#blockedAccount').slideUp(200);
-          }, 4000);
-          break;
-          default:
-          return false;
-        }
-      }
-      </script>
-      <!-- Cordova reference -->
-      <script type="text/javascript" src="cordova.js"></script>
-      <!-- <script src="NativePageTransitions.js"></script> -->
-      <!-- <script type="text/javascript" src="js/index.js"></script> -->
-      <!-- <script type="text/javascript">
-      app.initialize();
-    </script> -->
-  </body>
-  </html>
+  function showMessage(messType) {
+    switch(messType) {
+      case 'invalidInput':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#invalidInput').slideDown(200);
+      setTimeout(function(){
+        $('#invalidInput').slideUp(200);
+      }, 4000);
+      break;
+      case 'wrongAccount':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#error').slideDown(200);
+      setTimeout(function(){
+        $('#error').slideUp(200);
+      }, 4000);
+      break;
+      case 'connectionError':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#errorConnection').slideDown(200);
+      setTimeout(function(){
+        $('#errorConnection').slideUp(200);
+      }, 4000);
+      break;
+      case 'blockAccount':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#blockedAccount').slideDown(200);
+      setTimeout(function(){
+        $('#blockedAccount').slideUp(200);
+      }, 4000);
+      break;
+      default:
+      return false;
+    }
+  }
+  </script>
+  <!-- Cordova reference -->
+  <script type="text/javascript" src="cordova.js"></script>
+  <!-- <script src="NativePageTransitions.js"></script> -->
+  <!-- <script type="text/javascript" src="js/index.js"></script> -->
+  <!-- <script type="text/javascript">
+  app.initialize();
+</script> -->
+</body>
+</html>

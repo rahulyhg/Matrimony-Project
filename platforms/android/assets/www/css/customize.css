@@ -54,17 +54,17 @@
 }
 
 .contactTextarea{
-	background-color:rgba(255,255,255,0.4);
-	font-size:12px;
-	border:solid 1px #cacaca;
+  background-color:rgba(255,255,255,0.4);
+  font-size:12px;
+  border:solid 1px #cacaca;
   border-radius: 4px!important;
-	color: #666;
-    transition:all 200ms ease;
+  color: #666;
+  transition:all 200ms ease;
 }
 
 .contactTextarea:focus{
-    border:solid 1px #27ae60;
-    transition:all 200ms ease;
+  border:solid 1px #27ae60;
+  transition:all 200ms ease;
 }
 .activecodeField{
   border-bottom: solid 1px #27ae60);
@@ -88,4 +88,46 @@
   left:0px;
   right:0px;
   height: 100px;
+}
+
+.page-boxshadow{
+  -webkit-box-shadow: 0 5px 7px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 7px 2px rgba(0,0,0,0.3);
+}
+
+.menu-pos{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px !important;
+  bottom: 0px;
+}
+
+.card {
+  background-color: white;
+  background-image: url(/img/5s.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  height: 250px;
+}
+
+.menu-header{
+  background-image: none !important;
+  font-family: 'Roboto', sans-serif;
+  color: #FFFFFF;
+  font-size: 18px;
+}
+
+.notifi-number{
+  opacity: 1!important;
+  font-size: 10px!important;
+  top: 35%!important;
+  margin-left: 220px!important;
+}
+
+.submenu-down-arrow{
+  font-size: 15px!important;
+  top: 40%!important;
+  margin-left: 226px!important;
 }

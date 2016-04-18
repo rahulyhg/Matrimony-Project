@@ -125,7 +125,7 @@
         <div class="profile-name">
           <ons-row>
             <ons-col width="80px"><img src="{{imgurl}}" id="userAvatar" class="profile-image" ng-click="avatarMenu()"></ons-col>
-            <ons-col class="profile-name-field">{{profile.firstName}} {{profile.middleName}} {{profile.lastName}}</ons-col>
+            <ons-col class="profile-name-field">{{profile[0].firstName}} {{profile[0].middleName}} {{profile[0].lastName}}</ons-col>
           </ons-row>
         </div>
         <div class="overlay" style="background-color: rgba(0,0,0,0.5);position: initial; height: 100%"></div>
@@ -137,19 +137,20 @@
         </p>
         <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
       </div>
+
       <div class="material-container container full-bottom" style="font-size: 14px;">
         <!-- <h4 class="no-bottom">Basic information</h4><br/> -->
         <div class="quote-3 container custom-quote-marrgin">
           <i class="fa fa-quote-left" style="font-size: 8px"></i>
           <p style="padding-left: 10px!important;">
-            {{profile.seftDescription}}
+            {{profile[0].seftDescription}}
             <i class="fa fa-quote-right" style="padding-left: 5px; font-size: 8px"></i>
           </p>
         </div>
         <div class="container user-information-tab-marrgin">
           <ul class="tabs">
             <li class="tab-link user-information-tab active-tab" data-tab="tab-1" id="tab-1-header">Information</li>
-            <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery</li>
+            <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery ({{numbOfImage}})</li>
           </ul>
 
           <div id="tab-1" class="tab-content customize-boxshadow profile-tab-content" style="display: block">
@@ -161,14 +162,14 @@
               <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
               <div class="accordion-content active-accordion" id="basicInfo">
                 <ul class="font-icon-list no-bottom">
-                  <li><a href="#"><i class="fa fa-heart"></i>{{profile.marialStatus}}</a></li>
-                  <li><a href="#"><i class="fa fa-transgender"></i>{{profile.gender}}</a></li>
-                  <li><a href="#"><i class="fa fa-birthday-cake"></i>{{profile.dateOfBirth}} - {{profile.age}} years old</a></li>
-                  <li><a href="#"><i class="fa fa-university"></i>{{profile.nationality}}</a></li>
-                  <li><a href="#"><i class="fa fa-language"></i>{{profile.motherTongue}}</a></li>
-                  <li><a href="#"><i class="fa fa-location-arrow"></i>{{profile.cityStates}}, {{profile.country}}</a></li>
-                  <li><a href="#"><i class="fa fa-phone"></i>0{{profile.phoneNumber}}</a></li>
-                  <li><a href="#"><i class="fa fa-envelope"></i>{{profile.email}}</a></li>
+                  <li><a href="#"><i class="fa fa-heart"></i>{{profile[0].marialStatus}}</a></li>
+                  <li><a href="#"><i class="fa fa-transgender"></i>{{profile[0].gender}}</a></li>
+                  <li><a href="#"><i class="fa fa-birthday-cake"></i>{{profile[0].dateOfBirth}} - {{profile[0].age}} years old</a></li>
+                  <li><a href="#"><i class="fa fa-university"></i>{{profile[0].nationality}}</a></li>
+                  <li><a href="#"><i class="fa fa-language"></i>{{profile[0].motherTongue}}</a></li>
+                  <li><a href="#"><i class="fa fa-location-arrow"></i>{{profile[0].cityStates}}, {{profile[0].country}}</a></li>
+                  <li><a href="#"><i class="fa fa-phone"></i>0{{profile[0].phoneNumber}}</a></li>
+                  <li><a href="#"><i class="fa fa-envelope"></i>{{profile[0].email}}</a></li>
                 </ul>
               </div>
               <h6 class="accordion-toggle" id="hobbyContentHeader">
@@ -201,10 +202,10 @@
               </h6>
               <div class="accordion-content" id="educationContent" style="display: none">
                 <ul class="font-icon-list no-bottom">
-                  <li>Highest Literacy: {{profile.highestLiteracy}}</li>
-                  <li>Working in: {{profile.workIn}}</li>
-                  <li>Occupation: {{profile.occupation}}</li>
-                  <li>Monthly income: {{profile.income}} ($)</li>
+                  <li>Highest Literacy: {{profile[0].highestLiteracy}}</li>
+                  <li>Working in: {{profile[0].workIn}}</li>
+                  <li>Occupation: {{profile[0].occupation}}</li>
+                  <li>Monthly income: {{profile[0].income}} ($)</li>
                 </ul>
               </div>
               <h6 class="accordion-toggle" id="familyContentHeader">
@@ -213,9 +214,9 @@
               </h6>
               <div class="accordion-content" id="familyContent" style="display: none">
                 <ul class="font-icon-list no-bottom">
-                  <li>Family type: {{profile.familyType}}</li>
-                  <li>Family trend: {{profile.familyTrend}}</li>
-                  <li>Caste: {{profile.caste}}</li>
+                  <li>Family type: {{profile[0].familyType}}</li>
+                  <li>Family trend: {{profile[0].familyTrend}}</li>
+                  <li>Caste: {{profile[0].caste}}</li>
                 </ul>
               </div>
             </div>
@@ -224,27 +225,7 @@
         <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
           <div class="material-container container full-bottom" style="font-size: 14px;">
             <a href="#" class="button button-red red-3d button-image"><i class="fa fa-picture-o"></i>Add image</a>
-            <div class="gallery-justified">
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/8.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/8w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3s.jpg"></a>
+            <div class="gallery-justified" id="userGallery">
             </div>
           </div>
         </div>
@@ -255,285 +236,263 @@
   <!-- Profile page end -->
 
   <!-- User detail page start -->
-  <ons-template id="userDetail.html">
+  <ons-template id="detail.html">
     <ons-page class="page-boxshadow" ng-controller="DetailController" modifier="user-profile">
       <ons-toolbar modifier="transparent">
         <div class="left">
           <ons-toolbar-button>
-            <ons-icon icon="ion-ios-arrow-left" style="color: white; font-size: 28px;" fixed-width="false" onclick="navi.popPage()"></ons-icon>
+            <ons-icon icon="ion-ios-arrow-left" style="color: white; font-size: 28px;" fixed-width="false" ng-click="navi.popPage()"></ons-icon>
           </ons-toolbar-button>
         </div>
-        <!-- <div class="right">
-        <ons-toolbar-button>
-        <ons-icon icon="ion-ios-camera-outline" style="color: white; font-size: 28px;" fixed-width="false" ng-click="coverMenu()"></ons-icon>
-      </ons-toolbar-button>
-    </div> -->
-  </ons-toolbar>
-  <div class="profile-card" id="coverImage" style="background-image: url({{selectedUser.coverImageUrl}}); background-size: 100% 100%; background-repeat: no-repeat;">
-    <div class="profile-name">
-      <ons-row>
-        <ons-col width="80px" class="gallery-justified"><img src="{{selectedUser.avatarUrl}}" id="userAvatar" class="profile-image"></ons-col>
-        <ons-col class="profile-name-field">{{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.lastName}}</ons-col>
-      </ons-row>
-    </div>
-    <div class="overlay" style="background-color: rgba(0,0,0,0.5);position: initial; height: 100%"></div>
-  </div>
-  <!-- Connection error -->
-  <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
-    <p>
-      No internet conncetion!
-    </p>
-    <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
-  </div>
-  <div class="material-container container full-bottom" style="font-size: 14px;">
-    <!-- <h4 class="no-bottom">Basic information</h4><br/> -->
-    <div class="quote-3 container custom-quote-marrgin">
-      <i class="fa fa-quote-left" style="font-size: 8px"></i>
-      <p style="padding-left: 10px!important;">
-        {{selectedUser.seftDescription}}
-        <i class="fa fa-quote-right" style="padding-left: 5px; font-size: 8px"></i>
-      </p>
-    </div>
-    <div class="container user-information-tab-marrgin">
-      <ul class="tabs">
-        <li class="tab-link user-information-tab active-tab" data-tab="tab-1" id="tab-1-header">Information</li>
-        <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery</li>
-      </ul>
+      </ons-toolbar>
+      <div class="profile-card" style="background-image: url({{selectedUser.coverImageUrl}}); background-size: 100% 100%; background-repeat: no-repeat;">
+        <div class="profile-name">
+          <ons-row>
+            <ons-col width="80px"><img src="{{selectedUser.avatarUrl}}" class="profile-image"></ons-col>
+            <ons-col class="profile-name-field">{{selectedUser.firstName}} {{selectedUser.middleName}} {{selectedUser.lastName}}</ons-col>
+          </ons-row>
+        </div>
+        <div class="overlay" style="background-color: rgba(0,0,0,0.5);position: initial; height: 100%"></div>
+      </div>
+      <!-- Connection error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
+        <p>
+          No internet conncetion!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- Friend permission error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="permissionErr">
+        <p>
+          Be user's friend to view more information!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="material-container container full-bottom" style="font-size: 14px;">
+        <!-- <h4 class="no-bottom">Basic information</h4><br/> -->
 
-      <div id="tab-1" class="tab-content customize-boxshadow profile-tab-content" style="display: block">
+        <div class="quote-3 container custom-quote-marrgin">
+          <i class="fa fa-quote-left" style="font-size: 8px"></i>
+          <p style="padding-left: 10px!important;">
+            {{selectedUser.seftDescription}}
+            <i class="fa fa-quote-right" style="padding-left: 5px; font-size: 8px"></i>
+          </p>
+        </div>
+        <div class="container user-information-tab-marrgin">
+          <ul class="tabs">
+            <li class="tab-link user-information-tab active-tab" data-tab="tab-1" id="tab-1-header">Information</li>
+            <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery ({{numbOfImage}})</li>
+          </ul>
+
+          <div id="tab-1" class="tab-content customize-boxshadow profile-tab-content" style="display: block">
+            <div class="accordion">
+              <h6 class="accordion-toggle" id="basicInfoHeader">
+                Basic information
+              </h6>
+              <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
+              <div class="accordion-content active-accordion" id="basicInfo">
+                <ul class="font-icon-list no-bottom">
+                  <li><a href="#"><i class="fa fa-heart"></i>{{selectedUser.marialStatus}}</a></li>
+                  <li><a href="#"><i class="fa fa-transgender"></i>{{selectedUser.gender}}</a></li>
+                  <li><a href="#"><i class="fa fa-birthday-cake"></i>{{selectedUser.dateOfBirth}} - {{selectedUser.age}} years old</a></li>
+                  <li><a href="#"><i class="fa fa-university"></i>{{selectedUser.nationality}}</a></li>
+                  <li><a href="#"><i class="fa fa-language"></i>{{selectedUser.motherTongue}}</a></li>
+                  <li><a href="#"><i class="fa fa-location-arrow"></i>{{selectedUser.cityStates}}, {{selectedUser.country}}</a></li>
+                  <li><a href="#" id="userPhonenumb"><i class="fa fa-phone"></i>0{{selectedUser.phoneNumber}}</a></li>
+                  <li><a href="#" id="userEmail"><i class="fa fa-envelope"></i>{{selectedUser.email}}</a></li>
+                </ul>
+              </div>
+              <h6 class="accordion-toggle" id="hobbyContentHeader">
+                Hobby
+              </h6>
+              <div class="accordion-content" id="hobbyContent" style="display: none">
+                <ul class="font-icon-list no-bottom">
+                  <li><i class="fa fa-film"></i> Movies</li>
+                  <ul ng-repeat="m in umovies">
+                    <li><i class="fa fa-angle-right"></i> {{m.hobbyName}}</li>
+                  </ul>
+                  <li><i class="fa fa-music"></i> Music</li>
+                  <ul ng-repeat="ms in umusic">
+                    <li><i class="fa fa-angle-right"></i> {{ms.hobbyName}}</li>
+                  </ul>
+                  <li><i class="fa fa-futbol-o"></i> Sport</li>
+                  <ul ng-repeat="s in usport">
+                    <li><i class="fa fa-angle-right"></i> {{s.hobbyName}}</li>
+                  </ul>
+                  <li><i class="fa fa-list"></i> Other</li>
+                  <ul ng-repeat="o in uother">
+                    <li><i class="fa fa-angle-right"></i> {{o.hobbyName}}</li>
+                  </ul>
+                </ul>
+              </div>
+              <h6 class="accordion-toggle" id="educationContentHeader">
+                Education
+              </h6>
+              <div class="accordion-content" id="educationContent" style="display: none">
+                <ul class="font-icon-list no-bottom">
+                  <li>Highest Literacy: {{selectedUser.highestLiteracy}}</li>
+                  <li>Working in: {{selectedUser.workIn}}</li>
+                  <li>Occupation: {{selectedUser.occupation}}</li>
+                  <li>Monthly income: {{selectedUser.income}} ($)</li>
+                </ul>
+              </div>
+              <h6 class="accordion-toggle" id="familyContentHeader">
+                Family
+              </h6>
+              <div class="accordion-content" id="familyContent" style="display: none">
+                <ul class="font-icon-list no-bottom">
+                  <li>Family type: {{selectedUser.familyType}}</li>
+                  <li>Family trend: {{selectedUser.familyTrend}}</li>
+                  <li>Caste: {{selectedUser.caste}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
+          <div class="material-container container full-bottom" style="font-size: 14px;">
+            <div class="gallery-justified" id="userGallery">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </ons-page>
+  </ons-template>
+  <!-- User detail page end -->
+
+  <!-- Feedback page start -->
+  <ons-template id="feedback.html">
+    <ons-page ng-controller="FeedbackController">
+      <div class="container-fullscreen heading-style-3 bg-3">
+        <h3 class="heading-title">Accordion</h3>
+        <em class="heading-subtitle">A simple way to display a lot of content.</em>
+        <div class="overlay bg-black"></div>
+      </div>
+
+      <div class="material-container container">
         <div class="accordion">
-          <h6 class="accordion-toggle" id="basicInfoHeader">
-            Basic information
-            <i class="fa fa-pencil"></i>
+          <h6 class="accordion-toggle">
+            Accordion 1
+            <i class="fa fa-angle-down"></i>
           </h6>
           <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
-          <div class="accordion-content active-accordion" id="basicInfo">
-            <ul class="font-icon-list no-bottom">
-              <li><a href="#"><i class="fa fa-heart"></i>{{selectedUser.marialStatus}}</a></li>
-              <li><a href="#"><i class="fa fa-transgender"></i>{{selectedUser.gender}}</a></li>
-              <li><a href="#"><i class="fa fa-birthday-cake"></i>{{selectedUser.dateOfBirth}} - {{selectedUser.age}} years old</a></li>
-              <li><a href="#"><i class="fa fa-university"></i>{{selectedUser.nationality}}</a></li>
-              <li><a href="#"><i class="fa fa-language"></i>{{selectedUser.motherTongue}}</a></li>
-              <li><a href="#"><i class="fa fa-location-arrow"></i>{{selectedUser.cityStates}}, {{selectedUser.country}}</a></li>
-              <li><a href="#"><i class="fa fa-phone"></i>0{{selectedUser.phoneNumber}}</a></li>
-              <li><a href="#"><i class="fa fa-envelope"></i>{{selectedUser.email}}</a></li>
-            </ul>
+          <div class="accordion-content active-accordion">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
-          <h6 class="accordion-toggle" id="hobbyContentHeader">
-            Hobby
-            <i class="fa fa-pencil"></i>
+          <h6 class="accordion-toggle">
+            Accordion 2
+            <i class="fa fa-angle-down"></i>
           </h6>
-          <div class="accordion-content" id="hobbyContent" style="display: none">
-            <ul class="font-icon-list no-bottom">
-              <li><i class="fa fa-film"></i> Movies</li>
-              <ul ng-repeat="m in umovies">
-                <li><i class="fa fa-angle-right"></i> {{m.hobbyName}}</li>
-              </ul>
-              <li><i class="fa fa-music"></i> Music</li>
-              <ul ng-repeat="ms in umusic">
-                <li><i class="fa fa-angle-right"></i> {{ms.hobbyName}}</li>
-              </ul>
-              <li><i class="fa fa-futbol-o"></i> Sport</li>
-              <ul ng-repeat="s in usport">
-                <li><i class="fa fa-angle-right"></i> {{s.hobbyName}}</li>
-              </ul>
-              <li><i class="fa fa-list"></i> Other</li>
-              <ul ng-repeat="o in uother">
-                <li><i class="fa fa-angle-right"></i> {{o.hobbyName}}</li>
-              </ul>
-            </ul>
+          <div class="accordion-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
-          <h6 class="accordion-toggle" id="educationContentHeader">
-            Education
-            <i class="fa fa-pencil"></i>
+          <h6 class="accordion-toggle">
+            Accordion 3
+            <i class="fa fa-angle-down"></i>
           </h6>
-          <div class="accordion-content" id="educationContent" style="display: none">
-            <ul class="font-icon-list no-bottom">
-              <li>Highest Literacy: {{selectedUser.highestLiteracy}}</li>
-              <li>Working in: {{selectedUser.workIn}}</li>
-              <li>Occupation: {{selectedUser.occupation}}</li>
-              <li>Monthly income: {{selectedUser.income}} ($)</li>
-            </ul>
-          </div>
-          <h6 class="accordion-toggle" id="familyContentHeader">
-            Family
-            <i class="fa fa-pencil"></i>
-          </h6>
-          <div class="accordion-content" id="familyContent" style="display: none">
-            <ul class="font-icon-list no-bottom">
-              <li>Family type: {{selectedUser.familyType}}</li>
-              <li>Family trend: {{selectedUser.familyTrend}}</li>
-              <li>Caste: {{selectedUser.caste}}</li>
-            </ul>
+          <div class="accordion-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
         </div>
       </div>
-    </div>
-    <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
-      <div class="material-container container full-bottom" style="font-size: 14px;">
-        <a href="#" class="button button-red red-3d button-image"><i class="fa fa-picture-o"></i>Add image</a>
-        <div class="gallery-justified">
-          <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2ww.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3w.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4s.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5t.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6s.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7ww.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/8.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/8w.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1t.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3ww.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4w.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5s.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6t.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7s.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5ww.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1w.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2t.jpg"></a>
-          <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3s.jpg"></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-</ons-page>
-</ons-template>
-<!-- User detail page end -->
+    </ons-page>
+  </ons-template>
+  <!-- Feedback page end -->
 
-<!-- Feedback page start -->
-<ons-template id="feedback.html">
-  <ons-page ng-controller="FeedbackController">
-    <div class="container-fullscreen heading-style-3 bg-3">
-      <h3 class="heading-title">Accordion</h3>
-      <em class="heading-subtitle">A simple way to display a lot of content.</em>
-      <div class="overlay bg-black"></div>
-    </div>
-
-    <div class="material-container container">
-      <div class="accordion">
-        <h6 class="accordion-toggle">
-          Accordion 1
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
-        <div class="accordion-content active-accordion">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <!-- Menu template start -->
+  <ons-template id="menu.html">
+    <ons-page modifier="menu-page" class="menu-pos" ng-controller="ProfileController" style="background-color: #FFFFFF">
+      <div class="sidebar-header" style="background-image: url({{imgurl}}) !important; background-size: 100% 100%; background-repeat: no-repeat;">
+        <div class="sidebar-header-logo">
+          <a href="#" class="menu-header">{{profile[0].firstName}} {{profile[0].lastName}}</a>
         </div>
-        <h6 class="accordion-toggle">
-          Accordion 2
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <div class="accordion-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="sidebar-header-icons">
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-phone"></i></a>
+          <a href="#"><i class="fa fa-comments-o"></i></a>
+          <a href="#" class="close-sidebar"><i class="fa fa-times"></i></a>
         </div>
-        <h6 class="accordion-toggle">
-          Accordion 3
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <div class="accordion-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="overlay" style="background-color: rgba(0,0,0,0.5);"></div>
+      </div>
+      <div class="sidebar-menu half-bottom" ng-controller="MenuController">
+        <div class="sidebar-divider">
+          Menu
         </div>
-      </div>
-    </div>
-  </ons-page>
-</ons-template>
-<!-- Feedback page end -->
-
-<!-- Menu template start -->
-<ons-template id="menu.html">
-  <ons-page modifier="menu-page" class="menu-pos" ng-controller="ProfileController" style="background-color: #FFFFFF">
-    <div class="sidebar-header" style="background-image: url({{imgurl}}) !important; background-size: 100% 100%; background-repeat: no-repeat;">
-      <div class="sidebar-header-logo">
-        <a href="#" class="menu-header">{{profile.firstName}} {{profile.lastName}}</a>
-      </div>
-      <div class="sidebar-header-icons">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-phone"></i></a>
-        <a href="#"><i class="fa fa-comments-o"></i></a>
-        <a href="#" class="close-sidebar"><i class="fa fa-times"></i></a>
-      </div>
-      <div class="overlay" style="background-color: rgba(0,0,0,0.5);"></div>
-    </div>
-    <div class="sidebar-menu half-bottom" ng-controller="MenuController">
-      <div class="sidebar-divider">
-        Menu
-      </div>
-      <a class="menu-item" href="#" ng-click="goProfile()">
-        <i class="bg-green-dark fa fa-user"></i>
-        <em>Profile</em>
-        <!-- <i class="fa fa-circle"></i> -->
-        <!-- <strong>6</strong> -->
-      </a>
-      <a class="menu-item" href="#" ng-click="goMatching()">
-        <i class="bg-red-dark fa fa-heartbeat"></i>
-        <em>Matching</em>
-      </a>
-      <div class="has-submenu">
-        <a class="menu-item show-submenu" href="#">
-          <i class="bg-blue-dark fa fa-users"></i>
-          <em>Friends</em>
-          <i class="fa fa-angle-down submenu-down-arrow" aria-hidden="true"></i>
+        <a class="menu-item" href="#" ng-click="goProfile()">
+          <i class="bg-green-dark fa fa-user"></i>
+          <em>Profile</em>
+          <!-- <i class="fa fa-circle"></i> -->
+          <!-- <strong>6</strong> -->
         </a>
-        <div class="submenu">
-          <a class="submenu-item" href="#">     <i class="fa fa-angle-right"></i><em>   Friend request    </em><i class="notification notifi-number">111</i></a>
-          <a class="submenu-item" href="#">     <i class="fa fa-angle-right"></i><em>   Friend list     </em></a>
+        <a class="menu-item" href="#" ng-click="goMatching()">
+          <i class="bg-red-dark fa fa-heartbeat"></i>
+          <em>Matching</em>
+        </a>
+        <div class="has-submenu">
+          <a class="menu-item show-submenu" href="#">
+            <i class="bg-blue-dark fa fa-users"></i>
+            <em>Friends</em>
+            <i class="fa fa-angle-down submenu-down-arrow" aria-hidden="true"></i>
+          </a>
+          <div class="submenu">
+            <a class="submenu-item" href="#">     <i class="fa fa-angle-right"></i><em>   Friend request    </em><i class="notification notifi-number">111</i></a>
+            <a class="submenu-item" href="#">     <i class="fa fa-angle-right"></i><em>   Friend list     </em></a>
+          </div>
         </div>
+        <a class="menu-item" href="contact.html">
+          <i class="bg-magenta-dark fa fa-envelope-o"></i>
+          <em>Inbox</em>
+          <i class="notification notifi-number">0</i>
+        </a>
+        <a class="menu-item" href="#" ng-click="navi.pushPage('feedback.html')">
+          <i class="bg-teal-light fa fa-question"></i>
+          <em>Support & Feedback</em>
+        </a>
+        <a class="menu-item close-sidebar" href="#" ng-click="logout()">
+          <i class="bg-night-dark fa fa-power-off"></i>
+          <em>Logout</em>
+          <!-- <i class="fa fa-circle"></i> -->
+        </a>
       </div>
-      <a class="menu-item" href="contact.html">
-        <i class="bg-magenta-dark fa fa-envelope-o"></i>
-        <em>Inbox</em>
-        <i class="notification notifi-number">0</i>
-      </a>
-      <a class="menu-item" href="#" ng-click="navi.pushPage('feedback.html')">
-        <i class="bg-teal-light fa fa-question"></i>
-        <em>Support & Feedback</em>
-      </a>
-      <a class="menu-item close-sidebar" href="#" ng-click="logout()">
-        <i class="bg-night-dark fa fa-power-off"></i>
-        <em>Logout</em>
-        <!-- <i class="fa fa-circle"></i> -->
-      </a>
-    </div>
-  </ons-page>
-</ons-template>
-<!-- Menu template end -->
+    </ons-page>
+  </ons-template>
+  <!-- Menu template end -->
 
-<!-- Edit avatar modal start -->
-<ons-modal var="editAvataModal" ng-controller="ProfileController">
-  <div class="simple-modal-content modal-content rounded-modal customize-modal">
-    <div class="modal-header">
-      <p>Avatar</p>
+  <!-- Edit avatar modal start -->
+  <ons-modal var="editAvataModal" ng-controller="ProfileController">
+    <div class="simple-modal-content modal-content rounded-modal customize-modal">
+      <div class="modal-header">
+        <p>Avatar</p>
+      </div>
+      <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
+      <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Capture new photo</a>
+      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Choose exists</a>
+      <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
     </div>
-    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
-    <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Capture new photo</a>
-    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Choose exists</a>
-    <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
-  </div>
-</ons-modal>
-<!-- Edit avatar modal end -->
+  </ons-modal>
+  <!-- Edit avatar modal end -->
 
-<!-- Edit cover image modal start -->
-<ons-modal var="editCoverModal" ng-controller="ProfileController">
-  <div class="simple-modal-content modal-content rounded-modal customize-modal">
-    <div class="modal-header">
-      <p>Cover image</p>
+  <!-- Edit cover image modal start -->
+  <ons-modal var="editCoverModal" ng-controller="ProfileController">
+    <div class="simple-modal-content modal-content rounded-modal customize-modal">
+      <div class="modal-header">
+        <p>Cover image</p>
+      </div>
+      <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
+      <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="capture()">Capture new photo</a>
+      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Choose exists</a>
+      <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
     </div>
-    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
-    <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="capture()">Capture new photo</a>
-    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Choose exists</a>
-    <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
-  </div>
-</ons-modal>
-<!-- Edit cover image modal end -->
+  </ons-modal>
+  <!-- Edit cover image modal end -->
 
-<!-- Path to matterTheme Library JS-->
-<script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
-<script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
-<script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
-<script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
-<script type="text/javascript" src="js/cameraHandler.js"></script>
+  <!-- Path to matterTheme Library JS-->
+  <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
+  <script type="text/javascript" src="js/cameraHandler.js"></script>
 </body>
 </html>

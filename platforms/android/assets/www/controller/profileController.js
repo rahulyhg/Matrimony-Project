@@ -5,13 +5,7 @@ module.controller("ProfileController", function($scope, $http) {
   console.log($scope.userName);
   reloadScript();
   checkConnection();
-  apply_gallery_justification();
-  document.addEventListener("deviceready", onDeviceReady, false);
-  function onDeviceReady() {
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
-    console.log('API is ready');
-  }
+  getUserImage();
 
   // initial justify gallery
   function apply_gallery_justification(){
@@ -37,6 +31,31 @@ module.controller("ProfileController", function($scope, $http) {
     };
   };
 
+  // Get user image
+  function getUserImage() {
+    console.log('getting image...');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/getuserimage.php",
+      data: {
+        userName: $scope.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log('data image: ');
+      console.log(data);
+      $scope.userImage = data;
+      for (var i = 0; i < $scope.userImage.length; i++) {
+        $('<a href="'+$scope.userImage[i]["imageUrl"]+'" class="show-gallery" title="Image"><img alt="img" src="'+$scope.userImage[i]["imageUrl"]+'"></a>').appendTo('#userGallery');
+      }
+      apply_gallery_justification();
+      reloadScript();
+      $scope.numbOfImage = $scope.userImage.length;
+    });
+  };
+
   // Set user cover image
   function setCoverImage() {
     $('#coverImage').css('background-image', 'url("' + $scope.coverUrl + '")');
@@ -59,45 +78,6 @@ module.controller("ProfileController", function($scope, $http) {
     editAvataModal.hide();
     editCoverModal.hide();
   }
-  // Capture photo handler
-  $scope.capture = function () {
-    capturePhoto();
-  }
-  // Take new photo
-  function capturePhoto() {
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-      quality: 50,
-      targetWidth: 600,
-      targetHeight: 600,
-      destinationType: destinationType.FILE_URI,
-      saveToPhotoAlbum: true
-    });
-  }
-  // Get photo from gallery
-  function getPhoto(source) {
-    navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-      quality: 50,
-      targetWidth: 600,
-      targetHeight: 600,
-      destinationType: destinationType.FILE_URI,
-      sourceType: source
-    });
-  }
-  // Fail
-  function onFail(message) {
-  }
-
-  function onPhotoDataSuccess(imageURI) {
-    console.log(imageURI);
-    var avatar = document.getElementById('#'+$scope.editImageType);
-    avatar.src = imageURI;
-  }
-
-  function onPhotoURISuccess(imageURI) {
-    console.log(imageURI);
-    var avatar = document.getElementById('#'+$scope.editImageType);
-    avatar.src = imageURI;
-  }
 
   function upload() {
     console.log('uploading....');
@@ -112,30 +92,6 @@ module.controller("ProfileController", function($scope, $http) {
     options.chunkedMode = false;
     var ft = new FileTransfer();
     ft.upload(imageURI, "http://139.59.254.92/uploadDemo.php", win, fail,options);
-  }
-
-  function win(r) {
-    var regExp = /\[name] => ([^)]+)\[type]/;
-    console.log("Code = " + r.responseCode);
-    console.log("Response = " + r.response);
-    console.log("Sent = " + r.bytesSent);
-    var test = JSON.stringify(r.response);
-    console.log(test);
-    if (r.responseCode == 200) {
-      var matchesUrl = regExp.exec(test);
-      var imgUrl = matchesUrl[1];
-      var imrUrlFormated = imgUrl.slice(0,-14);
-      $scope.uploadedUrl = imrUrlFormated;
-      // window.localStorage.setItem("imgUrl", imrUrlFormated);
-      saveToServer(imrUrlFormated);
-    }
-  }
-  // upload image error
-  function fail(error) {
-    showMessage('otherError');
-    console.log("An error has occurred: Code = " + error.code);
-    console.log("upload error source " + error.source);
-    console.log("upload error target " + error.target);
   }
 
   // Get user information

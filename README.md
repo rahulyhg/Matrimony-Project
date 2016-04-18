@@ -1,10 +1,10 @@
-Matrimony Project Introdcution
+Matrimony Project Introduction
 ====
 
 This is an hybrid application based on cordova phonegap and OnsenUI framework
-Serve code: PHP
-Server using: Ubuntu
-Server ip: 139.59.254.92
+-Serve code: PHP
+-Server using: Ubuntu
+-Server ip: 139.59.254.92
 
 ## Requirement
 

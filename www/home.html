@@ -282,6 +282,7 @@
       </div>
       <div class="material-container container full-bottom" style="font-size: 14px;">
         <!-- <h4 class="no-bottom">Basic information</h4><br/> -->
+
         <div class="quote-3 container custom-quote-marrgin">
           <i class="fa fa-quote-left" style="font-size: 8px"></i>
           <p style="padding-left: 10px!important;">
@@ -292,7 +293,7 @@
         <div class="container user-information-tab-marrgin">
           <ul class="tabs">
             <li class="tab-link user-information-tab active-tab" data-tab="tab-1" id="tab-1-header">Information</li>
-            <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery</li>
+            <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery ({{numbOfImage}})</li>
           </ul>
 
           <div id="tab-1" class="tab-content customize-boxshadow profile-tab-content" style="display: block">
@@ -366,28 +367,8 @@
         </div>
         <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
           <div class="material-container container full-bottom" style="font-size: 14px;">
-            <a href="#" class="button button-red red-3d button-image"><i class="fa fa-picture-o"></i>Add image</a>
-            <div class="gallery-justified">
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/8.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/8w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/4.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/4w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/6.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/6t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/7.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/7s.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/5.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/5ww.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/1.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/1w.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/2.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/2t.jpg"></a>
-              <a href="lib/matterTheme/images/pictures/3.jpg" class="show-gallery" title="Your Caption Here"><img alt="img" src="lib/matterTheme/images/pictures/3s.jpg"></a>
+            <div class="gallery-justified" id="userGallery">
+              <!-- <a href="{{img.imageUrl}}" class="show-gallery" title="Image"><img alt="img" src="{{img.imageUrl}}"></a> -->
             </div>
           </div>
         </div>

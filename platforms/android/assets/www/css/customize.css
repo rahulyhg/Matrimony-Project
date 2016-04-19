@@ -131,3 +131,25 @@
   top: 40%!important;
   margin-left: 226px!important;
 }
+
+.detail-div{
+  padding: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0px!important;
+}
+
+.detail-button{
+  border-radius: 0px;
+  margin-bottom: 0px;
+  letter-spacing: 0.2px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: black;
+  background-color: transparent;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}

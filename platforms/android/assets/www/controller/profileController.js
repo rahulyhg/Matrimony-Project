@@ -1,5 +1,6 @@
 module.controller("ProfileController", function($scope, $http) {
   $scope.userName = window.localStorage.getItem("username");
+  $scope.numbOfImage = 0;
   var pictureSource;
   var destinationType;
   console.log($scope.userName);

@@ -70,6 +70,7 @@
   <ons-sliding-menu main-page="matching.html" menu-page="menu.html" max-slide-distance="260px" type="push" var="menu">
   </ons-sliding-menu>
 
+  <!-- Matching page start -->
   <ons-template id="matching.html">
     <ons-page class="page-boxshadow" ng-controller="MatchingController">
       <ons-navigator var="navi">
@@ -97,7 +98,7 @@
             <div class="activity-item material-container matching-item">
               <img class="activity-item-image" src="{{mt.avatarUrl}}" alt="img">
               <h5><strong class="color-blue-dark">{{mt.firstName}} {{mt.middleName}} {{mt.lastName}}</strong></h5>
-              <em class="matching-desciption"><i class="fa fa-venus-mars matching-icon-red"></i>{{mt.gender}} - <i class="fa fa-heart-o matching-icon-red"></i>{{mt.marialStatus}}</em>
+              <em class="matching-desciption"><i class="fa fa-venus-mars matching-icon-red"></i>{{mt.gender}} <i class="fa fa-heart-o matching-icon-red"></i>{{mt.marialStatus}}</em>
               <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
             </div>
           </div>
@@ -105,6 +106,7 @@
       </ons-navigator>
     </ons-page>
   </ons-template>
+  <!-- Matching page end -->
 
   <!-- Profile page start -->
   <ons-template id="profile.html">
@@ -272,6 +274,20 @@
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="chatPermissionErr">
         <p>
           Be {{selectedUser.lastName}}'s friend to chat!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- Accept friend request error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="acceptErr">
+        <p>
+          An error has occurred when accept request. Please try again!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- unfriend error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="unfriendErr">
+        <p>
+          An error has occurred when unfriend. Please try again!
         </p>
         <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
       </div>

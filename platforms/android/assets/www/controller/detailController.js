@@ -1,10 +1,70 @@
 module.controller("DetailController", function($scope, $rootScope, $http) {
   $scope.userName = window.localStorage.getItem("username");
+  $scope.friend = [];
+  $scope.frStt = '';
+  $scope.friendIcon = '';
+  $scope.friendShip = '';
+  $scope.numbOfImage = 0;
   reloadScript();
-  getUserImage();
-  getHobbyData();
   checkFriendShip();
-
+  // Friend button handler
+  $scope.btnFriendHandler = function () {
+    switch ($scope.friendShip) {
+      case 'no':
+      console.log('adding friend....');
+      break;
+      case 'request':
+      ons.notification.confirm({
+        message: 'Cancel request?',
+        modifier: 'material',
+        callback: function(idx) {
+          switch (idx) {
+            case 0:
+            console.log('canceled');
+            break;
+            case 1:
+            console.log('canceled');
+            break;
+          }
+        }
+      });
+      break;
+      case 'friend':
+      ons.notification.confirm({
+        message: 'Unfriend '+$rootScope.selectedUser.lastName+' ?',
+        modifier: 'material',
+        callback: function(idx) {
+          switch (idx) {
+            case 0:
+            console.log('canceled');
+            break;
+            case 1:
+            console.log('unfriend....');
+            break;
+          }
+        }
+      });
+      break;
+      default:
+      return false;
+    }
+  };
+  // Button chat handler
+  $scope.btnChatHandler = function () {
+    switch ($scope.friendShip) {
+      case 'no':
+      showMessage('chatPermissionErr');
+      break;
+      case 'request':
+      showMessage('chatPermissionErr');
+      break;
+      case 'friend':
+      alert('can chat!');
+      break;
+      default:
+      return false;
+    }
+  };
   // initial justify gallery
   function apply_gallery_justification(){
     console.log('apply');
@@ -67,18 +127,29 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
     });
     /* Successful HTTP post request or not */
     request.success(function (data) {
-    console.log(data);
-    $scope.friend = data;
-    console.log($scope.friend.length);
-    if ($scope.friend.length == 0) {
-      console.log('no friend');
-      disableField();
-    }else if ($scope.friend[0]["friendShipStatus"] == "request") {
-      console.log('request');
-      disableField();
-    }else {
-      console.log('friend');
-    }
+      console.log(data);
+      $scope.friend = data;
+      console.log($scope.friend.length);
+      if ($scope.friend.length == 0) {
+        console.log('no friend');
+        $scope.friendShip = 'no';
+        $scope.friendIcon = "fa fa-user-plus";
+        $scope.frStt = "Add friend";
+        disableField();
+      }else if ($scope.friend[0]["friendShipStatus"] == "request") {
+        console.log('request');
+        $scope.friendShip = 'request';
+        $scope.friendIcon = "fa fa-spinner";
+        $scope.frStt = "Requesting";
+        disableField();
+      }else {
+        console.log('friend');
+        $scope.friendShip = 'friend';
+        $scope.friendIcon = "fa fa-user-times";
+        $scope.frStt = "Unfriend";
+        getUserImage();
+        getHobbyData();
+      }
     });
   }
   // Get user hobby
@@ -121,11 +192,13 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
     });
   };
   function disableField() {
+    $('#profileDes').hide();
     $("#hobbyContentHeader").hide();
     $("#educationContentHeader").hide();
     $("#familyContentHeader").hide();
-    $('#userPhonenumb').innerHTML = '**********';
-    $('#userEmail').innerHTML = '**********';
+    $rootScope.selectedUser.phoneNumber = "********";
+    $rootScope.selectedUser.email = "********";
+    $('#alertGallery').show();
     showMessage('permissionErr');
   }
 
@@ -141,14 +214,23 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       case 'permissionErr':
       $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
       $('#permissionErr').slideDown(200);
-      // setTimeout(function(){
-      //   $('#permissionErr').slideUp(200);
-      // }, 5000);
+      setTimeout(function(){
+        $('#permissionErr').slideUp(200);
+      }, 3000);
+      break;
+      case 'chatPermissionErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#chatPermissionErr').slideDown(200);
+      setTimeout(function(){
+        $('#chatPermissionErr').slideUp(200);
+      }, 3000);
       break;
       default:
       return false;
     }
   };
+
+  // Reload jquery scripts
   function reloadScript() {
     $.when(
       $.getScript( "lib/matterTheme/scripts/jquery.js" ),

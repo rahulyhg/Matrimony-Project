@@ -5,13 +5,99 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
   $scope.friendIcon = '';
   $scope.friendShip = '';
   $scope.numbOfImage = 0;
+  $scope.phone = '';
+  $scope.email = '';
   reloadScript();
-  checkFriendShip();
+  checkFriendRequest();
+  // Accept friend
+  function acceptFriendRequest() {
+    console.log('accepting request....');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/acceptfriend.php",
+      data: {
+        userName: $rootScope.selectedUser.userName,
+        friendUserName: $scope.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log(data);
+      if (data=="success") {
+        console.log('now its my friend');
+        $scope.friendShip = 'friend';
+        $scope.friendIcon = "fa fa-user-times";
+        $scope.frStt = "Unfriend";
+        enableField();
+      }else if (data=="error") {
+        console.log('accept fail');
+        showMessage('acceptErr');
+      }
+    });
+  };
+  // Add friend
+  function addFriend() {
+    console.log('sending request....');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/addfriend.php",
+      data: {
+        userName: $scope.userName,
+        friendUserName: $rootScope.selectedUser.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log(data);
+      if (data=="success") {
+        $scope.friendShip = 'request';
+        $scope.friendIcon = "fa fa-spinner";
+        $scope.frStt = "Requesting";
+        disableField();
+      }else if (data=="error") {
+        showMessage('addfriendErr');
+      }
+    });
+  };
+  // Unfriend
+  function unfriend() {
+    console.log('unfriending....');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/unfriend.php",
+      data: {
+        userName: $scope.userName,
+        friendUserName: $rootScope.selectedUser.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log(data);
+      if (data=="success") {
+        console.log('now its not friend');
+        $scope.friendShip = 'no';
+        $scope.friendIcon = "fa fa-user-plus";
+        $scope.frStt = "Add friend";
+        disableField();
+      }else if (data=="error") {
+        console.log('unfriend fail');
+        showMessage('unfriendErr');
+      }
+    });
+  };
+  // Cancel request
+  function cancelRequest() {
+    console.log('cancel request....');
+
+  }
   // Friend button handler
   $scope.btnFriendHandler = function () {
     switch ($scope.friendShip) {
       case 'no':
-      console.log('adding friend....');
+      addFriend();
       break;
       case 'request':
       ons.notification.confirm({
@@ -23,11 +109,14 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
             console.log('canceled');
             break;
             case 1:
-            console.log('canceled');
+            cancelRequest();
             break;
           }
         }
       });
+      break;
+      case 'request to me':
+      acceptFriendRequest();
       break;
       case 'friend':
       ons.notification.confirm({
@@ -39,7 +128,7 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
             console.log('canceled');
             break;
             case 1:
-            console.log('unfriend....');
+            unfriend();
             break;
           }
         }
@@ -56,6 +145,9 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       showMessage('chatPermissionErr');
       break;
       case 'request':
+      showMessage('chatPermissionErr');
+      break;
+      case 'request to me':
       showMessage('chatPermissionErr');
       break;
       case 'friend':
@@ -112,7 +204,41 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       $scope.numbOfImage = $scope.userImage.length;
     });
   };
-
+  // Check if this user has send request to me
+  function checkFriendRequest() {
+    console.log('checking friend request...');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/checkfriendrequest.php",
+      data: {
+        userName: $rootScope.selectedUser.userName,
+        friendUserName: $scope.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log(data);
+      $scope.friend = data;
+      if ($scope.friend.length == 0) {
+        console.log('checking friendship');
+        checkFriendShip();
+      }else if ($scope.friend[0]["friendShipStatus"] == "request") {
+        console.log('this user has send request to me');
+        $scope.friendShip = 'request to me';
+        $scope.friendIcon = "fa fa-user-plus";
+        $scope.frStt = "Accept";
+        disableField();
+      }else if ($scope.friend[0]["friendShipStatus"] == "friend") {
+        console.log('its my friend');
+        $scope.friendShip = 'friend';
+        $scope.friendIcon = "fa fa-user-times";
+        $scope.frStt = "Unfriend";
+        getUserImage();
+        getHobbyData();
+      }
+    });
+  };
   // Check friendship
   function checkFriendShip() {
     console.log('checking friendship...');
@@ -131,6 +257,9 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       $scope.friend = data;
       console.log($scope.friend.length);
       if ($scope.friend.length == 0) {
+        // dont have request to this user
+        // checking request from that user
+        console.log('dont have friend or request to this user');
         console.log('no friend');
         $scope.friendShip = 'no';
         $scope.friendIcon = "fa fa-user-plus";
@@ -143,7 +272,7 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         $scope.frStt = "Requesting";
         disableField();
       }else {
-        console.log('friend');
+        console.log('its my friend');
         $scope.friendShip = 'friend';
         $scope.friendIcon = "fa fa-user-times";
         $scope.frStt = "Unfriend";
@@ -191,17 +320,34 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       }
     });
   };
+  // Disable field if not friend
   function disableField() {
     $('#profileDes').hide();
     $("#hobbyContentHeader").hide();
     $("#educationContentHeader").hide();
     $("#familyContentHeader").hide();
+    $('#userGallery').hide();
+    $scope.phone = $rootScope.selectedUser.phoneNumber;
     $rootScope.selectedUser.phoneNumber = "********";
+    $scope.email = $rootScope.selectedUser.email;
     $rootScope.selectedUser.email = "********";
     $('#alertGallery').show();
     showMessage('permissionErr');
   }
+  // Enable field after its friend
+  function enableField() {
+    $rootScope.selectedUser.phoneNumber = $scope.phone;
+    $rootScope.selectedUser.email = $scope.email;
+    $('#alertGallery').hide();
+    $('#userGallery').show();
+    getUserImage();
+    getHobbyData();
+    $('#profileDes').show();
+    $("#hobbyContentHeader").show();
+    $("#educationContentHeader").show();
+    $("#familyContentHeader").show();
 
+  }
   function showMessage(messType) {
     switch(messType) {
       case 'connectErr':
@@ -223,6 +369,27 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       $('#chatPermissionErr').slideDown(200);
       setTimeout(function(){
         $('#chatPermissionErr').slideUp(200);
+      }, 3000);
+      break;
+      case 'acceptErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#acceptErr').slideDown(200);
+      setTimeout(function(){
+        $('#acceptErr').slideUp(200);
+      }, 3000);
+      break;
+      case 'unfriendErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#unfriendErr').slideDown(200);
+      setTimeout(function(){
+        $('#unfriendErr').slideUp(200);
+      }, 3000);
+      break;
+      case 'addfriendErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#addfriendErr').slideDown(200);
+      setTimeout(function(){
+        $('#addfriendErr').slideUp(200);
       }, 3000);
       break;
       default:

@@ -264,14 +264,30 @@
       <!-- Friend permission error -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="permissionErr">
         <p>
-          Be user's friend to view more information!
+          Be {{selectedUser.lastName}}'s friend to view more information!
         </p>
         <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
       </div>
-      <div class="material-container container full-bottom" style="font-size: 14px;">
+      <!-- Chat permission error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="chatPermissionErr">
+        <p>
+          Be {{selectedUser.lastName}}'s friend to chat!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="material-container detail-div">
+        <ons-row>
+          <ons-col width=50%>
+            <a href="#" class="button button-green detail-button" ng-click="btnFriendHandler()"><i class="{{friendIcon}}" aria-hidden="true"></i>{{frStt}}</a>
+          </ons-col>
+          <ons-col width=50%>
+            <a href="#" class="button button-green detail-button" ng-click="btnChatHandler()"><i class="fa fa-comments-o" aria-hidden="true"></i>Message</a>
+          </ons-col>
+        </ons-row>
+      </div>
+      <div class="material-container container full-bottom" style="font-size: 14px; padding-top: 0px;">
         <!-- <h4 class="no-bottom">Basic information</h4><br/> -->
-
-        <div class="quote-3 container custom-quote-marrgin">
+        <div class="quote-3 container custom-quote-marrgin" id="profileDes">
           <i class="fa fa-quote-left" style="font-size: 8px"></i>
           <p style="padding-left: 10px!important;">
             {{selectedUser.seftDescription}}
@@ -298,8 +314,8 @@
                   <li><a href="#"><i class="fa fa-university"></i>{{selectedUser.nationality}}</a></li>
                   <li><a href="#"><i class="fa fa-language"></i>{{selectedUser.motherTongue}}</a></li>
                   <li><a href="#"><i class="fa fa-location-arrow"></i>{{selectedUser.cityStates}}, {{selectedUser.country}}</a></li>
-                  <li><a href="#" id="userPhonenumb"><i class="fa fa-phone"></i>0{{selectedUser.phoneNumber}}</a></li>
-                  <li><a href="#" id="userEmail"><i class="fa fa-envelope"></i>{{selectedUser.email}}</a></li>
+                  <li><a href="#"><i class="fa fa-phone"></i>0{{selectedUser.phoneNumber}}</a></li>
+                  <li><a href="#"><i class="fa fa-envelope"></i>{{selectedUser.email}}</a></li>
                 </ul>
               </div>
               <h6 class="accordion-toggle" id="hobbyContentHeader">
@@ -351,6 +367,9 @@
         </div>
         <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
           <div class="material-container container full-bottom" style="font-size: 14px;">
+            <div class="material-container" style="display: none; text-align: center" id="alertGallery">
+              <h6>Be user's friend to view photos!</h6>
+            </div>
             <div class="gallery-justified" id="userGallery">
             </div>
           </div>

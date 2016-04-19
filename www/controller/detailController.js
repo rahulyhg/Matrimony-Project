@@ -1,4 +1,4 @@
-module.controller("DetailController", function($scope, $rootScope, $http) {
+module.controller("DetailController", function($scope, $rootScope, $timeout, $http) {
   $scope.userName = window.localStorage.getItem("username");
   $scope.friend = [];
   $scope.frStt = '';
@@ -9,6 +9,14 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
   $scope.email = '';
   reloadScript();
   checkFriendRequest();
+  // Load function
+  $scope.load = function($done) {
+    $timeout(function() {
+      reloadScript();
+      checkFriendRequest();
+      $done();
+    }, 500);
+  };
   // Accept friend
   function acceptFriendRequest() {
     console.log('accepting request....');
@@ -35,6 +43,10 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         showMessage('acceptErr');
       }
     });
+    request.error(function() {
+      console.log('accept fail');
+      showMessage('acceptErr');
+    });
   };
   // Add friend
   function addFriend() {
@@ -57,8 +69,13 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         $scope.frStt = "Requesting";
         disableField();
       }else if (data=="error") {
+        console.log('add friend fail');
         showMessage('addfriendErr');
       }
+    });
+    request.error(function() {
+      console.log('add friend fail');
+      showMessage('addfriendErr');
     });
   };
   // Unfriend
@@ -87,11 +104,41 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         showMessage('unfriendErr');
       }
     });
+    request.error(function() {
+      console.log('unfriend fail');
+      showMessage('unfriendErr');
+    });
   };
   // Cancel request
   function cancelRequest() {
     console.log('cancel request....');
-
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/cancelrequest.php",
+      data: {
+        userName: $scope.userName,
+        friendUserName: $rootScope.selectedUser.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log(data);
+      if (data=="success") {
+        console.log('now its not friend');
+        $scope.friendShip = 'no';
+        $scope.friendIcon = "fa fa-user-plus";
+        $scope.frStt = "Add friend";
+        disableField();
+      }else if (data=="error") {
+        console.log('cancel request fail');
+        showMessage('cancelrequestErr');
+      }
+    });
+    request.error(function() {
+      console.log('cancel request fail');
+      showMessage('cancelrequestErr');
+    });
   }
   // Friend button handler
   $scope.btnFriendHandler = function () {
@@ -203,6 +250,10 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       reloadScript();
       $scope.numbOfImage = $scope.userImage.length;
     });
+    request.error(function() {
+      console.log('getting image fail');
+      showMessage('connectErr');
+    });
   };
   // Check if this user has send request to me
   function checkFriendRequest() {
@@ -237,6 +288,10 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         getUserImage();
         getHobbyData();
       }
+    });
+    request.error(function() {
+      console.log('checking friend request fail');
+      showMessage('connectErr');
     });
   };
   // Check friendship
@@ -279,6 +334,10 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
         getUserImage();
         getHobbyData();
       }
+    });
+    request.error(function() {
+      console.log('check friendship fail');
+      showMessage('connectErr');
     });
   }
   // Get user hobby
@@ -390,6 +449,13 @@ module.controller("DetailController", function($scope, $rootScope, $http) {
       $('#addfriendErr').slideDown(200);
       setTimeout(function(){
         $('#addfriendErr').slideUp(200);
+      }, 3000);
+      break;
+      case 'cancelrequestErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#cancelrequestErr').slideDown(200);
+      setTimeout(function(){
+        $('#cancelrequestErr').slideUp(200);
       }, 3000);
       break;
       default:

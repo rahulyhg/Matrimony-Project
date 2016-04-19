@@ -1,51 +1,30 @@
-Onsen UI Quick Startup Guide
+Matrimony Project Introduction
 ====
 
-This document describes the minimum information required to develop an app using Onsen UI.
+- This is an hybrid application based on cordova phonegap and OnsenUI framework
+- Serve code: PHP
+- Server using: Ubuntu
+- Server ip: 139.59.254.92
 
 ## Requirement
 
  * Node.js - [Install Node.js](http://nodejs.org)
- * Cordova - Install by `npm install cordova`
+ * Phonegap - Install by `npm install phonegap`
 
-## Development Instructions
+## Workinh progess - 50%
 
-1. Install dependencies
+(==========>..............)
 
-    $ npm install
+## Demo screenshot
+![alt tag](http://139.59.254.92/upload/m1.PNG)
+![alt tag](http://139.59.254.92/upload/m2.PNG)
+![alt tag](http://139.59.254.92/upload/m3.PNG)
+![alt tag](http://139.59.254.92/upload/m4.PNG)
+![alt tag](http://139.59.254.92/upload/m5.PNG)
+![alt tag](http://139.59.254.92/upload/m6.PNG)
 
-2. Install Gulp globally
-
-    $ npm install -g gulp
-
-3. Run `gulp serve` and run the web server
-
-    $ gulp serve
-
-You should see running app on browser and you can start to develop your app with Onsen UI.
-
-### Directory Layout
-
-    README.md     --> This file
-    gulpfile.js   --> Gulp tasks definition
-    www/          --> Asset files for app
-      index.html  --> App entry point
-      js/
-      lib/
-        angular/  --> AngularJS dependency
-        onsen/
-          stylus/ --> Stylus files for onsen-css-components.css
-          js/     --> JS files for Onsen UI
-          css/    --> CSS files for Onsen UI
-      scripts/    --> Cordova scripts directory
-    platforms/    --> Cordova platform directory
-    plugins/      --> Cordova plugin directory
-    merges/       --> Cordova merge directory
-    hooks/        --> Cordova hook directory
-    scripts/      --> Cordova TS scripts directory and TS definitions
-
-## Gulp Tasks
-
- * `gulp serve` - Running the app for development.
- * `gulp build` - Build several files for project.
- * `gulp jshint` - Generate [jshint](https://github.com/jshint/jshint) report.
+## Author
+- author name: Thinh Nguyen
+- email: ndthinh94@gmail.com - ndthinh94@live.com
+- website: http://codementor.xyz/
+- skype: ndthinh94@live.com

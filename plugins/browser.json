@@ -24,6 +24,9 @@
         },
         "nl.moreapps.datepicker": {
             "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
+        },
+        "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "com.tinysoft.tinymatrimony"
         }
     },
     "dependent_plugins": {

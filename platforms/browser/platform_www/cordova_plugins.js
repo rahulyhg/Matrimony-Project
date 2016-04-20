@@ -256,6 +256,14 @@ module.exports = [
         "clobbers": [
             "share"
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "pluginId": "com.phonegap.plugins.PushPlugin",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -267,7 +275,8 @@ module.exports.metadata =
     "cordova-plugin-file": "4.1.1",
     "cordova-plugin-file-transfer": "1.5.1-dev",
     "com.bikasv.plugins.datepicker": "0.1.1",
-    "nl.moreapps.datepicker": "1.0.2"
+    "nl.moreapps.datepicker": "1.0.2",
+    "com.phonegap.plugins.PushPlugin": "2.5.0"
 }
 // BOTTOM OF METADATA
 });

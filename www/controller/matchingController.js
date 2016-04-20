@@ -1,7 +1,11 @@
-module.controller("MatchingController", function($scope, $rootScope, $http) {
+module.controller("MatchingController", function($scope, $rootScope, $timeout, $http) {
   $scope.userName = window.localStorage.getItem("username");
   checkConnection();
+  $scope.rightButtonRematching = function () {
+    checkConnection();
+  };
 
+  // View profile
   $scope.viewProfile = function (index) {
     var selectedUser = $rootScope.matchingResult[index];
     $rootScope.selectedUser = selectedUser;
@@ -28,6 +32,7 @@ module.controller("MatchingController", function($scope, $rootScope, $http) {
   };
 
   function getMatchingData() {
+    $('#rightIcon').attr('spin','true');
     console.log('geting matching data...');
     var request = $http({
       method: "post",
@@ -46,17 +51,27 @@ module.controller("MatchingController", function($scope, $rootScope, $http) {
     });
     /* Successful HTTP post request or not */
     request.success(function (data) {
-      showMessage('matchingErr');
       console.log('matching data');
       console.log(data);
-      $rootScope.matchingResult = data;
-      for (var i = 0; i < $rootScope.matchingResult.length; i++) {
-        var unformatedUrl = $rootScope.matchingResult[i]["avatarUrl"];
-        var formatedUrl = unformatedUrl.replace("?", "%3f");
-        $rootScope.matchingResult[i]["avatarUrl"] = formatedUrl;
-        var unformatedCoverUrl = $rootScope.matchingResult[i]["coverImageUrl"];
-        var formatedCoverUrl = unformatedCoverUrl.replace("?", "%3f");
-        $rootScope.matchingResult[i]["coverImageUrl"] = formatedCoverUrl;
+      if (data.length==0) {
+        console.log('no user suit with this account');
+        setTimeout(function(){
+          $('#rightIcon').attr('spin','false');
+        }, 1000);
+        $('#noMatching').show();
+      }else {
+        $rootScope.matchingResult = data;
+        for (var i = 0; i < $rootScope.matchingResult.length; i++) {
+          var unformatedUrl = $rootScope.matchingResult[i]["avatarUrl"];
+          var formatedUrl = unformatedUrl.replace("?", "%3f");
+          $rootScope.matchingResult[i]["avatarUrl"] = formatedUrl;
+          var unformatedCoverUrl = $rootScope.matchingResult[i]["coverImageUrl"];
+          var formatedCoverUrl = unformatedCoverUrl.replace("?", "%3f");
+          $rootScope.matchingResult[i]["coverImageUrl"] = formatedCoverUrl;
+          setTimeout(function(){
+            $('#rightIcon').attr('spin','false');
+          }, 1000);
+        }
       }
     });
     request.error(function(){

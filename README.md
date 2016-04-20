@@ -11,7 +11,7 @@ Matrimony Project Introduction
  * Node.js - [Install Node.js](http://nodejs.org)
  * Phonegap - Install by `npm install phonegap`
 
-## Workinh progess - 70%
+## Working progess - 70%
 
 (===========>..........)
 

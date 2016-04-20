@@ -16,15 +16,17 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   countSeftRequest();
   $scope.requestCount = $scope.requestnumb;
   updateData();
+  updateMenu();
   // updateMenu();
   function updateMenu() {
     $timeout(function () {
+      reloadScript();
       updateMenu();
     }, 1000);
   };
   function updateData() {
     $timeout(function () {
-      reloadScript();
+
       console.log('update data....');
       countRequest();
       countFriend();

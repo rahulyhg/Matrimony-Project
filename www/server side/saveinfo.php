@@ -7,7 +7,7 @@ if(isset($_POST['savestep1']))
   $mName=mysql_real_escape_string(htmlspecialchars(trim($_POST['mname'])));
   $lName=mysql_real_escape_string(htmlspecialchars(trim($_POST['lname'])));
   $birthday=mysql_real_escape_string(htmlspecialchars(trim($_POST['birthday'])));
-  $age=$phone=intval($_POST['age']);
+  $age=intval($_POST['age']);
   $gender=mysql_real_escape_string(htmlspecialchars(trim($_POST['gender'])));
   $phone=intval($_POST['phone']);
   $coverImgUrl  = "http://139.59.254.92/upload/default-system-cover-imgae.jpg";

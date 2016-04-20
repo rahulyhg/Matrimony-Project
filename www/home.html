@@ -101,7 +101,7 @@
             <div class="activity-item material-container matching-item">
               <img class="activity-item-image" src="{{mt.avatarUrl}}" alt="img">
               <h5><strong class="color-blue-dark">{{mt.firstName}} {{mt.middleName}} {{mt.lastName}}</strong></h5>
-              <em class="matching-desciption"><i class="fa fa-venus-mars matching-icon-red"></i>{{mt.gender}} <i class="fa fa-heart-o matching-icon-red"></i>{{mt.marialStatus}}</em>
+              <em class="matching-desciption"><i class="fa fa-venus-mars matching-icon-red"></i>{{mt.gender}} <i> </i>  <i class="fa fa-heart-o matching-icon-red"></i>{{mt.marialStatus}}</em>
               <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
             </div>
           </div>
@@ -123,15 +123,15 @@
           </div>
           <div class="center" style="color: black">Seach</div>
           <div class="right">
-            <ons-toolbar-button ng-click="rightButtonRematching()">
+            <ons-toolbar-button ng-click="reRearch()">
               <ons-icon icon="ion-ios-reload" size="28px" fixed-width="false" style="color: black" id="rightIcon"></ons-icon>
             </ons-toolbar-button>
           </div>
         </ons-toolbar>
         <!-- Connection error -->
-        <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
+        <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="error">
           <p>
-            No internet conncetion!
+            {{errorContent}}
           </p>
           <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
         </div>
@@ -142,7 +142,7 @@
         <div class="material-container" style="display: none; text-align: center" id="noResult">
           <h6>No user result</h6>
         </div>
-        <div class="material-container">
+        <div class="material-container" id="searchContent">
           <fieldset>
             <div class="formFieldWrap">
               <!-- <label class="field-title contactNameField" for="contactNameField">Name:<span>(required)</span></label> -->
@@ -150,9 +150,10 @@
             </div>
             <div class="formTextareaWrap">
               <select class="contactField2" name="event-type" id="txtGender">
-                <option value="" disabled selected style="display: none;">Gender</option>
+                <option value="any" disabled selected style="display: none;">Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
+                <option value="any">Any</option>
               </select>
             </div>
             <div class="formFieldWrap">
@@ -161,13 +162,13 @@
                   Age from:
                 </ons-col>
                 <ons-col width="30%" class="contactField2 age-label">
-                  <input type="number" name="contactNameField" class="contactField requiredField" style="width: 100%"/>
+                  <input type="number" id="txtMinAge" min="16" max="80" name="contactNameField" class="contactField requiredField" style="width: 100%" value="16"/>
                 </ons-col>
                 <ons-col width="10%" class="contactField2 age-label">
                   to:
                 </ons-col>
                 <ons-col width="30%" class="contactField2">
-                  <input type="number" name="contactNameField" class="contactField requiredField" style="width: 100%"/>
+                  <input type="number" id="txtMaxAge" min="16" max="80" name="contactNameField" class="contactField requiredField" style="width: 100%" value="80"/>
                 </ons-col>
               </ons-row>
             </div>
@@ -179,7 +180,7 @@
             </div>
             <div class="formTextareaWrap">
               <select class="contactField2" name="event-type" id="txtMotherTongue">
-                <option value="" disabled selected style="display: none;">Mother tongue</option>
+                <option value="any" disabled selected style="display: none;">Mother tongue</option>
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
                 <option value="Arabic">Arabic</option>
@@ -228,7 +229,7 @@
             </div>
             <div class="formTextareaWrap">
               <select class="contactField2" name="event-type" id="txtMarial">
-                <option value="" disabled selected style="display: none;">Marial status</option>
+                <option value="any" disabled selected style="display: none;">Marial status</option>
                 <option value="single">Single</option>
                 <option value="engaged">Engaged</option>
                 <option value="married">Married</option>
@@ -240,7 +241,7 @@
             </div>
             <div class="formFieldWrap">
               <select class="contactField2" name="event-type" id="txtReligion">
-                <option value="" disabled selected style="display: none;">Religion</option>
+                <option value="any" disabled selected style="display: none;">Religion</option>
                 <option value="Christianity">Christianity</option>
                 <option value="Christianity - Catholicism">Christianity - Catholicism</option>
                 <option value="Christianity - Orthodoxy">Christianity - Orthodoxy</option>
@@ -275,7 +276,7 @@
             </div>
             <div class="formTextareaWrap">
               <select class="contactField2" name="event-type" id="txtCaste">
-                <option value="" disabled selected style="display: none;">Family caste</option>
+                <option value="any" disabled selected style="display: none;">Family caste</option>
                 <option value="Middle Class">Middle Class</option>
                 <option value="Upper Middle Class">Upper Middle Class</option>
                 <option value="Rich">Rich</option>
@@ -285,7 +286,7 @@
             </div>
             <div class="formTextareaWrap">
               <select class="contactField2" name="education" id="txtLitteracy">
-                <option value="" disabled selected style="display: none;">Highest Literacy</option>
+                <option value="any" disabled selected style="display: none;">Highest Literacy</option>
                 <option value="Primary school">Primary school</option>
                 <option value="High school">High school</option>
                 <option value="Vocational">Vocational</option>
@@ -299,9 +300,30 @@
               </select>
             </div>
             <div class="formSubmitButtonErrorsWrap contactFormButton">
-              <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+              <input type="submit" ng-click="searchButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnSearch" value="Search"/>
             </div>
           </fieldset>
+        </div>
+        <!-- Search result -->
+        <div class="container-fullscreen matching-content" ng-repeat="r in searchResult" id="searchResultList">
+          <div class="one-half-responsive">
+            <div class="activity-item material-container matching-item">
+              <img class="activity-item-image" src="{{r.avatarUrl}}" alt="img" ng-click="viewDetail($index)">
+              <h5 ng-click="viewDetail($index)"><strong class="color-blue-dark">{{r.firstName}} {{r.middleName}} {{r.lastName}}</strong></h5>
+              <em class="matching-desciption"><i class="fa fa-venus-mars matching-icon-red"></i>{{r.gender}} &nbsp <i class="fa fa-birthday-cake matching-icon-red" aria-hidden="true"></i> {{r.age}} years old</em>
+              <!-- <div class="material-container detail-div">
+              <ons-row>
+                <ons-col width=50%>
+                  <a href="#" class="button friend-action-button" ng-click="unfriend($index)"><i class="fa fa-user-times" aria-hidden="true"></i>Unfriend</a>
+                </ons-col>
+                <ons-col width=50%>
+                  <a href="#" class="button friend-action-button" ng-click="chat($index)"><i class="fa fa-comments-o" aria-hidden="true"></i>Message</a>
+                </ons-col>
+              </ons-row>
+              </div> -->
+              <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
+            </div>
+          </div>
         </div>
       </ons-navigator>
     </ons-page>
@@ -829,14 +851,14 @@
     <ons-page modifier="menu-page" class="menu-pos" ng-controller="ProfileController" style="background-color: #FFFFFF">
       <div class="sidebar-header" style="background-image: url({{imgurl}}) !important; background-size: 100% 100%; background-repeat: no-repeat;">
         <div class="sidebar-header-logo">
-          <a href="#" class="menu-header">{{profile[0].firstName}} {{profile[0].lastName}}</a>
+          <!-- <a href="#" class="menu-header">{{profile[0].firstName}} {{profile[0].lastName}}</a> -->
         </div>
         <div class="sidebar-header-icons">
-          <a href="#"><i class="fa fa-facebook"></i></a>
-          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#" style="width: 100%; text-align: left; top: 50px;">{{profile[0].firstName}} {{profile[0].lastName}}</a>
+          <!-- <a href="#"><i class="fa fa-twitter"></i></a>
           <a href="#"><i class="fa fa-phone"></i></a>
           <a href="#"><i class="fa fa-comments-o"></i></a>
-          <a href="#" class="close-sidebar"><i class="fa fa-times"></i></a>
+          <a href="#" class="close-sidebar"><i class="fa fa-times"></i></a> -->
         </div>
         <!-- Connection error -->
         <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="newRequest">

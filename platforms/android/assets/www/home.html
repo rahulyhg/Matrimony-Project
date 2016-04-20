@@ -22,20 +22,6 @@
   <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
   <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
 
-  <!-- Mobiscroll JS and CSS Includes -->
-  <!-- <link href="css/mobiscroll.custom-2.17.1.min.css" rel="stylesheet" type="text/css" />
-  <script src="js/mobi/mobiscroll.core.js"></script>
-  <script src="js/mobi/mobiscroll.frame.js"></script>
-  <script src="js/mobi/mobiscroll.scroller.js"></script>
-
-  <script src="js/mobi/mobiscroll.util.datetime.js"></script>
-  <script src="js/mobi/mobiscroll.datetimebase.js"></script>
-  <script src="js/mobi/mobiscroll.datetime.js"></script>
-  <script src="js/mobi/mobiscroll.select.js"></script>
-  <script src="js/mobi/mobiscroll.listbase.js"></script>
-
-  <script type="text/javascript" src="js/SocialSharing.js"></script> -->
-
   <!-- Path to matterTheme Library CSS-->
   <link href="lib/matterTheme/styles/style.css"           rel="stylesheet" type="text/css">
   <link href="lib/matterTheme/styles/framework.css"       rel="stylesheet" type="text/css">
@@ -43,7 +29,8 @@
   <link href="lib/matterTheme/styles/animate.css"         rel="stylesheet" type="text/css">
 
   <link rel="shortcut icon" href="lib/matterTheme/images/splash/favicon.ico" type="image/x-icon" />
-
+  <!-- Path to countries JS-->
+  <script type= "text/javascript" src = "js/countries.js"></script>
 
   <!-- Path to customize CSS-->
   <link rel="stylesheet" href="css/customize.css">
@@ -60,9 +47,10 @@
   <script src="controller/matchingController.js"></script>
   <script src="controller/feedbackController.js"></script>
   <script src="controller/detailController.js"></script>
-  <script src="controller/friendListController.js"></script>
   <script src="controller/requestController.js"></script>
-  <!-- <script src="controller/seftRequestController.js"></script> -->
+  <script src="controller/seftRequestController.js"></script>
+  <script src="controller/friendListController.js"></script>
+  <script src="controller/searchController.js"></script>
   <!-- <script type="text/javascript">
   var pushNotification;
   document.addEventListener("deviceready", function(){
@@ -80,16 +68,16 @@
   <ons-template id="matching.html">
     <ons-page class="page-boxshadow" ng-controller="MatchingController">
       <ons-navigator var="navi">
-        <ons-toolbar modifier="transparent">
+        <ons-toolbar style="background-image; url(lib/matterTheme/images/pictures/4.jpg)">
           <div class="left">
-            <ons-toolbar-button ng-click="menu.toggleMenu()">
-              <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: #FFFFFF"></ons-icon>
+            <ons-toolbar-button ng-click="menuButtonHandler()">
+              <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
             </ons-toolbar-button>
           </div>
-          <div class="center" style="color: #FFFFFF">Matching</div>
+          <div class="center" style="color: black">Matching</div>
           <div class="right">
             <ons-toolbar-button ng-click="rightButtonRematching()">
-              <ons-icon icon="ion-ios-loop" size="28px" fixed-width="false" style="color: #FFFFFF" spin="false" id="rightIcon"></ons-icon>
+              <ons-icon icon="ion-ios-loop" size="28px" fixed-width="false" style="color: black" spin="false" id="rightIcon"></ons-icon>
             </ons-toolbar-button>
           </div>
         </ons-toolbar>
@@ -123,16 +111,213 @@
   </ons-template>
   <!-- Matching page end -->
 
+  <!-- Search page start -->
+  <ons-template id="search.html">
+    <ons-page class="page-boxshadow" ng-controller="SearchController">
+      <ons-navigator var="navi">
+        <ons-toolbar style="background-image; url(lib/matterTheme/images/pictures/4.jpg)">
+          <div class="left">
+            <ons-toolbar-button ng-click="menuButtonHandler()">
+              <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+          <div class="center" style="color: black">Seach</div>
+          <div class="right">
+            <ons-toolbar-button ng-click="rightButtonRematching()">
+              <ons-icon icon="ion-ios-reload" size="28px" fixed-width="false" style="color: black" id="rightIcon"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+        </ons-toolbar>
+        <!-- Connection error -->
+        <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
+          <p>
+            No internet conncetion!
+          </p>
+          <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+        </div>
+        <div class="container-fullscreen heading-style-3 bg-4 heading-style">
+          <em class="heading-subtitle heading-sub">Find other people</em>
+          <div class="overlay bg-black"></div>
+        </div>
+        <div class="material-container" style="display: none; text-align: center" id="noResult">
+          <h6>No user result</h6>
+        </div>
+        <div class="material-container">
+          <fieldset>
+            <div class="formFieldWrap">
+              <!-- <label class="field-title contactNameField" for="contactNameField">Name:<span>(required)</span></label> -->
+              <input type="text" placeholder="Name" name="contactNameField" value="" class="contactField requiredField" id="txtName" maxlength="10"/>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="event-type" id="txtGender">
+                <option value="" disabled selected style="display: none;">Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="formFieldWrap">
+              <ons-row>
+                <ons-col width="20%" class="contactField2 age-label">
+                  Age from:
+                </ons-col>
+                <ons-col width="30%" class="contactField2 age-label">
+                  <input type="number" name="contactNameField" class="contactField requiredField" style="width: 100%"/>
+                </ons-col>
+                <ons-col width="10%" class="contactField2 age-label">
+                  to:
+                </ons-col>
+                <ons-col width="30%" class="contactField2">
+                  <input type="number" name="contactNameField" class="contactField requiredField" style="width: 100%"/>
+                </ons-col>
+              </ons-row>
+            </div>
+            <div class="formFieldWrap">
+              <select class="contactField2" id="txtCountry" name ="country"></select>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="state" id="txtState"></select>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="event-type" id="txtMotherTongue">
+                <option value="" disabled selected style="display: none;">Mother tongue</option>
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Russian">Russian</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Japanese">Japanese</option>
+                <option value="German">German</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Javanese">Javanese</option>
+                <option value="Korean">Korean</option>
+                <option value="French">French</option>
+                <option value="Turkish">Turkish</option>
+                <option value="Vietnamese">Vietnamese</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Italian">Italian</option>
+                <option value="Urdu">Urdu</option>
+                <option value="Gujarati">Gujarati</option>
+                <option value="Polish">Polish</option>
+                <option value="Ukrainian">Ukrainian</option>
+                <option value="Persian">Persian</option>
+                <option value="Malayalam">Malayalam</option>
+                <option value="Kannada">Kannada</option>
+                <option value="Oriya">Oriya</option>
+                <option value="Panjabi">Panjabi</option>
+                <option value="Sunda">Sunda</option>
+                <option value="Panjabi">Panjabi</option>
+                <option value="Romanian">Romanian</option>
+                <option value="Bhojpuri">Bhojpuri</option>
+                <option value="Azerbaijani">Azerbaijani</option>
+                <option value="Maithili">Maithili</option>
+                <option value="Hausa">Hausa</option>
+                <option value="Burmese">Burmese</option>
+                <option value="Serbo">Serbo</option>
+                <option value="Awadhi">Awadhi</option>
+                <option value="Thai">Thai</option>
+                <option value="Dutch">Dutch</option>
+                <option value="Yoruba">Yoruba</option>
+                <option value="Sindhi">Sindhi</option>
+                <option value="Any">Any</option>
+              </select>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="event-type" id="txtMarial">
+                <option value="" disabled selected style="display: none;">Marial status</option>
+                <option value="single">Single</option>
+                <option value="engaged">Engaged</option>
+                <option value="married">Married</option>
+                <option value="widowed">Widowed</option>
+                <option value="separated">Separated</option>
+                <option value="divorced">Divorced</option>
+                <option value="any">Any</option>
+              </select>
+            </div>
+            <div class="formFieldWrap">
+              <select class="contactField2" name="event-type" id="txtReligion">
+                <option value="" disabled selected style="display: none;">Religion</option>
+                <option value="Christianity">Christianity</option>
+                <option value="Christianity - Catholicism">Christianity - Catholicism</option>
+                <option value="Christianity - Orthodoxy">Christianity - Orthodoxy</option>
+                <option value="Christianity - Protestantism">Christianity - Protestantism</option>
+                <option value="Buddhism">Buddhism</option>
+                <option value="Buddhism - Zen">Buddhism - Zen</option>
+                <option value="Buddhism - Pure Land">Buddhism - Pure Land</option>
+                <option value="Buddhism - Theravada">Buddhism - Theravada</option>
+                <option value="Buddhism - Tibetan">Buddhism - Tibetan</option>
+                <option value="Confucianism">Confucianism</option>
+                <option value="Hinduism">Hinduism</option>
+                <option value="Hinduism - Shaivism">Hinduism - Shaivism</option>
+                <option value="Hinduism - Vaishnavism">Hinduism - Vaishnavism</option>
+                <option value="Hinduism - Shakta">Hinduism - Shakta</option>
+                <option value="Hinduism - Philosophy">Hinduism - Philosophy</option>
+                <option value="Islam">Islam</option>
+                <option value="Jainism">Jainism</option>
+                <option value="Judaism - Orthodox">Judaism - Orthodox</option>
+                <option value="Judaism - Liberal/Reform">Judaism - Liberal/Reform</option>
+                <option value="Shinto">Shinto</option>
+                <option value="Sikhism">Sikhism</option>
+                <option value="Taoism">Taoism</option>
+                <option value="Zoroastrianism">Zoroastrianism</option>
+                <option value="Christian-Derived NRMs">Christian-Derived NRMs</option>
+                <option value="Eastern-Derived NRMs">Eastern-Derived NRMs</option>
+                <option value="Bahai">Bahai</option>
+                <option value="Scientology">Scientology</option>
+                <option value="Rastafarianism">Rastafarianism</option>
+                <option value="No">No</option>
+                <option value="Any">Any</option>
+              </select>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="event-type" id="txtCaste">
+                <option value="" disabled selected style="display: none;">Family caste</option>
+                <option value="Middle Class">Middle Class</option>
+                <option value="Upper Middle Class">Upper Middle Class</option>
+                <option value="Rich">Rich</option>
+                <option value="Affluent">Affluent</option>
+                <option value="any">Any</option>
+              </select>
+            </div>
+            <div class="formTextareaWrap">
+              <select class="contactField2" name="education" id="txtLitteracy">
+                <option value="" disabled selected style="display: none;">Highest Literacy</option>
+                <option value="Primary school">Primary school</option>
+                <option value="High school">High school</option>
+                <option value="Vocational">Vocational</option>
+                <option value="College">College</option>
+                <option value="University">University</option>
+                <option value="Masters">Masters</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Associate professor">Associate professor</option>
+                <option value="Professor">Professor</option>
+                <option value="any">Any</option>
+              </select>
+            </div>
+            <div class="formSubmitButtonErrorsWrap contactFormButton">
+              <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+            </div>
+          </fieldset>
+        </div>
+      </ons-navigator>
+    </ons-page>
+  </ons-template>
+  <!-- Search page end -->
+
   <!-- Friend list start -->
   <ons-template id="friendList.html">
     <ons-page class="page-boxshadow" ng-controller="FriendListController">
       <ons-toolbar modifier="transparent">
         <div class="left">
-          <ons-toolbar-button ng-click="menu.toggleMenu()">
-            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: #FFFFFF"></ons-icon>
+          <ons-toolbar-button ng-click="menuButtonHandler()">
+            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
           </ons-toolbar-button>
         </div>
-        <div class="center" style="color: #FFFFFF">Friends</div>
+        <div class="center" style="color: black">Friends</div>
       </ons-toolbar>
       <!-- Connection error -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
@@ -184,11 +369,11 @@
     <ons-page class="page-boxshadow" ng-controller="RequestController">
       <ons-toolbar modifier="transparent">
         <div class="left">
-          <ons-toolbar-button ng-click="menu.toggleMenu()">
-            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: #FFFFFF"></ons-icon>
+          <ons-toolbar-button ng-click="menuButtonHandler()">
+            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
           </ons-toolbar-button>
         </div>
-        <div class="center" style="color: #FFFFFF">Friend request</div>
+        <div class="center" style="color: black">Friend request</div>
       </ons-toolbar>
       <!-- Connection error -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
@@ -207,7 +392,7 @@
       <!-- Cancel error -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="cancelErr">
         <p>
-          An error has occurred when cancel request. Please try again!
+          An error has occurred when decide request. Please try again!
         </p>
         <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
       </div>
@@ -226,10 +411,10 @@
             <h5 ng-click="viewProfile($index)"><strong class="color-blue-dark">{{rq.firstName}} {{rq.middleName}} {{rq.lastName}}</strong></h5>
             <ons-row>
               <ons-col width=50%>
-                <a href="#" class="button friend-action-button" ng-click="accept($index)"><i class="fa fa-user-plus" aria-hidden="true"></i>Accept</a>
+                <a href="#" class="button friend-action-button" ng-click="acceptFriend($index)"><i class="fa fa-user-plus" aria-hidden="true"></i>Accept</a>
               </ons-col>
               <ons-col width=50%>
-                <a href="#" class="button friend-action-button" ng-click="cancel($index)"><i class="fa fa-ban" aria-hidden="true"></i>Cancel request</a>
+                <a href="#" class="button friend-action-button" ng-click="decide($index)"><i class="fa fa-ban" aria-hidden="true"></i>Decide</a>
               </ons-col>
             </ons-row>
             <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
@@ -240,13 +425,66 @@
   </ons-template>
   <!-- Friendrequest list page end -->
 
+  <!-- Seft request list start -->
+  <ons-template id="seftRequestList.html">
+    <ons-page class="page-boxshadow" ng-controller="SeftRequestController">
+      <ons-toolbar modifier="transparent">
+        <div class="left">
+          <ons-toolbar-button ng-click="menuButtonHandler()">
+            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center" style="color: black">Your request</div>
+      </ons-toolbar>
+      <!-- Connection error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
+        <p>
+          No internet conncetion!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- Cancel error -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="cancelErr">
+        <p>
+          An error has occurred when cancel request. Please try again!
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="container-fullscreen heading-style-3 bg-4 heading-style">
+        <em class="heading-subtitle heading-sub">All request you has send</em>
+        <div class="overlay bg-black"></div>
+      </div>
+      <div class="material-container" style="display: none; text-align: center" id="noRequest">
+        <h6>Your don't send any request!</h6>
+      </div>
+
+      <div class="container-fullscreen matching-content" ng-repeat="srq in seftRequest">
+        <div class="one-half-responsive">
+          <div class="activity-item material-container matching-item">
+            <img class="activity-item-image" src="{{srq.avatarUrl}}" alt="img" ng-click="viewProfile($index)">
+            <h5 ng-click="viewProfile($index)"><strong class="color-blue-dark">{{srq.firstName}} {{srq.middleName}} {{srq.lastName}}</strong></h5>
+            <ons-row>
+              <ons-col width=50%>
+                <a href="#" class="button friend-action-button" ng-click="cancelRequest($index)"><i class="fa fa-ban" aria-hidden="true" style="color: red"></i>Cancel</a>
+              </ons-col>
+              <ons-col width=50%>
+              </ons-col>
+            </ons-row>
+            <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </ons-page>
+  </ons-template>
+  <!-- Seft request list page end -->
+
   <!-- Profile page start -->
   <ons-template id="profile.html">
     <ons-page class="page-boxshadow" ng-controller="ProfileController" modifier="user-profile">
       <ons-toolbar modifier="transparent">
         <div class="left">
           <ons-toolbar-button>
-            <ons-icon icon="ion-navicon" style="color: white; font-size: 28px;" fixed-width="false" ng-click="menu.toggleMenu()"></ons-icon>
+            <ons-icon icon="ion-navicon" style="color: white; font-size: 28px;" fixed-width="false" ng-click="menuButtonHandler()"></ons-icon>
           </ons-toolbar-button>
         </div>
         <div class="right">
@@ -302,8 +540,8 @@
               <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
               <div class="accordion-content active-accordion" id="basicInfo">
                 <ul class="font-icon-list no-bottom">
-                  <li><a href="#"><i class="fa fa-heart"></i>{{profile[0].marialStatus}}</a></li>
-                  <li><a href="#"><i class="fa fa-transgender"></i>{{profile[0].gender}}</a></li>
+                  <li><a href="#"><i class="fa fa-transgender"></i>{{profile[0].gender}} &nbsp &nbsp &nbsp<i class="fa fa-heart"></i>{{profile[0].marialStatus}}</a></li>
+                  <li><a href="#"><i class="fa fa-info-circle"></i>{{profile[0].height}} cm - {{profile[0].weight}} kg</a></li>
                   <li><a href="#"><i class="fa fa-birthday-cake"></i>{{profile[0].dateOfBirth}} - {{profile[0].age}} years old</a></li>
                   <li><a href="#"><i class="fa fa-university"></i>{{profile[0].nationality}}</a></li>
                   <li><a href="#"><i class="fa fa-language"></i>{{profile[0].motherTongue}}</a></li>
@@ -381,7 +619,7 @@
       <ons-toolbar modifier="transparent">
         <div class="left">
           <ons-toolbar-button>
-            <ons-icon icon="ion-ios-arrow-left" style="color: white; font-size: 28px;" fixed-width="false" ng-click="navi.popPage()"></ons-icon>
+            <ons-icon icon="ion-ios-arrow-left" style="color: white; font-size: 28px;" fixed-width="false" ng-click="backHandler()"></ons-icon>
           </ons-toolbar-button>
         </div>
       </ons-toolbar>
@@ -476,8 +714,8 @@
               <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
               <div class="accordion-content active-accordion" id="basicInfo">
                 <ul class="font-icon-list no-bottom">
-                  <li><a href="#"><i class="fa fa-heart"></i>{{selectedUser.marialStatus}}</a></li>
-                  <li><a href="#"><i class="fa fa-transgender"></i>{{selectedUser.gender}}</a></li>
+                  <li><a href="#"><i class="fa fa-heart"></i>{{selectedUser.marialStatus}} &nbsp &nbsp &nbsp<i class="fa fa-transgender"></i>{{selectedUser.gender}}</a></li>
+                  <li><a href="#"><i class="fa fa-info-circle"></i>{{selectedUser.height}} cm - {{selectedUser.weight}} kg</a></li>
                   <li><a href="#"><i class="fa fa-birthday-cake"></i>{{selectedUser.dateOfBirth}} - {{selectedUser.age}} years old</a></li>
                   <li><a href="#"><i class="fa fa-university"></i>{{selectedUser.nationality}}</a></li>
                   <li><a href="#"><i class="fa fa-language"></i>{{selectedUser.motherTongue}}</a></li>
@@ -623,6 +861,10 @@
           <i class="bg-red-dark fa fa-heartbeat"></i>
           <em>Matching</em>
         </a>
+        <a class="menu-item" href="#" ng-click="gosearch()">
+          <i class="bg-yellow-dark fa fa-search"></i>
+          <em>Search</em>
+        </a>
         <div class="has-submenu">
           <a class="menu-item show-submenu" href="#">
             <i class="bg-blue-dark fa fa-users"></i>
@@ -630,9 +872,9 @@
             <i class="fa fa-angle-down submenu-down-arrow" aria-hidden="true"></i>
           </a>
           <div class="submenu">
-            <a class="submenu-item" href="#" ng-click="gofriendRequestList()"> <i class="fa fa-angle-right"></i><em>   Friend request    </em><i class="notification notifi-number">{{requestnumb}}</i></a>
-            <a class="submenu-item" href="#" ng-click="goFriendList()">     <i class="fa fa-angle-right"></i><em>   Your request     </em><i class="notification notifi-number">{{seftRequestnumb}}</i></a>
-            <a class="submenu-item" href="#" ng-click="goFriendList()">     <i class="fa fa-angle-right"></i><em>   Friend list     </em><i class="notification notifi-number">{{friendnumb}}</i></a>
+            <a class="submenu-item" style="display: block" href="#" ng-click="gofriendRequestList()"> <i class="fa fa-angle-right"></i><em>   Friend request    </em><i class="notification notifi-number">{{requestnumb}}</i></a>
+            <a class="submenu-item" style="display: block" href="#" ng-click="goseftRequestList()">     <i class="fa fa-angle-right"></i><em>   Your request     </em><i class="notification notifi-number">{{seftRequestnumb}}</i></a>
+            <a class="submenu-item" style="display: block" href="#" ng-click="goFriendList()">     <i class="fa fa-angle-right"></i><em>   Friend list     </em><i class="notification notifi-number">{{friendnumb}}</i></a>
           </div>
         </div>
         <a class="menu-item" href="contact.html">

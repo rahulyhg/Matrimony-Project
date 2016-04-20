@@ -1,10 +1,15 @@
 module.controller("MatchingController", function($scope, $rootScope, $timeout, $http) {
   $scope.userName = window.localStorage.getItem("username");
   checkConnection();
+  reloadScript();
   $scope.rightButtonRematching = function () {
     checkConnection();
   };
-
+  // Handler menu button
+  $scope.menuButtonHandler = function () {
+    menu.toggleMenu();
+    reloadScript();
+  }
   // View profile
   $scope.viewProfile = function (index) {
     var selectedUser = $rootScope.matchingResult[index];
@@ -107,4 +112,18 @@ module.controller("MatchingController", function($scope, $rootScope, $timeout, $
       return false;
     }
   };
+
+  function reloadScript() {
+    $.when(
+      $.getScript( "lib/matterTheme/scripts/jquery.js" ),
+      $.getScript( "lib/matterTheme/scripts/jqueryui.js" ),
+      $.getScript( "lib/matterTheme/scripts/framework-plugins.js" ),
+      $.getScript( "lib/matterTheme/scripts/custom.js" ),
+      $.Deferred(function( deferred ){
+        $( deferred.resolve );
+      })
+    ).done(function(){
+      console.log('script reloaded!');
+    });
+  }
 });

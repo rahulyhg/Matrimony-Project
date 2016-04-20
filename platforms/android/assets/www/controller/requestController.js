@@ -3,9 +3,56 @@ module.controller("RequestController", function($scope, $rootScope, $timeout, $h
   reloadScript();
   checkConnection();
   updateData();
+  // Handler menu button
+  $scope.menuButtonHandler = function () {
+    menu.toggleMenu();
+    reloadScript();
+  }
+  // Decide request
+  $scope.decide = function (index) {
+    console.log('deciding....');
+    ons.notification.confirm({
+      message: 'Decide friend request from '+$scope.request[index]["lastName"]+' ?',
+      modifier: 'material',
+      callback: function(idx) {
+        switch (idx) {
+          case 0:
+          console.log('canceled');
+          break;
+          case 1:
+          var request = $http({
+            method: "post",
+            url: "http://139.59.254.92/deciderequest.php",
+            data: {
+              userName: $scope.request[index]["userName"],
+              friendUserName: $scope.userName
+            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          });
+          /* Successful HTTP post request or not */
+          request.success(function (data) {
+            console.log(data);
+            if (data=="success") {
+              console.log('decide success');
+              checkConnection();
+            }else if (data=="error") {
+              console.log('decide fail');
+              showMessage('cancelErr');
+            }
+          });
+          request.error(function() {
+            console.log('decide fail');
+            showMessage('cancelErr');
+          });
+          break;
+        }
+      }
+    });
+  }
   // Accept friend
-  $scope.accept = function (index) {
+  $scope.acceptFriend = function (index) {
     console.log('accepting request....');
+    console.log($scope.request[index]["userName"]);
     var request = $http({
       method: "post",
       url: "http://139.59.254.92/acceptfriend.php",
@@ -29,7 +76,7 @@ module.controller("RequestController", function($scope, $rootScope, $timeout, $h
       console.log('accept fail');
       showMessage('acceptErr');
     });
-  }
+  };
   // View profile
   $scope.viewProfile = function (index) {
     var selectedUser = $scope.request[index];
@@ -65,6 +112,14 @@ module.controller("RequestController", function($scope, $rootScope, $timeout, $h
         $('#noRequest').show();
       }else {
         $scope.request = data;
+        for (var i = 0; i < $scope.request.length; i++) {
+          var unformatedUrl = $scope.request[i]["avatarUrl"];
+          var formatedUrl = unformatedUrl.replace("?", "%3f");
+          $scope.request[i]["avatarUrl"] = formatedUrl;
+          var unformatedCoverUrl = $scope.request[i]["coverImageUrl"];
+          var formatedCoverUrl = unformatedCoverUrl.replace("?", "%3f");
+          $scope.request[i]["coverImageUrl"] = formatedCoverUrl;
+        }
       }
     });
   };

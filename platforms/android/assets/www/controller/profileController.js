@@ -7,7 +7,11 @@ module.controller("ProfileController", function($scope, $http) {
   reloadScript();
   checkConnection();
   getUserImage();
-
+  // Handler menu button
+  $scope.menuButtonHandler = function () {
+    menu.toggleMenu();
+    reloadScript();
+  }
   // initial justify gallery
   function apply_gallery_justification(){
     console.log('apply');

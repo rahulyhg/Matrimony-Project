@@ -1,10 +1,10 @@
-.page__content {
+/*.page__content {
   position: absolute;
   left: 0px;
   right: 0px;
-  top: 0px!important;
+  top: 50px!important;
   bottom: 0px;
-}
+}*/
 
 .page__background{
   background-color: #FFFFFF;

@@ -1,31 +1,18 @@
-module.controller("FriendListController", function($scope, $rootScope, $timeout, $http) {
+module.controller("SeftRequestController", function($scope, $rootScope, $timeout, $http) {
   $scope.userName = window.localStorage.getItem("username");
   reloadScript();
   checkConnection();
   updateData();
-  // View profile
-  $scope.viewProfile = function (index) {
-    var selectedUser = $rootScope.matchingResult[index];
-    $rootScope.selectedUser = selectedUser;
-    console.log($rootScope.selectedUser);
-    $scope.navi.pushPage('detail.html');
-  };
-  // Update data
-  function updateData() {
-    $timeout(function () {
-      checkConnection();
-      updateData();
-    }, 10000);
+  // Handler menu button
+  $scope.menuButtonHandler = function () {
+    menu.toggleMenu();
+    reloadScript();
   }
-  // Chat
-  $scope.chat = function (index) {
-    console.log('chat');
-  }
-  // Unfriend
-  $scope.unfriend = function (index) {
-    console.log('unfriending....');
+  // Cancel request
+  $scope.cancelRequest = function (index) {
+    console.log('deciding....');
     ons.notification.confirm({
-      message: 'Unfriend '+$scope.friend[index]["lastName"]+' ?',
+      message: 'Cancel request to '+$scope.seftRequest[index]["lastName"]+' ?',
       modifier: 'material',
       callback: function(idx) {
         switch (idx) {
@@ -35,10 +22,10 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
           case 1:
           var request = $http({
             method: "post",
-            url: "http://139.59.254.92/unfriend.php",
+            url: "http://139.59.254.92/deciderequest.php",
             data: {
               userName: $scope.userName,
-              friendUserName: $scope.friend[index]["userName"]
+              friendUserName: $scope.seftRequest[index]["userName"]
             },
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
           });
@@ -46,28 +33,41 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
           request.success(function (data) {
             console.log(data);
             if (data=="success") {
-              console.log('unfriend success');
+              console.log('decide success');
               checkConnection();
             }else if (data=="error") {
-              console.log('unfriend fail');
-              showMessage('unfriendErr');
+              console.log('decide fail');
+              showMessage('cancelErr');
             }
           });
           request.error(function() {
-            console.log('unfriend fail');
-            showMessage('unfriendErr');
+            console.log('decide fail');
+            showMessage('cancelErr');
           });
           break;
         }
       }
     });
+  }
+  // View profile
+  $scope.viewProfile = function (index) {
+    var selectedUser = $scope.seftRequest[index];
+    $rootScope.selectedUser = selectedUser;
+    $scope.navi.pushPage('detail.html');
   };
+  // Update data
+  function updateData() {
+    $timeout(function () {
+      checkConnection();
+      updateData();
+    }, 10000);
+  }
   // Get list friend of user
-  function getFriendData() {
+  function getRequestData() {
     console.log('geting information...');
     var request = $http({
       method: "post",
-      url: "http://139.59.254.92/getfriendlist.php",
+      url: "http://139.59.254.92/getseftrequestlist.php",
       data: {
         userName: $scope.userName
       },
@@ -76,9 +76,17 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
     /* Successful HTTP post request or not */
     request.success(function (data) {
       if (data.lenght==0) {
-        $('#noFriend').show();
+        $('#noRequest').show();
       }else {
-        $scope.friend = data;
+        $scope.seftRequest = data;
+        for (var i = 0; i < $scope.seftRequest.length; i++) {
+          var unformatedUrl = $scope.seftRequest[i]["avatarUrl"];
+          var formatedUrl = unformatedUrl.replace("?", "%3f");
+          $scope.seftRequest[i]["avatarUrl"] = formatedUrl;
+          var unformatedCoverUrl = $scope.seftRequest[i]["coverImageUrl"];
+          var formatedCoverUrl = unformatedCoverUrl.replace("?", "%3f");
+          $scope.seftRequest[i]["coverImageUrl"] = formatedCoverUrl;
+        }
       }
     });
   };
@@ -93,7 +101,7 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
         }
       },
       success: function() {
-        getFriendData();
+        getRequestData();
       }
     });
   };
@@ -105,6 +113,13 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
       $('#connectErr').slideDown(200);
       setTimeout(function(){
         $('#connectErr').slideUp(200);
+      }, 5000);
+      break;
+      case 'cancelErr':
+      $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+      $('#cancelErr').slideDown(200);
+      setTimeout(function(){
+        $('#cancelErr').slideUp(200);
       }, 5000);
       break;
       default:

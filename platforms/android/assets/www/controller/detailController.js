@@ -9,6 +9,11 @@ module.controller("DetailController", function($scope, $rootScope, $timeout, $ht
   $scope.email = '';
   reloadScript();
   checkFriendRequest();
+  // Handler back button
+  $scope.backHandler = function () {
+    $scope.navi.popPage();
+    reloadScript();
+  };
   // Load function
   $scope.load = function($done) {
     $timeout(function() {

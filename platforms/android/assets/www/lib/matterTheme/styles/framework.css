@@ -1229,9 +1229,9 @@ label{
 
 @media(min-width:767px){
     .one-half, .one-half-responsive{
-        width:45%;
+        width:50%;
         float:left;
-        margin-right:10%;
+        /*margin-right:10%;*/
     }
 
     .one-third, .one-third-responsive{

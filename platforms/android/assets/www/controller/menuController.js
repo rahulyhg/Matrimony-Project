@@ -5,6 +5,8 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   $scope.inProfile = false;
   $scope.inFriendList = false;
   $scope.inFriendRequestList = false;
+  $scope.inSeftRequestList = false;
+  $scope.inSearch = false;
   $scope.requestnumb=0;
   $scope.requestCount = 0;
   $scope.friendnumb = 0;
@@ -14,8 +16,15 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   countSeftRequest();
   $scope.requestCount = $scope.requestnumb;
   updateData();
+  // updateMenu();
+  function updateMenu() {
+    $timeout(function () {
+      updateMenu();
+    }, 1000);
+  };
   function updateData() {
     $timeout(function () {
+      reloadScript();
       console.log('update data....');
       countRequest();
       countFriend();
@@ -23,7 +32,36 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       updateData();
     }, 10000);
   };
-  
+  $scope.gosearch = function () {
+    if (!$scope.inSearch) {
+      menu.closeMenu();
+      $scope.inProfile = false;
+      $scope.inMatching = false;
+      $scope.inFriendList = false;
+      $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = true;
+      navi.resetToPage('search.html');
+      reloadScript();
+    }else {
+      menu.closeMenu();
+    }
+  }
+  $scope.goseftRequestList = function () {
+    if (!$scope.inSeftRequestList) {
+      menu.closeMenu();
+      $scope.inProfile = false;
+      $scope.inMatching = false;
+      $scope.inFriendList = false;
+      $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = true;
+      $scope.inSearch = false;
+      navi.resetToPage('seftRequestList.html');
+      reloadScript();
+    }else {
+      menu.closeMenu();
+    }
+  }
   $scope.gofriendRequestList = function () {
     if (!$scope.inFriendRequestList) {
       menu.closeMenu();
@@ -31,7 +69,10 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inMatching = false;
       $scope.inFriendList = false;
       $scope.inFriendRequestList = true;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
       navi.resetToPage('friendRequestList.html');
+      reloadScript();
     }else {
       menu.closeMenu();
     }
@@ -43,6 +84,8 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inMatching = false;
       $scope.inFriendList = true;
       $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
       navi.resetToPage('friendList.html');
       reloadScript();
     }else {
@@ -57,7 +100,10 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inMatching = false;
       $scope.inFriendList = false;
       $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
       navi.resetToPage('profile.html');
+      reloadScript();
     }else {
       menu.closeMenu();
     }
@@ -70,7 +116,10 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inMatching = true;
       $scope.inFriendList = false;
       $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
       navi.resetToPage('matching.html');
+      reloadScript();
     }else {
       menu.closeMenu();
     }

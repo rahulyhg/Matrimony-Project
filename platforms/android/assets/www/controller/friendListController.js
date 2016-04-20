@@ -2,7 +2,12 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
   $scope.userName = window.localStorage.getItem("username");
   reloadScript();
   checkConnection();
-
+  updateData();
+  // Handler menu button
+  $scope.menuButtonHandler = function () {
+    menu.toggleMenu();
+    reloadScript();
+  }
   // View profile
   $scope.viewDetail = function (index) {
     var selectedUser = $scope.friend[index];
@@ -78,6 +83,14 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
         $('#noFriend').show();
       }else {
         $scope.friend = data;
+        for (var i = 0; i < $scope.friend.length; i++) {
+          var unformatedUrl = $scope.friend[i]["avatarUrl"];
+          var formatedUrl = unformatedUrl.replace("?", "%3f");
+          $scope.friend[i]["avatarUrl"] = formatedUrl;
+          var unformatedCoverUrl = $scope.friend[i]["coverImageUrl"];
+          var formatedCoverUrl = unformatedCoverUrl.replace("?", "%3f");
+          $scope.friend[i]["coverImageUrl"] = formatedCoverUrl;
+        }
       }
     });
   };

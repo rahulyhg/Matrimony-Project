@@ -169,3 +169,7 @@
   text-align: center;
   margin-left: 20px;
 }
+
+.age-label{
+border: none!important;
+}

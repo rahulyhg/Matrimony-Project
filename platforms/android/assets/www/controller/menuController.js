@@ -16,7 +16,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   countSeftRequest();
   $scope.requestCount = $scope.requestnumb;
   updateData();
-  updateMenu();
+  // updateMenu();
   // updateMenu();
   function updateMenu() {
     $timeout(function () {

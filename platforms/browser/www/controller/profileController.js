@@ -1,12 +1,23 @@
 module.controller("ProfileController", function($scope, $http) {
   $scope.userName = window.localStorage.getItem("username");
   $scope.numbOfImage = 0;
-  var pictureSource;
-  var destinationType;
+  $scope.imageUrl = '';
   console.log($scope.userName);
-  reloadScript();
+  // reloadScript();
   checkConnection();
   getUserImage();
+  reloadCameraScript();
+  // view avatar
+  $scope.ViewImg = function () {
+    editAvataModal.hide();
+    $scope.imageUrl = $scope.imgurl;
+    viewImgModal.show();
+  };
+  // view cover
+  $scope.ViewCoverImg = function () {
+    editCoverModal.hide();
+    viewCoverImgModal.show();
+  };
   // Handler menu button
   $scope.menuButtonHandler = function () {
     menu.toggleMenu();
@@ -194,6 +205,20 @@ module.controller("ProfileController", function($scope, $http) {
       default:
       return false;
     }
+  };
+
+  function reloadCameraScript() {
+    $.when(
+      $.getScript( "js/cameraHandler.js" ),
+      // $.getScript( "lib/matterTheme/scripts/jqueryui.js" ),
+      // $.getScript( "lib/matterTheme/scripts/framework-plugins.js" ),
+      // $.getScript( "lib/matterTheme/scripts/custom.js" ),
+      $.Deferred(function( deferred ){
+        $( deferred.resolve );
+      })
+    ).done(function(){
+      console.log('camera script reloaded!');
+    });
   };
 
   function reloadScript() {

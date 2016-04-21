@@ -1,12 +1,12 @@
 module.controller("ProfileController", function($scope, $http) {
   $scope.userName = window.localStorage.getItem("username");
   $scope.numbOfImage = 0;
-  var pictureSource;
-  var destinationType;
+
   console.log($scope.userName);
-  reloadScript();
+  // reloadScript();
   checkConnection();
   getUserImage();
+  reloadCameraScript();
   // Handler menu button
   $scope.menuButtonHandler = function () {
     menu.toggleMenu();
@@ -182,6 +182,65 @@ module.controller("ProfileController", function($scope, $http) {
     });
   };
 
+  //
+  // script for handler image start
+  //
+  //
+  var pictureSource;
+  var destinationType;
+
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+    console.log('ready ===============================================');
+    pictureSource = navigator.camera.PictureSourceType;
+    destinationType = navigator.camera.DestinationType;
+  }
+  function onPhotoDataSuccess(imageURI) {
+    alert(imageURI);
+    // savePhoto(imageURI);
+  }
+
+  function onPhotoURISuccess(imageURI) {
+    alert(imageURI);
+    // savePhoto(imageURI);
+  }
+
+  function capturePhoto() {
+    // takePic();
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+      quality: 50,
+      targetWidth: 600,
+      targetHeight: 600,
+      destinationType: destinationType.FILE_URI,
+      saveToPhotoAlbum: true
+    });
+  }
+
+  function getPhoto(source) {
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+      quality: 30,
+      targetWidth: 600,
+      targetHeight: 600,
+      destinationType: destinationType.FILE_URI,
+      sourceType: source
+    });
+  }
+
+  function onFail(message) {
+    //alert('Failed because: ' + message);
+  }
+  $scope.chooseHandler = function() {
+    getPhoto(pictureSource.PHOTOLIBRARY);
+  };
+  $scope.captureNewPhoto = function () {
+    capturePhoto();
+  }
+  //
+  //
+  // script for handler image end
+  //
+
+
   function showMessage(messType) {
     switch(messType) {
       case 'connectErr':
@@ -194,6 +253,20 @@ module.controller("ProfileController", function($scope, $http) {
       default:
       return false;
     }
+  };
+
+  function reloadCameraScript() {
+    $.when(
+      $.getScript( "js/cameraHandler.js" ),
+      // $.getScript( "lib/matterTheme/scripts/jqueryui.js" ),
+      // $.getScript( "lib/matterTheme/scripts/framework-plugins.js" ),
+      // $.getScript( "lib/matterTheme/scripts/custom.js" ),
+      $.Deferred(function( deferred ){
+        $( deferred.resolve );
+      })
+    ).done(function(){
+      console.log('camera script reloaded!');
+    });
   };
 
   function reloadScript() {

@@ -45,7 +45,7 @@
   <script src="controller/menuController.js"></script>
   <script src="controller/profileController.js"></script>
   <script src="controller/matchingController.js"></script>
-  <script src="controller/feedbackController.js"></script>
+  <script src="controller/passwordController.js"></script>
   <script src="controller/detailController.js"></script>
   <script src="controller/requestController.js"></script>
   <script src="controller/seftRequestController.js"></script>
@@ -137,7 +137,7 @@
           <div class="overlay bg-black"></div>
         </div>
         <div class="material-container" style="display: none; text-align: center" id="noResult">
-          <h6>No user result</h6>
+          <h6>No result!</h6>
         </div>
         <div class="material-container" id="searchContent">
           <fieldset>
@@ -803,44 +803,53 @@
 </ons-template>
 <!-- User detail page end -->
 
-<!-- Feedback page start -->
-<ons-template id="feedback.html">
-  <ons-page ng-controller="FeedbackController">
-    <div class="container-fullscreen heading-style-3 bg-3">
-      <h3 class="heading-title">Accordion</h3>
-      <em class="heading-subtitle">A simple way to display a lot of content.</em>
-      <div class="overlay bg-black"></div>
-    </div>
-
-    <div class="material-container container">
-      <div class="accordion">
-        <h6 class="accordion-toggle">
-          Accordion 1
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
-        <div class="accordion-content active-accordion">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <h6 class="accordion-toggle">
-          Accordion 2
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <div class="accordion-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <h6 class="accordion-toggle">
-          Accordion 3
-          <i class="fa fa-angle-down"></i>
-        </h6>
-        <div class="accordion-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
+<!-- Change pass page start -->
+<ons-template id="changePass.html">
+  <ons-page class="page-boxshadow" ng-controller="PasswordController">
+    <ons-toolbar modifier="transparent">
+      <div class="left" style="color: black">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-navicon" style="color: black; font-size: 28px;" fixed-width="false" ng-click="menuButtonHandler()"></ons-icon>
+        </ons-toolbar-button>
       </div>
+      <div class="center" style="color: black">Change your password</div>
+    </ons-toolbar>
+    <!-- Error message -->
+    <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+      <p>
+        {{errorContent}}
+      </p>
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    </div>
+    <!-- success message -->
+    <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      <p>
+        Your password has change successful!
+      </p>
+    </div>
+    <div class="material-container">
+      <fieldset>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Current password:</p>
+          <input type="password" placeholder="******" name="contactNameField" value="" class="contactField requiredField" id="txtCurrentPassword" maxlength="18"/>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">New password:</p>
+          <input type="password" placeholder="******" name="contactNameField" value="" class="contactField requiredField" id="txtNewPassword" maxlength="18"/>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Re-enter new password:</p>
+          <input type="password" placeholder="******" name="contactNameField" value="" class="contactField requiredField" id="txtNewPassword2" maxlength="18"/>
+        </div>
+        <div class="formSubmitButtonErrorsWrap contactFormButton">
+          <input type="submit" ng-click="changePassword()" class="buttonWrap button button-green contactSubmitButton" id="btnSubmit" value="Change your pasword"/>
+        </div>
+      </fieldset>
     </div>
   </ons-page>
 </ons-template>
-<!-- Feedback page end -->
+<!-- Change pass page end -->
 
 <!-- Edit Profile page start -->
 <ons-template id="editProfile.html">
@@ -1410,10 +1419,6 @@
       </div>
       <div class="sidebar-header-icons">
         <a href="#" style="width: 100%; text-align: left; top: 50px;">{{profile[0].firstName}} {{profile[0].lastName}}</a>
-        <!-- <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-phone"></i></a>
-        <a href="#"><i class="fa fa-comments-o"></i></a>
-        <a href="#" class="close-sidebar"><i class="fa fa-times"></i></a> -->
       </div>
       <!-- Connection error -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="newRequest">
@@ -1459,9 +1464,9 @@
         <em>Inbox</em>
         <i class="notification notifi-number">0</i>
       </a>
-      <a class="menu-item" href="#" ng-click="navi.pushPage('feedback.html')">
-        <i class="bg-teal-light fa fa-question"></i>
-        <em>Support & Feedback</em>
+      <a class="menu-item" href="#" ng-click="goChangePassword()">
+        <i class="bg-teal-light fa fa-unlock-alt"></i>
+        <em>Change password</em>
       </a>
       <a class="menu-item close-sidebar" href="#" ng-click="logout()">
         <i class="bg-night-dark fa fa-power-off"></i>

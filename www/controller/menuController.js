@@ -7,6 +7,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   $scope.inFriendRequestList = false;
   $scope.inSeftRequestList = false;
   $scope.inSearch = false;
+  $scope.inChangePassword = false;
   $scope.requestnumb=0;
   $scope.requestCount = 0;
   $scope.friendnumb = 0;
@@ -16,7 +17,6 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   countSeftRequest();
   $scope.requestCount = $scope.requestnumb;
   updateData();
-  // updateMenu();
   // updateMenu();
   function updateMenu() {
     $timeout(function () {
@@ -34,6 +34,22 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       updateData();
     }, 10000);
   };
+  $scope.goChangePassword = function () {
+    if (!$scope.inChangePassword) {
+      menu.closeMenu();
+      $scope.inProfile = false;
+      $scope.inMatching = false;
+      $scope.inFriendList = false;
+      $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
+      $scope.inChangePassword = true;
+      navi.resetToPage('changePass.html');
+      reloadScript();
+    }else {
+      menu.closeMenu();
+    }
+  };
   $scope.gosearch = function () {
     if (!$scope.inSearch) {
       menu.closeMenu();
@@ -43,6 +59,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = false;
       $scope.inSeftRequestList = false;
       $scope.inSearch = true;
+      $scope.inChangePassword = false;
       navi.resetToPage('search.html');
       reloadScript();
     }else {
@@ -58,6 +75,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = false;
       $scope.inSeftRequestList = true;
       $scope.inSearch = false;
+      $scope.inChangePassword = false;
       navi.resetToPage('seftRequestList.html');
       reloadScript();
     }else {
@@ -73,6 +91,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = true;
       $scope.inSeftRequestList = false;
       $scope.inSearch = false;
+      $scope.inChangePassword = false;
       navi.resetToPage('friendRequestList.html');
       reloadScript();
     }else {
@@ -88,6 +107,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = false;
       $scope.inSeftRequestList = false;
       $scope.inSearch = false;
+      $scope.inChangePassword = false;
       navi.resetToPage('friendList.html');
       reloadScript();
     }else {
@@ -104,6 +124,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = false;
       $scope.inSeftRequestList = false;
       $scope.inSearch = false;
+      $scope.inChangePassword = false;
       navi.resetToPage('profile.html');
       reloadScript();
     }else {
@@ -120,6 +141,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inFriendRequestList = false;
       $scope.inSeftRequestList = false;
       $scope.inSearch = false;
+      $scope.inChangePassword = false;
       navi.resetToPage('matching.html');
       reloadScript();
     }else {

@@ -36,6 +36,7 @@ module.controller("SearchController", function($scope, $rootScope, $timeout, $ht
   $scope.reRearch = function () {
     $scope.searchResult = "";
     resetAll();
+    $('#noResult').hide();
     $('#searchContent').show();
   };
   // Search
@@ -85,8 +86,9 @@ module.controller("SearchController", function($scope, $rootScope, $timeout, $ht
     });
     /* Successful HTTP post request or not */
     request.success(function (data) {
-      console.log(data);
-      if (data.lenght==0) {
+      $scope.searchResult = data;
+      console.log('number of result = '+$scope.searchResult.length);
+      if ($scope.searchResult.length==0) {
         $('#noResult').show();
       }else {
         $scope.searchResult = data;

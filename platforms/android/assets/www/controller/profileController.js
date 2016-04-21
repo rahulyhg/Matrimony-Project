@@ -4,11 +4,26 @@ module.controller("ProfileController", function($scope, $rootScope, $http) {
   $scope.imageUrl = '';
   console.log($scope.userName);
   // reloadScript();
+  console.log($rootScope.profile);
   checkConnection();
   getUserImage();
   reloadCameraScript();
+  // updateData();
+  getData();
+  function updateData() {
+    $timeout(function () {
+      getData();
+      updateData();
+    }, 10000);
+  };
   $scope.backEditHandler = function () {
-    navi.resetToPage('profile.html');
+    $scope.navi.popPage();
+    // $scope.navi.popPage({onTransitionEnd : function() {
+    //    $scope.navi.replacePage('profile.html', { animation : 'none' } );
+    // }});
+    // $scope.navi.pushPage('profile.html');
+    // $scope.navi.resetToPage('profile.html', { animation : 'none' });
+    // checkConnection();
   };
   // view avatar
   $scope.ViewImg = function () {

@@ -1,5 +1,8 @@
 module.controller("MatchingController", function($scope, $rootScope, $timeout, $http) {
   $scope.userName = window.localStorage.getItem("username");
+  $scope.survey = '';
+  $rootScope.matchingResult = '';
+  $('#matchingResult').hide();
   checkConnection();
   reloadScript();
   $scope.rightButtonRematching = function () {
@@ -32,11 +35,42 @@ module.controller("MatchingController", function($scope, $rootScope, $timeout, $
     request.success(function (data) {
       console.log(data);
       $scope.profile = data;
-      getMatchingData();
+      // getMatchingData();
     });
   };
-
+  // Get curent survey
+  function getSurvey() {
+    $('#rightIcon').attr('spin','true');
+    console.log('geting current survey...');
+    var request = $http({
+      method: "post",
+      url: "http://139.59.254.92/getsurvey.php",
+      data: {
+        userName: $scope.userName
+      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    /* Successful HTTP post request or not */
+    request.success(function (data) {
+      console.log("survey data:");
+      console.log(data);
+      if (data.length!=0) {
+        $scope.survey = data;
+        getMatchingData();
+        setTimeout(function(){
+          $('#rightIcon').attr('spin','false');
+        }, 1000);
+      }else {
+        showErr('Cant get your survey, please try again!');
+      }
+    });
+    request.error(function () {
+      showErr('Cant get your survey, please try again!');
+    });
+  };
+  // get matching data
   function getMatchingData() {
+    $('#matchingResult').hide();
     $('#rightIcon').attr('spin','true');
     console.log('geting matching data...');
     var request = $http({
@@ -44,13 +78,15 @@ module.controller("MatchingController", function($scope, $rootScope, $timeout, $
       url: "http://139.59.254.92/matching.php",
       data: {
         userName: $scope.userName,
-        gender: $scope.profile[0]["gender"],
+        gender: $scope.survey[0]["gender"],
         country: $scope.profile[0]["country"],
         cityStates: $scope.profile[0]["cityStates"],
         religion: $scope.profile[0]["religion"],
-        caste: $scope.profile[0]["caste"],
-        highestLiteracy: $scope.profile[0]["highestLiteracy"],
-        income: $scope.profile[0]["income"]
+        caste: $scope.survey[0]["caste"],
+        minAge: $scope.survey[0]["minAge"],
+        maxAge: $scope.survey[0]["maxAge"],
+        otherCity: $scope.survey[0]["otherCity"],
+        otherReligion: $scope.survey[0]["otherReligion"]
       },
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
@@ -63,8 +99,10 @@ module.controller("MatchingController", function($scope, $rootScope, $timeout, $
         setTimeout(function(){
           $('#rightIcon').attr('spin','false');
         }, 1000);
+        $('#matchingResult').hide();
         $('#noMatching').show();
       }else {
+        $('#matchingResult').show();
         $rootScope.matchingResult = data;
         for (var i = 0; i < $rootScope.matchingResult.length; i++) {
           var unformatedUrl = $rootScope.matchingResult[i]["avatarUrl"];
@@ -95,10 +133,19 @@ module.controller("MatchingController", function($scope, $rootScope, $timeout, $
       },
       success: function() {
         getData();
+        getSurvey();
       }
     });
   };
-
+  // show error
+  function showErr(mess) {
+    $scope.errorContent = mess;
+    $('bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification').slideUp(200);
+    $('#errorMess').slideDown(200);
+    setTimeout(function(){
+      $('#errorMess').slideUp(200);
+    }, 4000);
+  }
   function showMessage(messType) {
     switch(messType) {
       case 'connectErr':

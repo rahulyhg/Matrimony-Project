@@ -53,6 +53,7 @@
   <script src="controller/searchController.js"></script>
   <script src="controller/cameraController.js"></script>
   <script src="controller/editController.js"></script>
+  <script src="controller/surveyController.js"></script>
   <script src="cordova.js"></script>
   <title>Home</title>
 
@@ -78,6 +79,13 @@
             </ons-toolbar-button>
           </div>
         </ons-toolbar>
+        <!-- Error message -->
+        <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+          <p>
+            {{errorContent}}
+          </p>
+          <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+        </div>
         <!-- Connection error -->
         <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="connectErr">
           <p>
@@ -93,7 +101,7 @@
           <h6>No user suit for you!</h6>
         </div>
 
-        <div class="container-fullscreen matching-content" ng-repeat="mt in matchingResult">
+        <div class="container-fullscreen matching-content" ng-repeat="mt in matchingResult" id="matchingResult">
           <div class="one-half-responsive" ng-click="viewProfile($index)">
             <div class="activity-item material-container matching-item">
               <img class="activity-item-image" src="{{mt.avatarUrl}}" alt="img">
@@ -841,6 +849,87 @@
   </ons-template>
   <!-- Change pass page end -->
 
+  <!-- Survey page start -->
+  <ons-template id="survey.html">
+    <ons-page class="page-boxshadow" ng-controller="SurveyController">
+      <ons-toolbar modifier="transparent">
+        <div class="left" style="color: black">
+          <ons-toolbar-button>
+            <ons-icon icon="ion-navicon" style="color: black; font-size: 28px;" fixed-width="false" ng-click="menuButtonHandler()"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center" style="color: black">Your matching criteria</div>
+        <div class="right">
+          <ons-toolbar-button ng-click="reload()">
+            <ons-icon icon="ion-ios-loop" size="28px" fixed-width="false" style="color: black" spin="false" id="rightIcon"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+      <!-- Error message -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+        <p>
+          {{errorContent}}
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- success message -->
+      <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+        <p>
+          Save successful!
+        </p>
+      </div>
+      <div class="material-container">
+        <fieldset>
+          <div class="formTextareaWrap">
+            <p class="input-label-custom">Your are looking for?</p>
+            <select class="contactField2" name="event-type" id="txtGender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+          <div class="formTextareaWrap haft-input">
+            <p class="input-label-custom">From age:</p>
+            <input type="number" placeholder="16" name="contactNameField" value="" class="contactField requiredField" id="txtMinAge"/>
+          </div>
+          <div class="formTextareaWrap haft-input">
+            <p class="input-label-custom">To age:</p>
+            <input type="number" placeholder="80" name="contactNameField" value="" class="contactField requiredField" id="txtMaxAge"/>
+          </div>
+          <div class="formTextareaWrap">
+            <p class="input-label-custom" style="margin-top: 90px;">Do you like people in other city?</p>
+            <select class="contactField2" name="event-type" id="txtCity">
+              <option value="y">Yes</option>
+              <option value="n">No</option>
+            </select>
+          </div>
+          <div class="formTextareaWrap">
+            <p class="input-label-custom">Do you like people with other religion?</p>
+            <select class="contactField2" name="event-type" id="txtReligion">
+              <option value="y">Yes</option>
+              <option value="n">No</option>
+            </select>
+          </div>
+          <div class="formTextareaWrap">
+            <p class="input-label-custom">Caste:</p>
+            <select class="contactField2" name="event-type" id="txtCaste">
+              <option value="Middle Class">Middle Class</option>
+              <option value="Upper Middle Class">Upper Middle Class</option>
+              <option value="Rich">Rich</option>
+              <option value="Affluent">Affluent</option>
+              <option value="any">Don't matter</option>
+            </select>
+          </div>
+          <div class="formSubmitButtonErrorsWrap contactFormButton">
+            <input type="submit" ng-click="saveSurvey()" class="buttonWrap button button-green contactSubmitButton" id="btnSubmit" value="Save"/>
+          </div>
+        </fieldset>
+      </div>
+    </ons-page>
+  </ons-template>
+  <!-- Survey page end -->
+
   <!-- Edit Profile page start -->
   <ons-template id="editProfile.html">
     <ons-page class="page-boxshadow" ng-controller="EditProfileController">
@@ -1436,6 +1525,10 @@
         <a class="menu-item" href="#" ng-click="gosearch()">
           <i class="bg-yellow-dark fa fa-search"></i>
           <em>Search</em>
+        </a>
+        <a class="menu-item" href="#" ng-click="goSurvey()">
+          <i class="bg-night-dark fa fa-clipboard"></i>
+          <em>Survey</em>
         </a>
         <div class="has-submenu">
           <a class="menu-item show-submenu" href="#">

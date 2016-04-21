@@ -155,13 +155,33 @@ if(isset($_POST['savestep6']))
 if(isset($_POST['savestep7']))
 {
   $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $gender=mysql_real_escape_string(htmlspecialchars(trim($_POST['gender'])));
+  $minAge=intval($_POST['minAge']);
+  $maxAge=intval($_POST['maxAge']);
+  $city=mysql_real_escape_string(htmlspecialchars(trim($_POST['city'])));
+  $religon=mysql_real_escape_string(htmlspecialchars(trim($_POST['religon'])));
+  $caste=mysql_real_escape_string(htmlspecialchars(trim($_POST['caste'])));
+  $query = "INSERT INTO `Survey_TBL`(`userName`, `minAge`, `maxAge`, `caste`, `otherCity`, `otherReligion`, `gender`) VALUES ('$userName',$minAge,$maxAge,'$caste','$city','$religon','$gender')";
+  $q=mysql_query($query);
+  if($q){
+    $q1=mysql_query("UPDATE Account_TBL SET settingAccountStep = 7 WHERE userName = '$userName'");
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
+
+if(isset($_POST['savestep8']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
   $imgUrl=mysql_real_escape_string(htmlspecialchars(trim($_POST['imgurl'])));
   $imgUrlFormated = "http://139.59.254.92/upload/".$imgUrl;
   $des=mysql_real_escape_string(htmlspecialchars(trim($_POST['des'])));
   $query = "UPDATE `Information_TBL` SET `avatarUrl`= '$imgUrlFormated', `seftDescription` = '$des' WHERE userName = '$userName'";
   $q=mysql_query($query);
   if($q){
-    $q1=mysql_query("UPDATE Account_TBL SET settingAccountStep = 7 WHERE userName = '$userName'");
+    $q1=mysql_query("UPDATE Account_TBL SET settingAccountStep = 8 WHERE userName = '$userName'");
     if (q1) {
       echo "saveSuccess";
     }else {
@@ -231,6 +251,25 @@ if(isset($_POST['editBasicInformation']))
   }
   else{
     echo "saveError";
+  }
+}
+
+if(isset($_POST['editsurvey']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $gender=mysql_real_escape_string(htmlspecialchars(trim($_POST['gender'])));
+  $minAge=intval($_POST['minAge']);
+  $maxAge=intval($_POST['maxAge']);
+  $city=mysql_real_escape_string(htmlspecialchars(trim($_POST['city'])));
+  $religon=mysql_real_escape_string(htmlspecialchars(trim($_POST['religon'])));
+  $caste=mysql_real_escape_string(htmlspecialchars(trim($_POST['caste'])));
+  $query = "UPDATE `Survey_TBL` SET `minAge`=$minAge,`maxAge`=$maxAge,`caste`='$caste',`otherCity`='$city',`otherReligion`='$religon',`gender`='$gender' WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "success";
+  }
+  else{
+    echo "error";
   }
 }
 ?>

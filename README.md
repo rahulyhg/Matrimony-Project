@@ -22,6 +22,8 @@ Matrimony Project Introduction
 ![alt tag](http://139.59.254.92/upload/m4.PNG)
 ![alt tag](http://139.59.254.92/upload/m5.PNG)
 ![alt tag](http://139.59.254.92/upload/m6.PNG)
+![alt tag](http://139.59.254.92/upload/m7.PNG)
+![alt tag](http://139.59.254.92/upload/m8.PNG)
 
 ## Author
 - author name: Thinh Nguyen

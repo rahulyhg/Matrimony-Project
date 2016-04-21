@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Path to matterTheme Library CSS-->
+  <link href="lib/matterTheme/styles/style.css"           rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/framework.css"       rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/font-awesome.css"    rel="stylesheet" type="text/css">
+  <link href="lib/matterTheme/styles/animate.css"         rel="stylesheet" type="text/css">
+
+  <link rel="shortcut icon" href="lib/matterTheme/images/splash/favicon.ico" type="image/x-icon" />
+
+  <!-- Path to matterTheme Library JS-->
+  <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/jqueryui.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/framework-plugins.js"></script>
+  <script type="text/javascript" src="lib/matterTheme/scripts/custom.js"></script>
+  <!-- Path to customize CSS-->
+  <link rel="stylesheet" href="css/customize.css">
+  <!-- Path to Angular JS -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> -->
+  <script type="text/javascript">
+  function onLoad(){
+    document.addEventListener("deviceready",onDeviceReady, true);
+    document.addEventListener("backbutton", onBackKeyDown, false);
+  }
+
+  function onDeviceReady(){
+    // navigator.notification.alert("PhoneGap is working!!");
+    console.log('onready');
+  }
+
+  function onBackKeyDown(e) {
+    console.log('back button pressed!');
+    showConfirm();
+  }
+
+  // process the confirmation dialog result
+  function onConfirm(button) {
+    if (button == 2) {
+      navigator.app.exitApp();
+    }
+  }
+
+  // Show a custom confirmation dialog
+  //
+  function showConfirm() {
+    navigator.notification.confirm(
+      'Are you sure to exit?',  // message
+      onConfirm,              // callback to invoke with index of button pressed
+      'Alert',            // title
+      'Cancel,Exit'          // buttonLabels
+    );
+  }
+
+
+  </script>
+  <title>Collecting information step 7</title>
+</head>
+<body onload="onLoad()">
+  <div class="material-container full-bottom">
+    <div class="sidebar-divider" style="padding-left: 0px">
+      The criteria for your matching
+    </div>
+    <!-- <div class="page-profile-header container-fullscreen">
+    <img src="img/5s.jpg" alt="img">
+  </div> -->
+  <div class="contact-form no-bottom">
+    <fieldset>
+      <div class="formTextareaWrap">
+        <p class="input-label-custom">Your are looking for?</p>
+        <select class="contactField2" name="event-type" id="txtGender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="both">Both</option>
+        </select>
+      </div>
+      <div class="formTextareaWrap haft-input">
+        <p class="input-label-custom">From age:</p>
+        <input type="number" placeholder="16" name="contactNameField" value="" class="contactField requiredField" id="txtMinAge"/>
+      </div>
+      <div class="formTextareaWrap haft-input">
+        <p class="input-label-custom">To age:</p>
+        <input type="number" placeholder="80" name="contactNameField" value="" class="contactField requiredField" id="txtMaxAge"/>
+      </div>
+      <div class="formTextareaWrap">
+        <p class="input-label-custom" style="margin-top: 90px;">Do you like people in other city?</p>
+        <select class="contactField2" name="event-type" id="txtCity">
+          <option value="y">Yes</option>
+          <option value="n">No</option>
+        </select>
+      </div>
+      <div class="formTextareaWrap">
+        <p class="input-label-custom">Do you like people with other religion?</p>
+        <select class="contactField2" name="event-type" id="txtReligion">
+          <option value="y">Yes</option>
+          <option value="n">No</option>
+        </select>
+      </div>
+      <div class="formTextareaWrap">
+        <p class="input-label-custom">Caste:</p>
+        <select class="contactField2" name="event-type" id="txtCaste">
+          <option value="Middle Class">Middle Class</option>
+          <option value="Upper Middle Class">Upper Middle Class</option>
+          <option value="Rich">Rich</option>
+          <option value="Affluent">Affluent</option>
+          <option value="any">Don't matter</option>
+        </select>
+      </div>
+      <div class="formSubmitButtonErrorsWrap contactFormButton">
+        <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Save"/>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<!-- Min age error require -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="AgeErr">
+  <p>
+    Age from 16 to 80!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Connection error -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="errorConnection">
+  <p>
+    Can't connect to server, please check your internet connection!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Other error -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="otherError">
+  <p>
+    An error has occurred when save your information. Please try again!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+<!-- Max age error -->
+<div class="top-notification-2 top-notification bg-red-dark timeout-notification timer-notification" id="maxAgeError">
+  <p>
+    Max age cant less max age!
+  </p>
+  <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
+</div>
+
+<script>
+
+// handler next button
+function nextButtonHandler(){
+  disableAll();
+  var userName = window.localStorage.getItem("username");
+  console.log("next btn click");
+  console.log(userName);
+  if (checkInput()) {
+    checkConnection();
+    enableAll();
+  }else {
+    enableAll();
+    console.log('invalid Input!');
+  }
+
+  // Check connectionStatus
+  if (checkInternetConnection()) {
+    // Check input data
+    if (checkInput()) {
+      console.log('all validated!');
+      saveToServer();
+    }else {
+      enableAll();
+    }
+  }else {
+    enableAll();
+    showMessage("connectionError");
+  }
+};
+
+function checkInput() {
+  if ($('#txtMinAge').val() < 16 || $('#txtMinAge').val() > 80 || $('#txtMaxAge').val() < 16 || $('#txtMaxAge').val() > 80) {
+    showMessage('AgeErr');
+    return false;
+  }else if ($('#txtMaxAge').val() < $('#txtMinAge').val()) {
+    showMessage('maxAgeError');
+    return false;
+  }else {
+    return true;
+  }
+};
+
+function saveToServer() {
+  var userName = window.localStorage.getItem("username");
+  var gender = $('#txtGender option:selected').val();
+  var minAge = $('#txtMinAge').val();
+  var maxAge = $('#txtMaxAge').val();
+  var city = $('#txtCity option:selected').val();
+  var religon = $('#txtReligion option:selected').val();
+  var caste = $('#txtCaste option:selected').val();
+  var dataString="&userName="+userName+"&gender="+gender+"&minAge="+minAge+"&maxAge="+maxAge+"&city="+city+"&religon="+religon+"&caste="+caste+"&savestep7=";
+  console.log(dataString);
+  $.ajax({
+    type: "POST",
+    url:"http://139.59.254.92/saveinfo.php",
+    data: dataString,
+    crossDomain: true,
+    cache: false,
+    beforeSend: function(){ console.log('saving...');},
+    success: function(data){
+      console.log(data);
+      // save success
+      if (data=="saveSuccess") {
+        enableAll();
+        window.location.replace("profileStep8.html");
+      }else if (data=="saveError") {
+        // save error
+        enableAll();
+        showMessage('otherError');
+      }
+    }
+  });
+};
+
+// disable all when processing
+function disableAll() {
+  $("#btnNext").attr("onclick","return false;");
+}
+// enable all when process done
+function enableAll() {
+  $("#btnNext").attr("onclick","nextButtonHandler()");
+}
+
+// Check internet connection
+function checkConnection() {
+  $.ajax({
+    url: "http://139.59.254.92/insert.php",
+    timeout: 10000,
+    error: function(jqXHR) {
+      if(jqXHR.status==0) {
+        showMessage('Cant connect to server!');
+      }
+    },
+    success: function() {
+      saveToServer();
+    }
+  });
+};
+// Show message
+function showMessage(messType) {
+  switch(messType) {
+    case 'AgeErr':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#allRequire').slideDown(200);
+    setTimeout(function(){
+      $('#allRequire').slideUp(200);
+    }, 4000);
+    break;
+    case 'maxAgeError':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#allRequire').slideDown(200);
+    setTimeout(function(){
+      $('#allRequire').slideUp(200);
+    }, 4000);
+    break;
+    case 'connectionError':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#errorConnection').slideDown(200);
+    setTimeout(function(){
+      $('#errorConnection').slideUp(200);
+    }, 4000);
+    break;
+    case 'otherError':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#otherError').slideDown(200);
+    setTimeout(function(){
+      $('#otherError').slideUp(200);
+    }, 4000);
+    break;
+    default:
+    return false;
+  }
+}
+</script>
+<script type="text/javascript" src="cordova.js"></script>
+</body>
+</html>

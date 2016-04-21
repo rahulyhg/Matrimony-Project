@@ -172,4 +172,65 @@ if(isset($_POST['savestep7']))
     echo "saveError";
   }
 }
+
+if(isset($_POST['editProfile']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $litteracy=mysql_real_escape_string(htmlspecialchars(trim($_POST['litteracy'])));
+  $workFor=mysql_real_escape_string(htmlspecialchars(trim($_POST['work'])));
+  $occupation=mysql_real_escape_string(htmlspecialchars(trim($_POST['occupation'])));
+  $income=intval($_POST['income']);
+  $query = "UPDATE `Profile_TBL`SET `highestLiteracy`='$litteracy',`workIn`='$workFor',`occupation`='$occupation',`income`=$income WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
+
+if(isset($_POST['editFamily']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $type=mysql_real_escape_string(htmlspecialchars(trim($_POST['type'])));
+  $caste=mysql_real_escape_string(htmlspecialchars(trim($_POST['caste'])));
+  $trend=mysql_real_escape_string(htmlspecialchars(trim($_POST['trend'])));
+  $query = "UPDATE `Family_TBL` SET `familyType`='$type',`familyTrend`='$trend',`caste`='$caste' WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
+
+if(isset($_POST['editBasicInformation']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $fName=mysql_real_escape_string(htmlspecialchars(trim($_POST['fname'])));
+  $mName=mysql_real_escape_string(htmlspecialchars(trim($_POST['mname'])));
+  $lName=mysql_real_escape_string(htmlspecialchars(trim($_POST['lname'])));
+  $birthday=mysql_real_escape_string(htmlspecialchars(trim($_POST['birthday'])));
+  $age=intval($_POST['age']);
+  $gender=mysql_real_escape_string(htmlspecialchars(trim($_POST['gender'])));
+  $phone=intval($_POST['phone']);
+  $nationality=mysql_real_escape_string(htmlspecialchars(trim($_POST['nationality'])));
+  $cityStates=mysql_real_escape_string(htmlspecialchars(trim($_POST['citystates'])));
+  $country=mysql_real_escape_string(htmlspecialchars(trim($_POST['country'])));
+  $motherTongue=mysql_real_escape_string(htmlspecialchars(trim($_POST['mothertongue'])));
+  $marial=mysql_real_escape_string(htmlspecialchars(trim($_POST['marial'])));
+  $height=intval($_POST['height']);
+  $weight=intval($_POST['weight']);
+  $religon=mysql_real_escape_string(htmlspecialchars(trim($_POST['religion'])));
+  $query = "UPDATE `Information_TBL` SET `firstName`='$fName',`middleName`='$mName',`lastName`='$lName',`dateOfBirth`=STR_TO_DATE('$birthday', '%m/%d/%Y'), `gender`='$gender',`marialStatus`='$marial',`phoneNumber`=$phone,`height`=$height,`weight`=$weight,`motherTongue`='$motherTongue',`nationality`='$nationality',`country`='$country',`cityStates`='$cityStates',`religion`='$religon',`age`=$age WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
 ?>

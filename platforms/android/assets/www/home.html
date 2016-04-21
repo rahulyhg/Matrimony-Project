@@ -52,6 +52,7 @@
   <script src="controller/friendListController.js"></script>
   <script src="controller/searchController.js"></script>
   <script src="controller/cameraController.js"></script>
+  <script src="controller/editController.js"></script>
   <script src="cordova.js"></script>
   <title>Home</title>
 
@@ -548,12 +549,11 @@
           <li class="tab-link user-information-tab active-tab" data-tab="tab-1" id="tab-1-header">Information</li>
           <li class="tab-link user-information-tab" data-tab="tab-2" id="tab-2-header">Gallery ({{numbOfImage}})</li>
         </ul>
-
         <div id="tab-1" class="tab-content customize-boxshadow profile-tab-content" style="display: block">
           <div class="accordion">
             <h6 class="accordion-toggle" id="basicInfoHeader">
               Basic information
-              <i class="fa fa-pencil"></i>
+              <i class="fa fa-pencil" onclick="navi.pushPage('editBasicInformation.html')"></i>
             </h6>
             <!-- Add the extra class active-accordion to any accordion-content to make it active by default -->
             <div class="accordion-content active-accordion" id="basicInfo">
@@ -570,7 +570,7 @@
             </div>
             <h6 class="accordion-toggle" id="hobbyContentHeader">
               Hobby
-              <i class="fa fa-pencil"></i>
+              <i class="fa fa-pencil" onclick="navi.pushPage('editHobby.html')"></i>
             </h6>
             <div class="accordion-content" id="hobbyContent" style="display: none">
               <ul class="font-icon-list no-bottom">
@@ -593,8 +593,8 @@
               </ul>
             </div>
             <h6 class="accordion-toggle" id="educationContentHeader">
-              Education
-              <i class="fa fa-pencil"></i>
+              Education & Work
+              <i class="fa fa-pencil" onclick="navi.pushPage('editProfile.html')"></i>
             </h6>
             <div class="accordion-content" id="educationContent" style="display: none">
               <ul class="font-icon-list no-bottom">
@@ -606,7 +606,7 @@
             </div>
             <h6 class="accordion-toggle" id="familyContentHeader">
               Family
-              <i class="fa fa-pencil"></i>
+              <i class="fa fa-pencil" onclick="navi.pushPage('editFamily.html')"></i>
             </h6>
             <div class="accordion-content" id="familyContent" style="display: none">
               <ul class="font-icon-list no-bottom">
@@ -766,7 +766,7 @@
               </ul>
             </div>
             <h6 class="accordion-toggle" id="educationContentHeader">
-              Education
+              Education & Work
             </h6>
             <div class="accordion-content" id="educationContent" style="display: none">
               <ul class="font-icon-list no-bottom">
@@ -842,6 +842,565 @@
 </ons-template>
 <!-- Feedback page end -->
 
+<!-- Edit Profile page start -->
+<ons-template id="editProfile.html">
+  <ons-page class="page-boxshadow" ng-controller="EditProfileController">
+    <ons-toolbar modifier="transparent">
+      <div class="left" ng-controller="ProfileController">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backEditHandler()"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center" style="color: black">Education & Work</div>
+    </ons-toolbar>
+    <!-- Error message -->
+    <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+      <p>
+        {{errorContent}}
+      </p>
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    </div>
+    <!-- success message -->
+    <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      <p>
+        Save your information success!
+      </p>
+    </div>
+    <div class="material-container">
+      <fieldset>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Highest Literacy:</p>
+          <select class="contactField2" name="education" id="txtLitteracy">
+            <option value="Primary school">Primary school</option>
+            <option value="High school">High school</option>
+            <option value="Vocational">Vocational</option>
+            <option value="College">College</option>
+            <option value="University">University</option>
+            <option value="Masters">Masters</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Associate professor">Associate professor</option>
+            <option value="Professor">Professor</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">You work for:</p>
+          <select class="contactField2" name="work-in" id="txtWork">
+            <option value="Goverment">Goverment</option>
+            <option value="Private company">Private company</option>
+            <option value="State enterprise">State enterprise</option>
+            <option value="Multinational enterprises">Multinational enterprises</option>
+            <option value="Agriculture">Agriculture</option>
+            <option value="Self employed">Self employed</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Occupation:</p>
+          <select class="contactField2" name="occupation" id="txtOccupation">
+            <option value="Staff">Staff</option>
+            <option value="Manager">Manager</option>
+            <option value="Vice president">Vice president</option>
+            <option value="Director">Director</option>
+            <option value="Chairman">Chairman</option>
+            <option value="Singer">Singer</option>
+            <option value="Actor">Actor</option>
+            <option value="Dancer">Dancer</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Police">Police</option>
+            <option value="Fireman">Fireman</option>
+            <option value="Athletes">Athletes</option>
+            <option value="Other">Other</option>
+            <option value="Not Specified">Not Specified</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Monthly income:</p>
+          <input type="number" placeholder="Monthly income ($)" name="contactNameField" value="" class="contactField requiredField" id="txtIncome"/>
+        </div>
+        <div class="formSubmitButtonErrorsWrap contactFormButton">
+          <input type="submit" ng-click="saveHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnSave" value="Save"/>
+        </div>
+      </fieldset>
+    </div>
+  </ons-page>
+</ons-template>
+<!-- Edit Profile page end -->
+
+<!-- Edit Family page start -->
+<ons-template id="editFamily.html">
+  <ons-page class="page-boxshadow" ng-controller="EditFamilyController">
+    <ons-toolbar modifier="transparent">
+      <div class="left" ng-controller="ProfileController">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backEditHandler()"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center" style="color: black">Family</div>
+    </ons-toolbar>
+    <!-- Error message -->
+    <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+      <p>
+        {{errorContent}}
+      </p>
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    </div>
+    <!-- success message -->
+    <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      <p>
+        Save your information success!
+      </p>
+    </div>
+    <div class="material-container">
+      <fieldset>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Family type:</p>
+          <select class="contactField2" name="event-type" id="txtType">
+            <option value="Adjusting to Divorce">Adjusting to Divorce</option>
+            <option value="engaged">Stepfamily</option>
+            <option value="Gay and Lesbian Parents">Gay and Lesbian Parents</option>
+            <option value="Military Family">Military Family</option>
+            <option value="Single Parenting">Single Parenting</option>
+            <option value="Small Family">Small Family</option>
+            <option value="Large Family">Large Family</option>
+            <option value="Stepparents">Stepparents</option>
+            <option value="Nuclear Family">Nuclear Family</option>
+            <option value="Joint Family">Joint Family</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Family trend:</p>
+          <select class="contactField2" name="event-type" id="txtTrend">
+            <option value="Traditional">Traditional</option>
+            <option value="Modern">Modern</option>
+            <option value="Orthodox">Orthodox</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Caste:</p>
+          <select class="contactField2" name="event-type" id="txtCaste">
+            <option value="Middle Class">Middle Class</option>
+            <option value="Upper Middle Class">Upper Middle Class</option>
+            <option value="Rich">Rich</option>
+            <option value="Affluent">Affluent</option>
+          </select>
+        </div>
+        <div class="formSubmitButtonErrorsWrap contactFormButton">
+          <input type="submit" ng-click="saveHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnSave" value="Save"/>
+        </div>
+      </fieldset>
+    </div>
+  </ons-page>
+</ons-template>
+<!-- Edit Famile page end -->
+
+<!-- Edit Basic Information page start -->
+<ons-template id="editBasicInformation.html">
+  <ons-page class="page-boxshadow" ng-controller="EditBasicInformationController">
+    <ons-toolbar modifier="transparent">
+      <div class="left" ng-controller="ProfileController">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backEditHandler()"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center" style="color: black">Basic information</div>
+    </ons-toolbar>
+    <!-- Error message -->
+    <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+      <p>
+        {{errorContent}}
+      </p>
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    </div>
+    <!-- success message -->
+    <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      <p>
+        Save your information success!
+      </p>
+    </div>
+    <div class="material-container">
+      <fieldset>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">First name:</p>
+          <input type="text" placeholder="First Name" name="contactNameField" value="" class="contactField requiredField" id="txtFisrtName" maxlength="10"/>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Middle name:</p>
+          <input type="text" placeholder="Middle Name" name="contactNameField" value="" class="contactField requiredField" id="txtMiddleName" maxlength="10"/>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Last name:</p>
+          <input type="text" placeholder="Last Name" name="contactNameField" value="" class="contactField requiredField" id="txtLastName" maxlength="10"/>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Date of birth:</p>
+          <input type="text" placeholder="Birthday" onfocus="(this.type='date')" onblur="(this.type='text')" class="contactField" id="txtBirthday"/>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Gender:</p>
+          <select class="contactField2" name="event-type" id="txtGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Phone number:</p>
+          <input type="number" placeholder="Phone number" name="contactNameField" value="" class="contactField requiredField" id="txtPhone"/>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Your nationality:</p>
+          <select class="contactField2" name="nationality" id="txtNationality">
+            <option value="afghan">Afghan</option>
+            <option value="albanian">Albanian</option>
+            <option value="algerian">Algerian</option>
+            <option value="american">American</option>
+            <option value="andorran">Andorran</option>
+            <option value="angolan">Angolan</option>
+            <option value="antiguans">Antiguans</option>
+            <option value="argentinean">Argentinean</option>
+            <option value="armenian">Armenian</option>
+            <option value="australian">Australian</option>
+            <option value="austrian">Austrian</option>
+            <option value="azerbaijani">Azerbaijani</option>
+            <option value="bahamian">Bahamian</option>
+            <option value="bahraini">Bahraini</option>
+            <option value="bangladeshi">Bangladeshi</option>
+            <option value="barbadian">Barbadian</option>
+            <option value="barbudans">Barbudans</option>
+            <option value="batswana">Batswana</option>
+            <option value="belarusian">Belarusian</option>
+            <option value="belgian">Belgian</option>
+            <option value="belizean">Belizean</option>
+            <option value="beninese">Beninese</option>
+            <option value="bhutanese">Bhutanese</option>
+            <option value="bolivian">Bolivian</option>
+            <option value="bosnian">Bosnian</option>
+            <option value="brazilian">Brazilian</option>
+            <option value="british">British</option>
+            <option value="bruneian">Bruneian</option>
+            <option value="bulgarian">Bulgarian</option>
+            <option value="burkinabe">Burkinabe</option>
+            <option value="burmese">Burmese</option>
+            <option value="burundian">Burundian</option>
+            <option value="cambodian">Cambodian</option>
+            <option value="cameroonian">Cameroonian</option>
+            <option value="canadian">Canadian</option>
+            <option value="cape verdean">Cape Verdean</option>
+            <option value="central african">Central African</option>
+            <option value="chadian">Chadian</option>
+            <option value="chilean">Chilean</option>
+            <option value="chinese">Chinese</option>
+            <option value="colombian">Colombian</option>
+            <option value="comoran">Comoran</option>
+            <option value="congolese">Congolese</option>
+            <option value="costa rican">Costa Rican</option>
+            <option value="croatian">Croatian</option>
+            <option value="cuban">Cuban</option>
+            <option value="cypriot">Cypriot</option>
+            <option value="czech">Czech</option>
+            <option value="danish">Danish</option>
+            <option value="djibouti">Djibouti</option>
+            <option value="dominican">Dominican</option>
+            <option value="dutch">Dutch</option>
+            <option value="east timorese">East Timorese</option>
+            <option value="ecuadorean">Ecuadorean</option>
+            <option value="egyptian">Egyptian</option>
+            <option value="emirian">Emirian</option>
+            <option value="equatorial guinean">Equatorial Guinean</option>
+            <option value="eritrean">Eritrean</option>
+            <option value="estonian">Estonian</option>
+            <option value="ethiopian">Ethiopian</option>
+            <option value="fijian">Fijian</option>
+            <option value="filipino">Filipino</option>
+            <option value="finnish">Finnish</option>
+            <option value="french">French</option>
+            <option value="gabonese">Gabonese</option>
+            <option value="gambian">Gambian</option>
+            <option value="georgian">Georgian</option>
+            <option value="german">German</option>
+            <option value="ghanaian">Ghanaian</option>
+            <option value="greek">Greek</option>
+            <option value="grenadian">Grenadian</option>
+            <option value="guatemalan">Guatemalan</option>
+            <option value="guinea-bissauan">Guinea-Bissauan</option>
+            <option value="guinean">Guinean</option>
+            <option value="guyanese">Guyanese</option>
+            <option value="haitian">Haitian</option>
+            <option value="herzegovinian">Herzegovinian</option>
+            <option value="honduran">Honduran</option>
+            <option value="hungarian">Hungarian</option>
+            <option value="icelander">Icelander</option>
+            <option value="indian">Indian</option>
+            <option value="indonesian">Indonesian</option>
+            <option value="iranian">Iranian</option>
+            <option value="iraqi">Iraqi</option>
+            <option value="irish">Irish</option>
+            <option value="israeli">Israeli</option>
+            <option value="italian">Italian</option>
+            <option value="ivorian">Ivorian</option>
+            <option value="jamaican">Jamaican</option>
+            <option value="japanese">Japanese</option>
+            <option value="jordanian">Jordanian</option>
+            <option value="kazakhstani">Kazakhstani</option>
+            <option value="kenyan">Kenyan</option>
+            <option value="kittian and nevisian">Kittian and Nevisian</option>
+            <option value="kuwaiti">Kuwaiti</option>
+            <option value="kyrgyz">Kyrgyz</option>
+            <option value="laotian">Laotian</option>
+            <option value="latvian">Latvian</option>
+            <option value="lebanese">Lebanese</option>
+            <option value="liberian">Liberian</option>
+            <option value="libyan">Libyan</option>
+            <option value="liechtensteiner">Liechtensteiner</option>
+            <option value="lithuanian">Lithuanian</option>
+            <option value="luxembourger">Luxembourger</option>
+            <option value="macedonian">Macedonian</option>
+            <option value="malagasy">Malagasy</option>
+            <option value="malawian">Malawian</option>
+            <option value="malaysian">Malaysian</option>
+            <option value="maldivan">Maldivan</option>
+            <option value="malian">Malian</option>
+            <option value="maltese">Maltese</option>
+            <option value="marshallese">Marshallese</option>
+            <option value="mauritanian">Mauritanian</option>
+            <option value="mauritian">Mauritian</option>
+            <option value="mexican">Mexican</option>
+            <option value="micronesian">Micronesian</option>
+            <option value="moldovan">Moldovan</option>
+            <option value="monacan">Monacan</option>
+            <option value="mongolian">Mongolian</option>
+            <option value="moroccan">Moroccan</option>
+            <option value="mosotho">Mosotho</option>
+            <option value="motswana">Motswana</option>
+            <option value="mozambican">Mozambican</option>
+            <option value="namibian">Namibian</option>
+            <option value="nauruan">Nauruan</option>
+            <option value="nepalese">Nepalese</option>
+            <option value="new zealander">New Zealander</option>
+            <option value="ni-vanuatu">Ni-Vanuatu</option>
+            <option value="nicaraguan">Nicaraguan</option>
+            <option value="nigerien">Nigerien</option>
+            <option value="north korean">North Korean</option>
+            <option value="northern irish">Northern Irish</option>
+            <option value="norwegian">Norwegian</option>
+            <option value="omani">Omani</option>
+            <option value="pakistani">Pakistani</option>
+            <option value="palauan">Palauan</option>
+            <option value="panamanian">Panamanian</option>
+            <option value="papua new guinean">Papua New Guinean</option>
+            <option value="paraguayan">Paraguayan</option>
+            <option value="peruvian">Peruvian</option>
+            <option value="polish">Polish</option>
+            <option value="portuguese">Portuguese</option>
+            <option value="qatari">Qatari</option>
+            <option value="romanian">Romanian</option>
+            <option value="russian">Russian</option>
+            <option value="rwandan">Rwandan</option>
+            <option value="saint lucian">Saint Lucian</option>
+            <option value="salvadoran">Salvadoran</option>
+            <option value="samoan">Samoan</option>
+            <option value="san marinese">San Marinese</option>
+            <option value="sao tomean">Sao Tomean</option>
+            <option value="saudi">Saudi</option>
+            <option value="scottish">Scottish</option>
+            <option value="senegalese">Senegalese</option>
+            <option value="serbian">Serbian</option>
+            <option value="seychellois">Seychellois</option>
+            <option value="sierra leonean">Sierra Leonean</option>
+            <option value="singaporean">Singaporean</option>
+            <option value="slovakian">Slovakian</option>
+            <option value="slovenian">Slovenian</option>
+            <option value="solomon islander">Solomon Islander</option>
+            <option value="somali">Somali</option>
+            <option value="south african">South African</option>
+            <option value="south korean">South Korean</option>
+            <option value="spanish">Spanish</option>
+            <option value="sri lankan">Sri Lankan</option>
+            <option value="sudanese">Sudanese</option>
+            <option value="surinamer">Surinamer</option>
+            <option value="swazi">Swazi</option>
+            <option value="swedish">Swedish</option>
+            <option value="swiss">Swiss</option>
+            <option value="syrian">Syrian</option>
+            <option value="taiwanese">Taiwanese</option>
+            <option value="tajik">Tajik</option>
+            <option value="tanzanian">Tanzanian</option>
+            <option value="thai">Thai</option>
+            <option value="togolese">Togolese</option>
+            <option value="tongan">Tongan</option>
+            <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+            <option value="tunisian">Tunisian</option>
+            <option value="turkish">Turkish</option>
+            <option value="tuvaluan">Tuvaluan</option>
+            <option value="ugandan">Ugandan</option>
+            <option value="ukrainian">Ukrainian</option>
+            <option value="uruguayan">Uruguayan</option>
+            <option value="uzbekistani">Uzbekistani</option>
+            <option value="venezuelan">Venezuelan</option>
+            <option value="vietnamese">Vietnamese</option>
+            <option value="welsh">Welsh</option>
+            <option value="yemenite">Yemenite</option>
+            <option value="zambian">Zambian</option>
+            <option value="zimbabwean">Zimbabwean</option>
+          </select>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Your country:</p>
+          <select class="contactField2" id="txtCountry" name ="country"></select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">City/States:</p>
+          <select class="contactField2" name="state" id="txtState"></select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Your mother tongue:</p>
+          <select class="contactField2" name="event-type" id="txtMotherTongue">
+            <option value="English">English</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Russian">Russian</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Japanese">Japanese</option>
+            <option value="German">German</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Javanese">Javanese</option>
+            <option value="Korean">Korean</option>
+            <option value="French">French</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Italian">Italian</option>
+            <option value="Urdu">Urdu</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Polish">Polish</option>
+            <option value="Ukrainian">Ukrainian</option>
+            <option value="Persian">Persian</option>
+            <option value="Malayalam">Malayalam</option>
+            <option value="Kannada">Kannada</option>
+            <option value="Oriya">Oriya</option>
+            <option value="Panjabi">Panjabi</option>
+            <option value="Sunda">Sunda</option>
+            <option value="Panjabi">Panjabi</option>
+            <option value="Romanian">Romanian</option>
+            <option value="Bhojpuri">Bhojpuri</option>
+            <option value="Azerbaijani">Azerbaijani</option>
+            <option value="Maithili">Maithili</option>
+            <option value="Hausa">Hausa</option>
+            <option value="Burmese">Burmese</option>
+            <option value="Serbo">Serbo</option>
+            <option value="Awadhi">Awadhi</option>
+            <option value="Thai">Thai</option>
+            <option value="Dutch">Dutch</option>
+            <option value="Yoruba">Yoruba</option>
+            <option value="Sindhi">Sindhi</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Marrial status:</p>
+          <select class="contactField2" name="event-type" id="txtMarial">
+            <option value="single">Single</option>
+            <option value="engaged">Engaged</option>
+            <option value="married">Married</option>
+            <option value="widowed">Widowed</option>
+            <option value="separated">Separated</option>
+            <option value="divorced">Divorced</option>
+          </select>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Height (cm):</p>
+          <input type="number" placeholder="Height (cm) " name="contactNameField" value="" class="contactField requiredField" id="txtHeight"/>
+        </div>
+        <div class="formTextareaWrap">
+          <p class="input-label-custom">Weight (kg):</p>
+          <input type="number" placeholder="Weight (kg) " name="contactNameField" value="" class="contactField requiredField" id="txtWeight"/>
+        </div>
+        <div class="formFieldWrap">
+          <p class="input-label-custom">Your religion:</p>
+          <select class="contactField2" name="event-type" id="txtReligion">
+            <option value="Christianity">Christianity</option>
+            <option value="Christianity - Catholicism">Christianity - Catholicism</option>
+            <option value="Christianity - Orthodoxy">Christianity - Orthodoxy</option>
+            <option value="Christianity - Protestantism">Christianity - Protestantism</option>
+            <option value="Buddhism">Buddhism</option>
+            <option value="Buddhism - Zen">Buddhism - Zen</option>
+            <option value="Buddhism - Pure Land">Buddhism - Pure Land</option>
+            <option value="Buddhism - Theravada">Buddhism - Theravada</option>
+            <option value="Buddhism - Tibetan">Buddhism - Tibetan</option>
+            <option value="Confucianism">Confucianism</option>
+            <option value="Hinduism">Hinduism</option>
+            <option value="Hinduism - Shaivism">Hinduism - Shaivism</option>
+            <option value="Hinduism - Vaishnavism">Hinduism - Vaishnavism</option>
+            <option value="Hinduism - Shakta">Hinduism - Shakta</option>
+            <option value="Hinduism - Philosophy">Hinduism - Philosophy</option>
+            <option value="Islam">Islam</option>
+            <option value="Jainism">Jainism</option>
+            <option value="Judaism - Orthodox">Judaism - Orthodox</option>
+            <option value="Judaism - Liberal/Reform">Judaism - Liberal/Reform</option>
+            <option value="Shinto">Shinto</option>
+            <option value="Sikhism">Sikhism</option>
+            <option value="Taoism">Taoism</option>
+            <option value="Zoroastrianism">Zoroastrianism</option>
+            <option value="Christian-Derived NRMs">Christian-Derived NRMs</option>
+            <option value="Eastern-Derived NRMs">Eastern-Derived NRMs</option>
+            <option value="Bahai">Bahai</option>
+            <option value="Scientology">Scientology</option>
+            <option value="Rastafarianism">Rastafarianism</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="formSubmitButtonErrorsWrap contactFormButton">
+          <input type="submit" ng-click="saveHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnSave" value="Save"/>
+        </div>
+      </fieldset>
+    </div>
+  </ons-page>
+</ons-template>
+<!-- Edit Basic Information page end -->
+
+<!-- Edit Hobby page start -->
+<ons-template id="editHobby.html">
+  <ons-page class="page-boxshadow" ng-controller="EditHobbyController">
+    <ons-toolbar modifier="transparent">
+      <div class="left" ng-controller="ProfileController">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backEditHandler()"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center" style="color: black">Hobby</div>
+    </ons-toolbar>
+    <!-- Error message -->
+    <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+      <p>
+        {{errorContent}}
+      </p>
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+    </div>
+    <!-- success message -->
+    <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+      <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      <p>
+        Save your information success!
+      </p>
+    </div>
+    <div class="material-container">
+      <div class="formSubmitButtonErrorsWrap contactFormButton">
+        <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+      </div>
+    </div>
+  </ons-page>
+</ons-template>
+<!-- Edit Hobby page end -->
+
 <!-- Menu template start -->
 <ons-template id="menu.html">
   <ons-page modifier="menu-page" class="menu-pos" ng-controller="ProfileController" style="background-color: #FFFFFF">
@@ -915,14 +1474,13 @@
 <!-- Menu template end -->
 
 <!-- Edit avatar modal start -->
-<ons-modal var="editAvataModal" ng-controller="CameraController">
+<ons-modal var="editAvataModal" ng-controller="ProfileController">
   <div class="simple-modal-content modal-content rounded-modal customize-modal">
     <div class="modal-header">
       <p>Avatar</p>
     </div>
-    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
-    <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="captureNewPhoto()">Capture new photo</a>
-    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Choose exists</a>
+    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="ViewImg()">View</a>
+    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Edit</a>
     <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
   </div>
 </ons-modal>
@@ -934,13 +1492,28 @@
     <div class="modal-header">
       <p>Cover image</p>
     </div>
-    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="closeModal()">View</a>
-    <a href="#" class="button button-blue button-small round-button modal-close button-center modal-header-button" ng-click="captureNewPhoto()">Capture new photo</a>
-    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="chooseHandler()">Choose exists</a>
+    <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="ViewCoverImg()">View</a>
+    <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" onclick="capturePhoto();">Edit</a>
     <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
   </div>
 </ons-modal>
 <!-- Edit cover image modal end -->
+
+<!-- view image modal start -->
+<ons-modal var="viewImgModal" ng-controller="ProfileController">
+  <div class="simple-modal-content modal-content rounded-modal customize-modal2" id="imgView">
+    <a src="{{imgurl}}" title="Image"> <img alt="Image" src="{{imgurl}}" onclick="viewImgModal.hide()"> </a>
+  </div>
+</ons-modal>
+<!-- view image modal end -->
+
+<!-- view cover modal start -->
+<ons-modal var="viewCoverImgModal" ng-controller="ProfileController">
+  <div class="simple-modal-content modal-content rounded-modal customize-modal2" id="imgView">
+    <a src="{{coverUrl}}" title="Image"> <img alt="Image" src="{{coverUrl}}" onclick="viewCoverImgModal.hide()"> </a>
+  </div>
+</ons-modal>
+<!-- view image modal end -->
 
 <!-- Path to matterTheme Library JS-->
 <script type="text/javascript" src="lib/matterTheme/scripts/jquery.js"></script>

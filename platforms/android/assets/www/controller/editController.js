@@ -39,7 +39,6 @@ module.controller("EditFamilyController", function($scope, $rootScope, $timeout,
         console.log(data);
         // save success
         if (data=="saveSuccess") {
-          getData();
           $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
           $('#success').slideDown(200);
           setTimeout(function(){
@@ -75,30 +74,6 @@ module.controller("EditFamilyController", function($scope, $rootScope, $timeout,
       }
     });
   };
-  // Get user information
-  function getData() {
-    console.log('geting information...');
-    var request = $http({
-      method: "post",
-      url: "http://139.59.254.92/getinfor.php",
-      data: {
-        userName: $scope.userName
-      },
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-    /* Successful HTTP post request or not */
-    request.success(function (data) {
-      console.log(data);
-      $rootScope.profile = data;
-      var unformatedUrl = $rootScope.profile[0]["avatarUrl"];
-      var unformatedCoverUrl = $rootScope.profile[0]["coverImageUrl"];
-      $scope.imgurl = unformatedUrl.replace("?", "%3f");
-      $scope.coverUrl = unformatedCoverUrl.replace("?", "%3f");
-      console.log($scope.imgurl);
-      console.log($scope.coverUrl);
-    });
-  };
-
 });
 
 // Edit Profile information
@@ -136,7 +111,6 @@ module.controller("EditProfileController", function($scope, $rootScope, $timeout
       success: function(data){
         console.log(data);
         if (data=="saveSuccess") {
-          getData();
           $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
           $('#success').slideDown(200);
           setTimeout(function(){
@@ -190,30 +164,6 @@ module.controller("EditProfileController", function($scope, $rootScope, $timeout
       }
     });
   };
-  // Get user information
-  function getData() {
-    console.log('geting information...');
-    var request = $http({
-      method: "post",
-      url: "http://139.59.254.92/getinfor.php",
-      data: {
-        userName: $scope.userName
-      },
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-    /* Successful HTTP post request or not */
-    request.success(function (data) {
-      console.log(data);
-      $rootScope.profile = data;
-      var unformatedUrl = $rootScope.profile[0]["avatarUrl"];
-      var unformatedCoverUrl = $rootScope.profile[0]["coverImageUrl"];
-      $scope.imgurl = unformatedUrl.replace("?", "%3f");
-      $scope.coverUrl = unformatedCoverUrl.replace("?", "%3f");
-      console.log($scope.imgurl);
-      console.log($scope.coverUrl);
-    });
-  };
-
 });
 
 // Edit Bsic information
@@ -269,7 +219,6 @@ module.controller("EditBasicInformationController", function($scope, $rootScope,
       success: function(data){
         console.log(data);
         if (data=="saveSuccess") {
-          getData();
           $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
           $('#success').slideDown(200);
           setTimeout(function(){
@@ -370,31 +319,7 @@ module.controller("EditBasicInformationController", function($scope, $rootScope,
       populateCountries("txtCountry", "txtState");
       console.log('script reloaded!');
     });
-  };
-  // Get user information
-  function getData() {
-    console.log('geting information...');
-    var request = $http({
-      method: "post",
-      url: "http://139.59.254.92/getinfor.php",
-      data: {
-        userName: $scope.userName
-      },
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-    /* Successful HTTP post request or not */
-    request.success(function (data) {
-      console.log(data);
-      $rootScope.profile = data;
-      var unformatedUrl = $rootScope.profile[0]["avatarUrl"];
-      var unformatedCoverUrl = $rootScope.profile[0]["coverImageUrl"];
-      $scope.imgurl = unformatedUrl.replace("?", "%3f");
-      $scope.coverUrl = unformatedCoverUrl.replace("?", "%3f");
-      console.log($scope.imgurl);
-      console.log($scope.coverUrl);
-    });
-  };
-
+  }
 });
 
 // Edit Hobby

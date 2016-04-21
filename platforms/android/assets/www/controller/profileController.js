@@ -1,12 +1,26 @@
-module.controller("ProfileController", function($scope, $http) {
+module.controller("ProfileController", function($scope, $rootScope, $http) {
   $scope.userName = window.localStorage.getItem("username");
   $scope.numbOfImage = 0;
-
+  $scope.imageUrl = '';
   console.log($scope.userName);
   // reloadScript();
   checkConnection();
   getUserImage();
   reloadCameraScript();
+  $scope.backEditHandler = function () {
+    navi.resetToPage('profile.html');
+  };
+  // view avatar
+  $scope.ViewImg = function () {
+    editAvataModal.hide();
+    $scope.imageUrl = $scope.imgurl;
+    viewImgModal.show();
+  };
+  // view cover
+  $scope.ViewCoverImg = function () {
+    editCoverModal.hide();
+    viewCoverImgModal.show();
+  };
   // Handler menu button
   $scope.menuButtonHandler = function () {
     menu.toggleMenu();
@@ -113,10 +127,10 @@ module.controller("ProfileController", function($scope, $http) {
     /* Successful HTTP post request or not */
     request.success(function (data) {
       console.log(data);
-      $scope.profile = data;
-      var unformatedUrl = $scope.profile[0]["avatarUrl"];
-      var unformatedCoverUrl = $scope.profile[0]["coverImageUrl"];
-      console.log("====== "+$scope.profile[0]["coverImageUrl"]);
+      $rootScope.profile = data;
+      var unformatedUrl = $rootScope.profile[0]["avatarUrl"];
+      var unformatedCoverUrl = $rootScope.profile[0]["coverImageUrl"];
+      console.log("====== "+$rootScope.profile[0]["coverImageUrl"]);
       $scope.imgurl = unformatedUrl.replace("?", "%3f");
       $scope.coverUrl = unformatedCoverUrl.replace("?", "%3f");
       console.log($scope.imgurl);
@@ -181,65 +195,6 @@ module.controller("ProfileController", function($scope, $http) {
       }
     });
   };
-
-  //
-  // script for handler image start
-  //
-  //
-  var pictureSource;
-  var destinationType;
-
-  document.addEventListener("deviceready", onDeviceReady, false);
-  function onDeviceReady() {
-    console.log('ready ===============================================');
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
-  }
-  function onPhotoDataSuccess(imageURI) {
-    alert(imageURI);
-    // savePhoto(imageURI);
-  }
-
-  function onPhotoURISuccess(imageURI) {
-    alert(imageURI);
-    // savePhoto(imageURI);
-  }
-
-  function capturePhoto() {
-    // takePic();
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-      quality: 50,
-      targetWidth: 600,
-      targetHeight: 600,
-      destinationType: destinationType.FILE_URI,
-      saveToPhotoAlbum: true
-    });
-  }
-
-  function getPhoto(source) {
-    navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-      quality: 30,
-      targetWidth: 600,
-      targetHeight: 600,
-      destinationType: destinationType.FILE_URI,
-      sourceType: source
-    });
-  }
-
-  function onFail(message) {
-    //alert('Failed because: ' + message);
-  }
-  $scope.chooseHandler = function() {
-    getPhoto(pictureSource.PHOTOLIBRARY);
-  };
-  $scope.captureNewPhoto = function () {
-    capturePhoto();
-  }
-  //
-  //
-  // script for handler image end
-  //
-
 
   function showMessage(messType) {
     switch(messType) {

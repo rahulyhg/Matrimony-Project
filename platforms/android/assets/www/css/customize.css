@@ -171,5 +171,14 @@
 }
 
 .age-label{
-border: none!important;
+  border: none!important;
+}
+
+.input-label-custom{
+  height: 0px;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  line-height: 40px!important;
+  padding-left: 8px;
 }

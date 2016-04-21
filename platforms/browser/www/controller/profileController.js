@@ -1,4 +1,4 @@
-module.controller("ProfileController", function($scope, $http) {
+module.controller("ProfileController", function($scope, $rootScope, $http) {
   $scope.userName = window.localStorage.getItem("username");
   $scope.numbOfImage = 0;
   $scope.imageUrl = '';
@@ -7,6 +7,18 @@ module.controller("ProfileController", function($scope, $http) {
   checkConnection();
   getUserImage();
   reloadCameraScript();
+  getData();
+  // updateData();
+  function updateData() {
+    $timeout(function () {
+      getData();
+      updateData();
+    }, 10000);
+  };
+  $scope.backEditHandler = function () {
+    navi.resetToPage('profile.html');
+    checkConnection();
+  };
   // view avatar
   $scope.ViewImg = function () {
     editAvataModal.hide();
@@ -124,10 +136,10 @@ module.controller("ProfileController", function($scope, $http) {
     /* Successful HTTP post request or not */
     request.success(function (data) {
       console.log(data);
-      $scope.profile = data;
-      var unformatedUrl = $scope.profile[0]["avatarUrl"];
-      var unformatedCoverUrl = $scope.profile[0]["coverImageUrl"];
-      console.log("====== "+$scope.profile[0]["coverImageUrl"]);
+      $rootScope.profile = data;
+      var unformatedUrl = $rootScope.profile[0]["avatarUrl"];
+      var unformatedCoverUrl = $rootScope.profile[0]["coverImageUrl"];
+      console.log("====== "+$rootScope.profile[0]["coverImageUrl"]);
       $scope.imgurl = unformatedUrl.replace("?", "%3f");
       $scope.coverUrl = unformatedCoverUrl.replace("?", "%3f");
       console.log($scope.imgurl);

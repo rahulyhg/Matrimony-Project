@@ -8,6 +8,7 @@ function onDeviceReady() {
 pictureSource = navigator.camera.PictureSourceType;
 destinationType = navigator.camera.DestinationType;
 console.log('Camera API ready');
+console.log(navigator.camera);
 }
 
 function onPhotoDataSuccess(imageURI) {

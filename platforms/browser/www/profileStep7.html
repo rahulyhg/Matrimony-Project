@@ -162,23 +162,15 @@ function nextButtonHandler(){
     enableAll();
     console.log('invalid Input!');
   }
-
-  // Check connectionStatus
-  if (checkInternetConnection()) {
-    // Check input data
-    if (checkInput()) {
-      console.log('all validated!');
-      saveToServer();
-    }else {
-      enableAll();
-    }
-  }else {
-    enableAll();
-    showMessage("connectionError");
-  }
 };
 
 function checkInput() {
+  if ($('#txtMinAge').val()=="") {
+    $('#txtMinAge').val(16);
+  };
+  if ($('#txtMaxAge').val()=="") {
+    $('#txtMaxAge').val(80);
+  };
   if ($('#txtMinAge').val() < 16 || $('#txtMinAge').val() > 80 || $('#txtMaxAge').val() < 16 || $('#txtMaxAge').val() > 80) {
     showMessage('AgeErr');
     return false;

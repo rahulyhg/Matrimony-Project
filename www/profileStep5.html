@@ -182,18 +182,13 @@ function nextButtonHandler(){
   var userName = window.localStorage.getItem("username");
   console.log("next btn click");
   console.log(userName);
-  // Check connectionStatus
-  if (checkInternetConnection()) {
-    // Check input data
-    if (checkInput()) {
-      console.log('all validated!');
-      saveToServer();
-    }else {
-      enableAll();
-    }
+  // Check input data
+  if (checkInput()) {
+    console.log('all validated!');
+    checkInternetConnection();
+    enableAll();
   }else {
     enableAll();
-    showMessage("connectionError");
   }
 };
 
@@ -257,13 +252,27 @@ function enableAll() {
 
 // check connection
 function checkInternetConnection() {
-  connectionStatus = navigator.onLine ? 'online' : 'offline';
-  if (connectionStatus=='online') {
-    return true;
-  }else if (connectionStatus=='offline') {
-    return false;
-  }
-}
+  $.ajax({
+    url: "http://139.59.254.92/insert.php",
+    timeout: 10000,
+    error: function(jqXHR) {
+      if(jqXHR.status==0) {
+        showMessage("connectionError");
+      }
+    },
+    success: function() {
+      saveToServer();
+    }
+  });
+};
+// function checkInternetConnection() {
+//   connectionStatus = navigator.onLine ? 'online' : 'offline';
+//   if (connectionStatus=='online') {
+//     return true;
+//   }else if (connectionStatus=='offline') {
+//     return false;
+//   }
+// }
 
 // Show message
 function showMessage(messType) {

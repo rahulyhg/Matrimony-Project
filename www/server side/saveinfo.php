@@ -121,7 +121,7 @@ if(isset($_POST['savestep5']))
 
 if(isset($_POST['savestep6']))
 {
-  // Decode our JSON into PHP objects
+  // Decode JSON into PHP objects
   $dataObj = json_decode($_POST["savestep6"]);
   $userName = $dataObj->username;
   $hobbyArr = $dataObj->hobby;
@@ -270,6 +270,32 @@ if(isset($_POST['editsurvey']))
   }
   else{
     echo "error";
+  }
+}
+
+if(isset($_POST['edithobby']))
+{
+  $qdl = mysql_query("DELETE FROM `Hobby_Mapping_TBL` WHERE userName = '$userName';");
+
+  // Decode JSON into PHP objects
+  $dataObj = json_decode($_POST["edithobby"]);
+  $userName = $dataObj->username;
+  $hobbyArr = $dataObj->hobby;
+  $j = count($hobbyArr);
+  $check = true;
+  for ($i=0; $i < $j; $i++) {
+    $query = "INSERT INTO `Hobby_Mapping_TBL`(`userName`, `hobbyId`) VALUES ('$userName',$hobbyArr[$i]);";
+    // echo $query;
+    $q=mysql_query($query);
+    if (!$q) {
+      $check = false;
+    }
+  }
+
+  if ($check == true) {
+    echo "saveSuccess";
+  }else {
+    echo "saveError";
   }
 }
 ?>

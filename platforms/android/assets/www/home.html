@@ -568,7 +568,12 @@
               </div>
               <h6 class="accordion-toggle" id="hobbyContentHeader">
                 Hobby
-                <i class="fa fa-pencil" onclick="navi.pushPage('editHobby.html')"></i>
+                <i class="fa fa-pencil" onclick="editHobby()"></i>
+                <script type="text/javascript">
+                function editHobby() {
+                  window.location.replace("editHobby.html");
+                }
+                </script>
               </h6>
               <div class="accordion-content" id="hobbyContent" style="display: none">
                 <ul class="font-icon-list no-bottom">
@@ -1083,7 +1088,7 @@
       </div>
     </ons-page>
   </ons-template>
-  <!-- Edit Famile page end -->
+  <!-- Edit Family page end -->
 
   <!-- Edit Basic Information page start -->
   <ons-template id="editBasicInformation.html">

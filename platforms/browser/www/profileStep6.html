@@ -203,24 +203,21 @@ function nextButtonHandler(){
   console.log("next btn click");
   console.log(userName);
   // var data_to_send = $.serialize(info);
-  // Check connectionStatus
-  if (checkInternetConnection()) {
-    var moviesArr = getSelectedMovies();
-    var musicArr = getSelectedMusic();
-    var sportArr = getSelectedSport();
-    var otherArr = getSelectedOther();
-    var hobbyArr = new Array();
-    hobbyArr = moviesArr.concat(musicArr.concat(sportArr.concat(otherArr)));
-    console.log(hobbyArr.length);
-    if (hobbyArr.length > 0) {
-      saveToServer(hobbyArr);
-    }else {
-      showMessage("hobbyRequire");
-      enableAll();
-    }
-  }else {
+  var moviesArr = getSelectedMovies();
+  var musicArr = getSelectedMusic();
+  var sportArr = getSelectedSport();
+  var otherArr = getSelectedOther();
+  var hobbyArr = new Array();
+  hobbyArr = moviesArr.concat(musicArr.concat(sportArr.concat(otherArr)));
+  console.log(hobbyArr.length);
+  if (hobbyArr.length > 0) {
+    // Check connectionStatus
+    checkConnection();
     enableAll();
-    showMessage("connectionError");
+    // saveToServer(hobbyArr);
+  }else {
+    showMessage("hobbyRequire");
+    enableAll();
   }
 };
 
@@ -306,14 +303,28 @@ function enableAll() {
 }
 
 // check connection
-function checkInternetConnection() {
-  connectionStatus = navigator.onLine ? 'online' : 'offline';
-  if (connectionStatus=='online') {
-    return true;
-  }else if (connectionStatus=='offline') {
-    return false;
-  }
-}
+function checkConnection() {
+  $.ajax({
+    url: "http://139.59.254.92/insert.php",
+    timeout: 10000,
+    error: function(jqXHR) {
+      if(jqXHR.status==0) {
+        showMessage("connectionError");
+      }
+    },
+    success: function() {
+      saveToServer();
+    }
+  });
+};
+// function checkInternetConnection() {
+//   connectionStatus = navigator.onLine ? 'online' : 'offline';
+//   if (connectionStatus=='online') {
+//     return true;
+//   }else if (connectionStatus=='offline') {
+//     return false;
+//   }
+// }
 
 // Show message
 function showMessage(messType) {

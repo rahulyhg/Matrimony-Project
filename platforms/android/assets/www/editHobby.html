@@ -70,7 +70,7 @@
   <!--Page content goes here, fixed elements go above the all elements class-->
   <div class="material-container full-bottom">
     <div class="sidebar-divider" style="padding-left: 0px">
-      Tell about your hobby
+      Edit your hobby
     </div>
     <div class="container">
       <ul class="tabs">
@@ -161,7 +161,10 @@
       </div>
     </div>
     <div class="formSubmitButtonErrorsWrap contactFormButton">
-      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
+      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Save"/>
+    </div>
+    <div class="formSubmitButtonErrorsWrap contactFormButton">
+      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-red contactSubmitButton" id="btnCancel" value="Cancel"/>
     </div>
   </div>
   <!-- <div id="footer">
@@ -195,6 +198,10 @@
 </div>
 <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
 <script>
+
+$('#btnCancel').click(function () {
+  window.location.replace("home.html");
+});
 
 // handler next button
 function nextButtonHandler(){
@@ -274,7 +281,7 @@ function saveToServer(hobbyArr) {
   $.ajax({
     type: "POST",
     url:"http://139.59.254.92/saveinfo.php",
-    data: {"savestep6" : JSON.stringify(dataObj)},
+    data: {"edithobby" : JSON.stringify(dataObj)},
     crossDomain: true,
     cache: false,
     beforeSend: function(){ console.log('saving...');},
@@ -283,7 +290,7 @@ function saveToServer(hobbyArr) {
       // save success
       if (data=="saveSuccess") {
         enableAll();
-        window.location.replace("profileStep7.html");
+        window.location.replace("home.html");
       }else if (data=="saveError") {
         // save error
         enableAll();

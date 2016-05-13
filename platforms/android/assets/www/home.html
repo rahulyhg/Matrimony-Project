@@ -55,6 +55,7 @@
   <script src="controller/editController.js"></script>
   <script src="controller/surveyController.js"></script>
   <script src="controller/chatController.js"></script>
+  <script src="controller/inboxController.js"></script>
   <script src="cordova.js"></script>
   <title>Home</title>
 
@@ -116,6 +117,51 @@
     </ons-page>
   </ons-template>
   <!-- Matching page end -->
+
+  <!-- Inbox page start -->
+  <ons-template id="inbox.html">
+    <ons-page class="page-boxshadow" ng-controller="InboxController">
+      <ons-toolbar modifier="transparent">
+        <div class="left">
+          <ons-toolbar-button ng-click="menuButtonHandler()">
+            <ons-icon icon="ion-navicon" size="28px" fixed-width="false" style="color: black"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center" style="color: black">Inbox</div>
+        <div class="right">
+          <ons-toolbar-button ng-click="rightButtonRematching()">
+            <ons-icon icon="ion-ios-loop" size="28px" fixed-width="false" style="color: black" spin="false" id="rightIcon"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+      <!-- Error message -->
+      <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
+        <p>
+          {{errorContent}}
+        </p>
+        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="material-container" style="display: none; text-align: center" id="noInbox">
+        <h6>Empty inbox</h6>
+      </div>
+      <div class="container-fullscreen matching-content" ng-repeat="ib in inbox">
+        <div class="one-half-responsive">
+          <div class="activity-item material-container matching-item">
+            <img class="activity-item-image" src="{{ib.avatarUrl}}" alt="img" ng-click="goChat($index)">
+            <h5 ng-click="goChat($index)"><strong class="color-blue-dark">{{ib.firstName}} {{ib.middleName}} {{ib.lastName}}</strong></h5>
+            <ons-row>
+              <ons-col width=50%>
+                <a href="#" class="button friend-action-button" ng-click="unfriend($index)"><i class="fa fa-trash-o" aria-hidden="true"></i>Detele</a>
+              </ons-col>
+            </ons-row>
+            <!-- </div> -->
+            <a href="#" class="activity-item-toggle"><i class="fa fa-angle-double-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </ons-page>
+  </ons-template>
+  <!-- Inbox page page end -->
 
   <!-- Search page start -->
   <ons-template id="search.html">
@@ -1569,10 +1615,10 @@
             <a class="submenu-item" style="display: block" href="#" ng-click="goFriendList()">     <i class="fa fa-angle-right"></i><em>   Friend list     </em><i class="notification notifi-number">{{friendnumb}}</i></a>
           </div>
         </div>
-        <a class="menu-item" href="contact.html">
+        <a class="menu-item" ng-click="goInbox()">
           <i class="bg-magenta-dark fa fa-envelope-o"></i>
           <em>Inbox</em>
-          <i class="notification notifi-number">0</i>
+          <!-- <i class="notification notifi-number">0</i> -->
         </a>
         <a class="menu-item" href="#" ng-click="goChangePassword()">
           <i class="bg-teal-light fa fa-unlock-alt"></i>

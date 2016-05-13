@@ -9,6 +9,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
   $scope.inSearch = false;
   $scope.inChangePassword = false;
   $scope.inSurvey = false;
+  $scope.inInbox = false;
   $scope.requestnumb=0;
   $scope.requestCount = 0;
   $scope.friendnumb = 0;
@@ -35,6 +36,24 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       updateData();
     }, 10000);
   };
+  $scope.goInbox = function () {
+    if (!$scope.inInbox) {
+      menu.closeMenu();
+      $scope.inProfile = false;
+      $scope.inMatching = false;
+      $scope.inFriendList = false;
+      $scope.inFriendRequestList = false;
+      $scope.inSeftRequestList = false;
+      $scope.inSearch = false;
+      $scope.inChangePassword = false;
+      $scope.inSurvey = false;
+      $scope.inInbox = true;
+      navi.resetToPage('inbox.html');
+      reloadScript();
+    }else {
+      menu.closeMenu();
+    }
+  };
   $scope.goSurvey = function () {
     if (!$scope.inSurvey) {
       menu.closeMenu();
@@ -46,6 +65,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = true;
+      $scope.inInbox = false;
       navi.resetToPage('survey.html');
       reloadScript();
     }else {
@@ -63,6 +83,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = true;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('changePass.html');
       reloadScript();
     }else {
@@ -80,6 +101,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = true;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('search.html');
       reloadScript();
     }else {
@@ -97,6 +119,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('seftRequestList.html');
       reloadScript();
     }else {
@@ -114,6 +137,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('friendRequestList.html');
       reloadScript();
     }else {
@@ -131,6 +155,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('friendList.html');
       reloadScript();
     }else {
@@ -149,6 +174,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('profile.html');
       reloadScript();
     }else {
@@ -167,6 +193,7 @@ module.controller("MenuController", function($scope, $rootScope, $timeout, $http
       $scope.inSearch = false;
       $scope.inChangePassword = false;
       $scope.inSurvey = false;
+      $scope.inInbox = false;
       navi.resetToPage('matching.html');
       reloadScript();
     }else {

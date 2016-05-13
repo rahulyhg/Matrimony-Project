@@ -6,7 +6,7 @@ module.controller("ChatController", function($scope, $rootScope, $timeout, $http
   $scope.replyMess = [];
   $scope.mess = [];
   loadMessage();
-  updateData();
+  // updateData();
   // update data
   function updateData() {
 
@@ -31,7 +31,6 @@ module.controller("ChatController", function($scope, $rootScope, $timeout, $http
     $scope.sendMess = [];
     $scope.replyMess = [];
     $scope.mess = [];
-    $('#chatList').html('');
     getSendMessageList();
   }
   // sort message
@@ -97,6 +96,7 @@ module.controller("ChatController", function($scope, $rootScope, $timeout, $http
       sortMessage();
       console.log('mess');
       console.log($scope.mess);
+      $('#chatList').html('');
       for (var i = 0; i < $scope.mess.length; i++) {
         if ($scope.mess[i]["sendFrom"] == $scope.userName) {
           $('<em class="speach-left-title">you says:</em><p class="speach-left" id="'+i+'" onclick="showTime()">'+$scope.mess[i]["messageContent"]+'</p><em class="speach-left-title" id="date-time-'+i+'" style="display: none">'+$scope.mess[i]["messageDate"]+$scope.mess[i]["messageTime"]+'</em><div class="clear"></div>').appendTo('#chatList');
@@ -104,6 +104,7 @@ module.controller("ChatController", function($scope, $rootScope, $timeout, $http
           $('<em class="speach-right-title">'+$scope.user+' replied:</em><p class="speach-right blue-bubble" id="'+i+'" onclick="showTime()">'+$scope.mess[i]["messageContent"]+'</p><em class="speach-left-title" id="date-time-'+i+'" style="display: none">'+$scope.mess[i]["messageDate"]+$scope.mess[i]["messageTime"]+'</em>').appendTo('#chatList');
         }
       }
+      $('#chatList').scrollTop($('#chatList')[0].scrollHeight);
     });
     request.error(function() {
       showMessage('Unable connect to load message, please check your internet connection!');
@@ -114,33 +115,38 @@ module.controller("ChatController", function($scope, $rootScope, $timeout, $http
   $scope.send = function (index) {
     console.log('sending....');
     var message = $('#txtMess').val();
-    $('#txtMess').val('');
-    console.log($scope.userName + $scope.user + message);
-    var request = $http({
-      method: "post",
-      url: "http://139.59.254.92/sendMessage.php",
-      data: {
-        userName: $scope.userName,
-        sendTo: $scope.user,
-        message: message
-      },
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-    /* Successful HTTP post request or not */
-    request.success(function (data) {
-      console.log(data);
-      if (data=="success") {
-        console.log('send success');
-        loadMessage();
-      }else if (data=="error") {
+    console.log('mess = '+message);
+    if (message!='' or message!=null) {
+      $('#txtMess').val('');
+      console.log($scope.userName + $scope.user + message);
+      var request = $http({
+        method: "post",
+        url: "http://139.59.254.92/sendMessage.php",
+        data: {
+          userName: $scope.userName,
+          sendTo: $scope.user,
+          message: message
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+      /* Successful HTTP post request or not */
+      request.success(function (data) {
+        console.log(data);
+        if (data=="success") {
+          console.log('send success');
+          loadMessage();
+        }else if (data=="error") {
 
+          console.log('send fail');
+        }
+      });
+      request.error(function() {
         console.log('send fail');
-      }
-    });
-    request.error(function() {
-      console.log('send fail');
-      showMessage('Unable connect to send message, please check your internet connection!');
-    });
+        showMessage('Unable connect to send message, please check your internet connection!');
+      });
+    }else {
+      showMessage("Your message can't empty!");
+    }
   };
   // show error
   function showMessage(mess) {

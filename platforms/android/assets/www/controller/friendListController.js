@@ -23,7 +23,9 @@ module.controller("FriendListController", function($scope, $rootScope, $timeout,
   };
   // Chat
   $scope.chat = function (index) {
-    console.log('chat');
+    var selectedUser = $scope.friend[index];
+    $rootScope.selectedUser = selectedUser;
+    navi.pushPage('chat.html');
   };
   // Unfriend
   $scope.unfriend = function (index) {

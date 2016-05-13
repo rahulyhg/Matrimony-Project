@@ -249,6 +249,11 @@ module.controller("DetailController", function($scope, $rootScope, $timeout, $ht
       console.log(data);
       $scope.userImage = data;
       for (var i = 0; i < $scope.userImage.length; i++) {
+        var unformatUrl = $scope.userImage[i]["imageUrl"];
+        var formatedUrl = unformatUrl.replace("?", "%3f");
+        $scope.userImage[i]["imageUrl"] = formatedUrl;
+      }
+      for (var i = 0; i < $scope.userImage.length; i++) {
         $('<a href="'+$scope.userImage[i]["imageUrl"]+'" class="show-gallery" title="Image"><img alt="img" src="'+$scope.userImage[i]["imageUrl"]+'"></a>').appendTo('#userGallery');
       }
       apply_gallery_justification();

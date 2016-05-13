@@ -53,6 +53,33 @@
   border-right:solid 1px #FFF!important;
 }
 
+.contactField3{
+  width: 100%;
+  color:#A9A9B1;
+  font-family:'Roboto', sans-serif;
+  font-size: 12px;
+  height:40px!important;
+  line-height:40px!important;
+  background-color:transparent;
+  border:none;
+  border-bottom:solid 1px #0b84fe!important;
+  border-top:solid 1px #0b84fe!important;
+  border-left:solid 1px #0b84fe!important;
+  border-right:solid 1px #0b84fe!important;
+  margin-bottom:20px;
+  padding-left:5px;
+}
+.contactField3:hover{
+  color:#4090e2;
+}
+.contactField3:focus{
+  color:#1f1f1f;
+  border-bottom:solid 1px #0b84fe!important;
+  border-top:solid 1px #0b84fe!important;
+  border-left:solid 1px #0b84fe!important;
+  border-right:solid 1px #0b84fe!important;
+}
+
 .contactTextarea{
   background-color:rgba(255,255,255,0.4);
   font-size:12px;

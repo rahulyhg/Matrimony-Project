@@ -180,20 +180,20 @@
 // Inspired by base2 and Prototype
 (function(){
   var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
- 
+
   // The base Class implementation (does nothing)
   this.Class = function(){};
- 
+
   // Create a new Class that inherits from this class
   Class.extend = function(prop) {
     var _super = this.prototype;
-   
+
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
     var prototype = new this();
     initializing = false;
-   
+
     // Copy the properties over onto the new prototype
     for (var name in prop) {
       // Check if we're overwriting an existing function
@@ -202,38 +202,38 @@
         (function(name, fn){
           return function() {
             var tmp = this._super;
-           
+
             // Add a new ._super() method that is the same method
             // but on the super-class
             this._super = _super[name];
-           
+
             // The method only need to be bound temporarily, so we
             // remove it when we're done executing
-            var ret = fn.apply(this, arguments);        
+            var ret = fn.apply(this, arguments);
             this._super = tmp;
-           
+
             return ret;
           };
         })(name, prop[name]) :
         prop[name];
     }
-   
+
     // The dummy class constructor
     function Class() {
       // All construction is actually done in the init method
       if ( !initializing && this.init )
         this.init.apply(this, arguments);
     }
-   
+
     // Populate our constructed prototype object
     Class.prototype = prototype;
-   
+
     // Enforce the constructor to be what we expect
     Class.prototype.constructor = Class;
- 
+
     // And make this class extendable
     Class.extend = arguments.callee;
-   
+
     return Class;
   };
 })();
@@ -3482,7 +3482,7 @@ function IScroll (el, options) {
 
 	this.options = {
 
-// INSERT POINT: OPTIONS 
+// INSERT POINT: OPTIONS
 
 		startX: 0,
 		startY: 0,
@@ -3533,7 +3533,7 @@ function IScroll (el, options) {
 
 // INSERT POINT: NORMALIZATION
 
-	// Some defaults	
+	// Some defaults
 	this.x = 0;
 	this.y = 0;
 	this.directionX = 0;
@@ -4143,7 +4143,7 @@ return IScroll;
 })(window, document, Math);
 /**
  * MicroEvent - to make any js object an event emitter (server or browser)
- * 
+ *
  * - pure javascript - server compatible, browser compatible
  * - dont rely on the browser doms
  * - super simple - you get it immediatly, no mistery, no magic involved
@@ -4252,7 +4252,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     slice = classes.slice,
 
-    featureName, 
+    featureName,
 
 
     injectElementWithStyles = function( rule, callback, nodes, testnames ) {
@@ -4301,7 +4301,7 @@ window.Modernizr = (function( window, document, undefined ) {
       };
     }
     else {
-      hasOwnProp = function (object, property) { 
+      hasOwnProp = function (object, property) {
         return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
       };
     }
@@ -4488,7 +4488,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
        }
 
-       return Modernizr; 
+       return Modernizr;
      };
 
 
@@ -5241,7 +5241,7 @@ limitations under the License.
  * @ngdoc object
  * @name ons
  * @category util
- * @description 
+ * @description
  *   [ja]Onsen UIで利用できるグローバルなオブジェクトです。このオブジェクトは、AngularJSのスコープから参照することができます。 [/ja]
  *   [en]A global object that's used in Onsen UI. This object can be reached from the AngularJS scope.[/en]
  */
@@ -5249,7 +5249,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature ready(callback)
- * @description 
+ * @description
  *   [ja]アプリの初期化に利用するメソッドです。渡された関数は、Onsen UIの初期化が終了している時点で必ず呼ばれます。[/ja]
  *   [en]Method used to wait for app initialization. The callback will not be executed until Onsen UI has been completely initialized.[/en]
  * @param {Function} callback
@@ -5260,13 +5260,13 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature bootstrap([moduleName, [dependencies]])
- * @description 
+ * @description
  *   [ja]Onsen UIの初期化を行います。Angular.jsのng-app属性を利用すること無しにOnsen UIを読み込んで初期化してくれます。[/ja]
  *   [en]Initialize Onsen UI. Can be used to load Onsen UI without using the <code>ng-app</code> attribute from AngularJS.[/en]
- * @param {String} [moduleName] 
+ * @param {String} [moduleName]
  *   [en]AngularJS module name.[/en]
  *   [ja]Angular.jsでのモジュール名[/ja]
- * @param {Array} [dependencies] 
+ * @param {Array} [dependencies]
  *   [en]List of AngularJS module dependencies.[/en]
  *   [ja]依存するAngular.jsのモジュール名の配列[/ja]
  * @return {Object}
@@ -5277,7 +5277,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature enableAutoStatusBarFill()
- * @description 
+ * @description
  *   [en]Enable status bar fill feature on iOS7 and above.[/en]
  *   [ja]iOS7以上で、ステータスバー部分の高さを自動的に埋める処理を有効にします。[/ja]
  */
@@ -5285,7 +5285,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature disableAutoStatusBarFill()
- * @description 
+ * @description
  *   [en]Disable status bar fill feature on iOS7 and above.[/en]
  *   [ja]iOS7以上で、ステータスバー部分の高さを自動的に埋める処理を無効にします。[/ja]
  */
@@ -5302,7 +5302,7 @@ limitations under the License.
  * @return {Object}
  *   [en]Component object. Will return null if no component was found.[/en]
  *   [ja]コンポーネントのオブジェクトを返します。もしコンポーネントが見つからなかった場合にはnullを返します。[/ja]
- * @description 
+ * @description
  *   [en]Find parent component object of <code>dom</code> element.[/en]
  *   [ja]指定されたdom引数の親要素をたどってコンポーネントを検索します。[/ja]
  */
@@ -5319,7 +5319,7 @@ limitations under the License.
  * @return {Object}
  *   [en]Component object. Will return null if no component was found.[/en]
  *   [ja]コンポーネントのオブジェクトを返します。もしコンポーネントが見つからなかった場合にはnullを返します。[/ja]
- * @description 
+ * @description
  *   [en]Find component object using CSS selector.[/en]
  *   [ja]CSSセレクタを使ってコンポーネントのオブジェクトを検索します。[/ja]
  */
@@ -5327,10 +5327,10 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature setDefaultDeviceBackButtonListener(listener)
- * @param {Function} listener 
+ * @param {Function} listener
  *   [en]Function that executes when device back button is pressed.[/en]
  *   [ja]デバイスのバックボタンが押された時に実行される関数オブジェクトを指定します。[/ja]
- * @description 
+ * @description
  *   [en]Set default handler for device back button.[/en]
  *   [ja]デバイスのバックボタンのためのデフォルトのハンドラを設定します。[/ja]
  */
@@ -5338,7 +5338,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature disableDeviceBackButtonHandler()
- * @description 
+ * @description
  * [en]Disable device back button event handler.[/en]
  * [ja]デバイスのバックボタンのイベントを受け付けないようにします。[/ja]
  */
@@ -5346,7 +5346,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature enableDeviceBackButtonHandler()
- * @description 
+ * @description
  * [en]Enable device back button event handler.[/en]
  * [ja]デバイスのバックボタンのイベントを受け付けるようにします。[/ja]
  */
@@ -5357,7 +5357,7 @@ limitations under the License.
  * @return {Boolean}
  *   [en]Will be true if Onsen UI is initialized.[/en]
  *   [ja]初期化されているかどうかを返します。[/ja]
- * @description 
+ * @description
  *   [en]Returns true if Onsen UI is initialized.[/en]
  *   [ja]Onsen UIがすでに初期化されているかどうかを返すメソッドです。[/ja]
  */
@@ -5368,7 +5368,7 @@ limitations under the License.
  * @param {HTMLElement} dom
  *   [en]Element to compile.[/en]
  *   [ja]コンパイルする要素を指定します。[/ja]
- * @description 
+ * @description
  *   [en]Compile Onsen UI components.[/en]
  *   [ja]通常のHTMLの要素をOnsen UIのコンポーネントにコンパイルします。[/ja]
  */
@@ -5379,7 +5379,7 @@ limitations under the License.
  * @return {Boolean}
  *   [en]Will be true if the app is running in Cordova.[/en]
  *   [ja]Cordovaで実行されている場合にtrueになります。[/ja]
- * @description 
+ * @description
  *   [en]Returns true if running inside Cordova.[/en]
  *   [ja]Cordovaで実行されているかどうかを返すメソッドです。[/ja]
  */
@@ -5399,7 +5399,7 @@ limitations under the License.
  * @return {Promise}
  *   [en]Promise object that resolves to the alert dialog component object.[/en]
  *   [ja]ダイアログのコンポーネントオブジェクトを解決するPromiseオブジェクトを返します。[/ja]
- * @description 
+ * @description
  *   [en]Create a alert dialog instance from a template.[/en]
  *   [ja]テンプレートからアラートダイアログのインスタンスを生成します。[/ja]
  */
@@ -5419,7 +5419,7 @@ limitations under the License.
  * @return {Promise}
  *   [en]Promise object that resolves to the dialog component object.[/en]
  *   [ja]ダイアログのコンポーネントオブジェクトを解決するPromiseオブジェクトを返します。[/ja]
- * @description 
+ * @description
  *   [en]Create a dialog instance from a template.[/en]
  *   [ja]テンプレートからダイアログのインスタンスを生成します。[/ja]
  */
@@ -5439,7 +5439,7 @@ limitations under the License.
  * @return {Promise}
  *   [en]Promise object that resolves to the popover component object.[/en]
  *   [ja]ポップオーバーのコンポーネントオブジェクトを解決するPromiseオブジェクトを返します。[/ja]
- * @description 
+ * @description
  *   [en]Create a popover instance from a template.[/en]
  *   [ja]テンプレートからポップオーバーのインスタンスを生成します。[/ja]
  */
@@ -5538,7 +5538,7 @@ window.ons = (function(){
 
     document.addEventListener('deviceready', function() {
       if (!bindEvents()) {
-        if (document.querySelector('[ons-keyboard-active]') || 
+        if (document.querySelector('[ons-keyboard-active]') ||
           document.querySelector('[ons-keyboard-inactive]')) {
           noPluginError();
         }
@@ -5764,7 +5764,7 @@ window.ons = (function(){
           // Copy attributes and insert html.
           var attrs = el.prop('attributes');
           for (var i = 0, l = attrs.length; i < l; i++) {
-            alertDialog.attr(attrs[i].name, attrs[i].value); 
+            alertDialog.attr(attrs[i].name, attrs[i].value);
           }
           alertDialog.html(el.html());
 
@@ -5816,7 +5816,7 @@ window.ons = (function(){
           // Copy attributes and insert html.
           var attrs = el.prop('attributes');
           for (var i = 0, l = attrs.length; i < l; i++) {
-            dialog.attr(attrs[i].name, attrs[i].value); 
+            dialog.attr(attrs[i].name, attrs[i].value);
           }
           dialog.html(el.html());
 
@@ -5843,8 +5843,8 @@ window.ons = (function(){
               childStyle = child.getAttribute('style'),
               newStyle = (function(a, b) {
                 var c =
-                (a.substr(-1) === ';' ? a : a + ';') + 
-                  (b.substr(-1) === ';' ? b : b + ';'); 
+                (a.substr(-1) === ';' ? a : a + ';') +
+                  (b.substr(-1) === ';' ? b : b + ';');
                 return c;
               })(parentStyle, childStyle);
 
@@ -5889,7 +5889,7 @@ window.ons = (function(){
           // Copy attributes and insert html.
           var attrs = el.prop('attributes');
           for (var i = 0, l = attrs.length; i < l; i++) {
-            popover.attr(attrs[i].name, attrs[i].value); 
+            popover.attr(attrs[i].name, attrs[i].value);
           }
           popover.html(el.html());
 
@@ -5916,11 +5916,11 @@ window.ons = (function(){
                 childStyle = child.getAttribute('style'),
                 newStyle = (function(a, b) {
                 var c =
-                  (a.substr(-1) === ';' ? a : a + ';') + 
-                  (b.substr(-1) === ';' ? b : b + ';'); 
+                  (a.substr(-1) === ';' ? a : a + ';') +
+                  (b.substr(-1) === ';' ? b : b + ';');
                 return c;
               })(parentStyle, childStyle);
-  
+
               child.setAttribute('style', newStyle);
             }
 
@@ -5985,7 +5985,7 @@ limitations under the License.
         this._visible = false;
         this._doorLock = new DoorLock();
 
-        this._animation = AlertDialogView._animatorDict[typeof attrs.animation !== 'undefined' ? 
+        this._animation = AlertDialogView._animatorDict[typeof attrs.animation !== 'undefined' ?
           attrs.animation : 'default'];
 
         if (!this._animation) {
@@ -6014,7 +6014,7 @@ limitations under the License.
           alertDialog: this,
           cancel: function() { cancel = true; }
         });
-        
+
         if (!cancel) {
           this._doorLock.waitUnlock(function() {
             var unlock = this._doorLock.lock(),
@@ -6023,11 +6023,11 @@ limitations under the License.
             this._mask.css('display', 'block');
             this._mask.css('opacity', 1);
             this._element.css('display', 'block');
-            
+
             if (options.animation) {
               animation = AlertDialogView._animatorDict[options.animation];
             }
-            
+
             animation.show(this, function() {
               this._visible = true;
               unlock();
@@ -6049,7 +6049,7 @@ limitations under the License.
         options = options || {};
         var cancel = false,
           callback = options.callback || function() {};
-        
+
         this.emit('prehide', {
           alertDialog: this,
           cancel: function() { cancel = true; }
@@ -6112,7 +6112,7 @@ limitations under the License.
       /**
        * Disable or enable alert dialog.
        *
-       * @param {Boolean} 
+       * @param {Boolean}
        */
       setDisabled: function(disabled) {
         if (typeof disabled !== 'boolean') {
@@ -6136,14 +6136,14 @@ limitations under the License.
       },
 
       /**
-       * Make alert dialog cancelable or uncancelable. 
+       * Make alert dialog cancelable or uncancelable.
        *
        * @param {Boolean}
        */
       setCancelable: function(cancelable) {
         if (typeof cancelable !== 'boolean') {
-          throw new Error('Argument must be a boolean.'); 
-        }  
+          throw new Error('Argument must be a boolean.');
+        }
 
         if (cancelable) {
           this._element.attr('cancelable', true);
@@ -6181,7 +6181,7 @@ limitations under the License.
         });
 
         this._mask.on('click', this._cancel.bind(this));
- 
+
         if (color) {
           this._mask.css('background-color', color);
         }
@@ -6246,7 +6246,7 @@ limitations under the License.
     var AndroidAlertDialogAnimator = DialogAnimator.extend({
 
       timing: 'cubic-bezier(.1, .7, .4, 1)',
-      duration: 0.2, 
+      duration: 0.2,
 
       init: function(options) {
         options = options || {};
@@ -6300,7 +6300,7 @@ limitations under the License.
       },
 
       /**
-       * @param {Object} dialog 
+       * @param {Object} dialog
        * @param {Function} callback
        */
       hide: function(dialog, callback) {
@@ -6382,7 +6382,7 @@ limitations under the License.
     var AndroidDialogAnimator = DialogAnimator.extend({
 
       timing: 'ease-in-out',
-      duration: 0.3, 
+      duration: 0.3,
 
       init: function(options) {
         options = options || {};
@@ -6436,7 +6436,7 @@ limitations under the License.
       },
 
       /**
-       * @param {Object} dialog 
+       * @param {Object} dialog
        * @param {Function} callback
        */
       hide: function(dialog, callback) {
@@ -6563,7 +6563,7 @@ limitations under the License.
           this._scope.animation = animation;
         }.bind(this));
       },
-  
+
       /**
        * Returns whether the button is disabled or not.
        */
@@ -6685,7 +6685,7 @@ limitations under the License.
 
         var sizeAttr = this._getCarouselItemSizeAttr();
         var sizeInfo = this._decomposeSizeString(sizeAttr);
-        
+
         for (var i = 0; i < children.length; i++) {
           angular.element(children[i]).css({
             position: 'absolute',
@@ -7111,7 +7111,7 @@ limitations under the License.
       _getTouchEvents: function() {
         var EVENTS = [
           'drag', 'dragstart', 'dragend',
-          'dragup', 'dragdown', 'dragleft', 
+          'dragup', 'dragdown', 'dragleft',
           'dragright', 'swipe', 'swipeup',
           'swipedown', 'swipeleft', 'swiperight'
         ];
@@ -7159,7 +7159,7 @@ limitations under the License.
           var size = this._getCarouselItemSize();
 
           for (var i = 0; i < this._getCarouselItemCount(); i++) {
-            if (max >= i * size) { 
+            if (max >= i * size) {
               arr.push(i * size);
             }
           }
@@ -7287,7 +7287,7 @@ limitations under the License.
 
       _scrollToKillOverScroll: function() {
         var duration = 0.4;
-        
+
         if (this._scroll < 0) {
           animit(this._getCarouselItemElements())
             .queue({
@@ -7351,7 +7351,7 @@ limitations under the License.
 
           if (this._isOverScroll(scroll)) {
             this._scrollToKillOverScroll();
-          } 
+          }
           else {
             if (this.isAutoScrollEnabled()) {
               scroll = this._normalizeScrollPosition(scroll);
@@ -7449,7 +7449,7 @@ limitations under the License.
         this._visible = false;
         this._doorLock = new DoorLock();
 
-        this._animation = DialogView._animatorDict[typeof attrs.animation !== 'undefined' ? 
+        this._animation = DialogView._animatorDict[typeof attrs.animation !== 'undefined' ?
           attrs.animation : 'default'];
 
         if (!this._animation) {
@@ -7488,7 +7488,7 @@ limitations under the License.
           dialog: this,
           cancel: function() { cancel = true; }
         });
-        
+
         if (!cancel) {
           this._doorLock.waitUnlock(function() {
             var unlock = this._doorLock.lock(),
@@ -7502,7 +7502,7 @@ limitations under the License.
             if (options.animation) {
               animation = DialogView._animatorDict[options.animation];
             }
-            
+
             animation.show(this, function() {
               this._visible = true;
               unlock();
@@ -7524,7 +7524,7 @@ limitations under the License.
         options = options || {};
         var cancel = false,
           callback = options.callback || function() {};
-        
+
         this.emit('prehide', {
           dialog: this,
           cancel: function() { cancel = true; }
@@ -7584,7 +7584,7 @@ limitations under the License.
       /**
        * Disable or enable dialog.
        *
-       * @param {Boolean} 
+       * @param {Boolean}
        */
       setDisabled: function(disabled) {
         if (typeof disabled !== 'boolean') {
@@ -7608,14 +7608,14 @@ limitations under the License.
       },
 
       /**
-       * Make dialog cancelable or uncancelable. 
+       * Make dialog cancelable or uncancelable.
        *
        * @param {Boolean}
        */
       setCancelable: function(cancelable) {
         if (typeof cancelable !== 'boolean') {
-          throw new Error('Argument must be a boolean.'); 
-        }  
+          throw new Error('Argument must be a boolean.');
+        }
 
         if (cancelable) {
           this._element.attr('cancelable', true);
@@ -7746,7 +7746,7 @@ limitations under the License.
     var FadePopoverAnimator = PopoverAnimator.extend({
 
       timing: 'cubic-bezier(.1, .7, .4, 1)',
-      duration: 0.2, 
+      duration: 0.2,
 
       init: function(options) {
         options = options || {};
@@ -7756,7 +7756,7 @@ limitations under the License.
       },
 
       /**
-      * @param {Object} popover 
+      * @param {Object} popover
       * @param {Function} callback
       */
       show: function(popover, callback) {
@@ -7769,7 +7769,7 @@ limitations under the License.
             opacity: 0
           })
           .queue({
-            opacity: 1.0 
+            opacity: 1.0
           }, {
             duration: this.duration,
             timing: this.timing
@@ -7782,7 +7782,7 @@ limitations under the License.
           })
           .queue({
             transform: 'scale3d(1.0, 1.0,  1.0)',
-            opacity: 1.0 
+            opacity: 1.0
           }, {
             duration: this.duration,
             timing: this.timing
@@ -7796,7 +7796,7 @@ limitations under the License.
       },
 
       /**
-      * @param {Object} popover 
+      * @param {Object} popover
       * @param {Function} callback
       */
       hide: function(popover, callback) {
@@ -7809,7 +7809,7 @@ limitations under the License.
             opacity: 1.0
           })
           .queue({
-            opacity: 0 
+            opacity: 0
           }, {
             duration: this.duration,
             timing: this.timing
@@ -7820,7 +7820,7 @@ limitations under the License.
             opacity: 1.0
           })
           .queue({
-            opacity: 0 
+            opacity: 0
           }, {
             duration: this.duration,
             timing: this.timing
@@ -8048,7 +8048,7 @@ limitations under the License.
     var IOSAlertDialogAnimator = DialogAnimator.extend({
 
       timing: 'cubic-bezier(.1, .7, .4, 1)',
-      duration: 0.2, 
+      duration: 0.2,
 
       init: function(options) {
         options = options || {};
@@ -8102,7 +8102,7 @@ limitations under the License.
       },
 
       /**
-       * @param {Object} dialog 
+       * @param {Object} dialog
        * @param {Function} callback
        */
       hide: function(dialog, callback) {
@@ -8182,7 +8182,7 @@ limitations under the License.
     var IOSDialogAnimator = DialogAnimator.extend({
 
       timing: 'ease-in-out',
-      duration: 0.3, 
+      duration: 0.3,
 
       init: function(options) {
         options = options || {};
@@ -8234,7 +8234,7 @@ limitations under the License.
       },
 
       /**
-       * @param {Object} dialog 
+       * @param {Object} dialog
        * @param {Function} callback
        */
       hide: function(dialog, callback) {
@@ -8443,7 +8443,7 @@ limitations under the License.
               .resetStyle({
                 duration: 0.1,
                 transition:
-                  'background-color 0.1s linear, ' + 
+                  'background-color 0.1s linear, ' +
                   'border-color 0.1s linear'
               }),
 
@@ -8881,7 +8881,7 @@ limitations under the License.
       _getItemHeight: function(i) {
         return this._delegate.calculateItemHeight(i);
       },
-      
+
       _getTopOffset: function() {
         return this._parentElement[0].getBoundingClientRect().top;
       },
@@ -8908,7 +8908,7 @@ limitations under the License.
       _isRendered: function(i) {
         return this._renderedElements.hasOwnProperty(i);
       },
-      
+
       _renderElement: function(item) {
         if (this._isRendered(item.index)) {
           // Update content even if it's already added to DOM
@@ -9316,7 +9316,7 @@ limitations under the License.
               duration: 0.4,
               timing: 'cubic-bezier(.1, .7, .1, 1)'
             })
-            
+
         );
       }
     });
@@ -10296,8 +10296,8 @@ limitations under the License.
        * @param {Boolean} instant
        */
       openMenu: function(callback, instant) {
-        var duration = instant === true ? 0.0 : this._duration;        
-        
+        var duration = instant === true ? 0.0 : this._duration;
+
         this._menuPage.css('display', 'block');
         this._blackMask.css('display', 'block');
 
@@ -10734,7 +10734,7 @@ limitations under the License.
         this._visible = false;
         this._doorLock = new DoorLock();
 
-        this._animation = PopoverView._animatorDict[typeof attrs.animation !== 'undefined' ? 
+        this._animation = PopoverView._animatorDict[typeof attrs.animation !== 'undefined' ?
           attrs.animation : 'fade'];
 
         if (!this._animation) {
@@ -10782,7 +10782,7 @@ limitations under the License.
         } else {
           throw new Error('Invalid direction.');
         }
-      
+
         if (!this._scope.$$phase) {
           this._scope.$apply();
         }
@@ -10869,7 +10869,7 @@ limitations under the License.
           down: window.innerHeight - position.bottom
         };
 
-        var orderedDirections = Object.keys(scores).sort(function(a, b) {return -(scores[a] - scores[b]);}); 
+        var orderedDirections = Object.keys(scores).sort(function(a, b) {return -(scores[a] - scores[b]);});
         for (var i = 0, l = orderedDirections.length; i < l; i++) {
           var direction = orderedDirections[i];
           if (directions.indexOf(direction) > -1) {
@@ -10894,13 +10894,13 @@ limitations under the License.
         } else if (target instanceof Event) {
           target = target.target;
         }
-      
+
         if (!target) {
          throw new Error('Target undefined');
         }
 
         options = options || {};
-        
+
         var cancel = false;
         this.emit('preshow', {
           popover: this,
@@ -11009,7 +11009,7 @@ limitations under the License.
        */
       setCancelable: function(cancelable) {
         if (typeof cancelable !== 'boolean') {
-          throw new Error('Argument must be a boolean.');  
+          throw new Error('Argument must be a boolean.');
         }
 
         if (cancelable) {
@@ -11091,7 +11091,7 @@ limitations under the License.
       }
     });
 
-    return PopoverAnimator; 
+    return PopoverAnimator;
   });
 })();
 
@@ -11161,7 +11161,7 @@ limitations under the License.
         pageElement.append(scrollElement);
         scrollElement.append(children);
 
-        return scrollElement; 
+        return scrollElement;
       },
 
       _setStyle: function() {
@@ -11173,7 +11173,7 @@ limitations under the License.
           lineHeight: h + 'px'
         });
       },
-    
+
       _onScroll: function(event) {
         var el = this._pageElement[0];
 
@@ -11237,7 +11237,7 @@ limitations under the License.
         else {
           this._setState(this.STATE_INITIAL);
         }
- 
+
         event.stopPropagation();
         this._translateTo(scroll);
       },
@@ -11479,7 +11479,7 @@ limitations under the License.
       _mainPage: undefined,
       _width: undefined,
       _duration: false,
-      
+
       /**
        * @param {jqLite} element "ons-sliding-menu" or "ons-split-view" element
        * @param {jqLite} mainPage
@@ -11561,7 +11561,7 @@ limitations under the License.
        * @param {Boolean} instant
        */
       openMenu: function(callback, instant) {
-        var duration = instant === true ? 0.0 : this._duration;        
+        var duration = instant === true ? 0.0 : this._duration;
 
         this._menuPage.css('display', 'block');
 
@@ -11600,7 +11600,7 @@ limitations under the License.
        * @param {Boolean} instant
        */
       closeMenu: function(callback, instant) {
-        var duration = instant === true ? 0.0 : this._duration;        
+        var duration = instant === true ? 0.0 : this._duration;
 
         var aboveTransform = this._generateAbovePageTransform(0);
         var behindStyle = this._generateBehindPageStyle(0);
@@ -11821,8 +11821,8 @@ limitations under the License.
        * @param {Boolean} instant
        */
       openMenu: function(callback, instant) {
-        var duration = instant === true ? 0.0 : this._duration;        
-        
+        var duration = instant === true ? 0.0 : this._duration;
+
         this._menuPage.css('display', 'block');
         this._blackMask.css('display', 'block');
 
@@ -11861,7 +11861,7 @@ limitations under the License.
        * @param {Boolean} instant
        */
       closeMenu: function(callback, instant) {
-        var duration = instant === true ? 0.0 : this._duration;        
+        var duration = instant === true ? 0.0 : this._duration;
 
         this._blackMask.css('display', 'block');
 
@@ -11993,7 +11993,7 @@ limitations under the License.
       ),
 
       timing: 'cubic-bezier(.1, .7, .4, 1)',
-      duration: 0.3, 
+      duration: 0.3,
       blackMaskOpacity: 0.4,
 
       init: function(options) {
@@ -12176,7 +12176,7 @@ limitations under the License.
     var SlideDialogAnimator = DialogAnimator.extend({
 
       timing: 'cubic-bezier(.1, .7, .4, 1)',
-      duration: 0.2, 
+      duration: 0.2,
 
       init: function(options) {
         options = options || {};
@@ -12228,7 +12228,7 @@ limitations under the License.
       },
 
       /**
-       * @param {Object} dialog 
+       * @param {Object} dialog
        * @param {Function} callback
        */
       hide: function(dialog, callback) {
@@ -12432,7 +12432,7 @@ limitations under the License.
   });
   MicroEvent.mixin(SlidingMenuViewModel);
 
-  module.factory('SlidingMenuView', ['$onsen', '$compile', 'SlidingMenuAnimator', 'RevealSlidingMenuAnimator', 'PushSlidingMenuAnimator', 'OverlaySlidingMenuAnimator', function($onsen, $compile, SlidingMenuAnimator, RevealSlidingMenuAnimator, 
+  module.factory('SlidingMenuView', ['$onsen', '$compile', 'SlidingMenuAnimator', 'RevealSlidingMenuAnimator', 'PushSlidingMenuAnimator', 'OverlaySlidingMenuAnimator', function($onsen, $compile, SlidingMenuAnimator, RevealSlidingMenuAnimator,
                                              PushSlidingMenuAnimator, OverlaySlidingMenuAnimator) {
 
     var SlidingMenuView = Class.extend({
@@ -12879,7 +12879,7 @@ limitations under the License.
       /**
        * Close sliding-menu page.
        *
-       * @param {Object} options 
+       * @param {Object} options
        */
       close: function(options) {
         options = options || {};
@@ -13047,7 +13047,7 @@ limitations under the License.
 
   module.factory('SlidingMenuAnimator', function() {
     return Class.extend({
-      
+
       /**
        * @param {jqLite} element "ons-sliding-menu" or "ons-split-view" element
        * @param {jqLite} mainPage
@@ -13285,9 +13285,9 @@ limitations under the License.
         var should = this._shouldCollapse();
 
         if (this._doSplit) {
-          this._activateSplitMode(); 
+          this._activateSplitMode();
         } else if (this._doCollapse) {
-          this._activateCollapseMode(); 
+          this._activateCollapseMode();
         } else if (should) {
           this._activateCollapseMode();
         } else if (!should) {
@@ -13362,7 +13362,7 @@ limitations under the License.
         this.emit(name, {
           splitView: this,
           width: window.innerWidth,
-          orientation: this._getOrientation() 
+          orientation: this._getOrientation()
         });
       },
 
@@ -13383,13 +13383,13 @@ limitations under the License.
           },
           width: window.innerWidth,
           orientation: this._getOrientation()
-        }); 
+        });
       },
 
       _activateCollapseMode: function() {
         if (this._mode !== COLLAPSE_MODE) {
           this._fireEvent('precollapse');
-       
+
           this._secondaryPage.attr('style', '');
           this._mainPage.attr('style', '');
 
@@ -13417,7 +13417,7 @@ limitations under the License.
 
           this._mode = SPLIT_MODE;
           this._setSize();
-       
+
           this._fireEvent('postsplit');
         }
       },
@@ -13864,7 +13864,7 @@ limitations under the License.
           if (options.callback instanceof Function) {
             options.callback();
           }
-        } 
+        }
       },
 
       /**
@@ -14355,16 +14355,16 @@ limitations under the License.
  *   [en]Back button component for ons-toolbar. Can be used with ons-navigator to provide back button support.[/en]
  *   [ja]ons-toolbarに配置できる「戻るボタン」用コンポーネントです。ons-navigatorと共に使用し、ページを1つ前に戻る動作を行います。[/ja]
  * @codepen aHmGL
- * @seealso ons-toolbar 
+ * @seealso ons-toolbar
  *   [en]ons-toolbar component[/en]
  *   [ja]ons-toolbarコンポーネント[/ja]
  * @seealso ons-navigator
  *   [en]ons-navigator component[/en]
  *   [ja]ons-navigatorコンポーネント[/en]
- * @guide Addingatoolbar 
+ * @guide Addingatoolbar
  *   [en]Adding a toolbar[/en]
  *   [ja]ツールバーの追加[/ja]
- * @guide Returningfromapage 
+ * @guide Returningfromapage
  *   [en]Returning from a page[/en]
  *   [ja]一つ前のページに戻る[/ja]
  * @example
@@ -14770,7 +14770,7 @@ limitations under the License.
  * @description
  *   [en]Fired just after the current carousel item has changed.[/en]
  *   [ja]現在表示しているカルーセルの要素が変わった時に発火します。[/ja]
- * @param {Object} event 
+ * @param {Object} event
  *   [en]Event object.[/en]
  *   [ja]イベントオブジェクトです。[/ja]
  * @param {Object} event.carousel
@@ -14804,7 +14804,7 @@ limitations under the License.
  * @description
  *   [en]Fired when the carousel has been overscrolled.[/en]
  *   [ja]カルーセルがオーバースクロールした時に発火します。[/ja]
- * @param {Object} event 
+ * @param {Object} event
  *   [en]Event object.[/en]
  *   [ja]イベントオブジェクトです。[/ja]
  * @param {Object} event.carousel
@@ -15428,7 +15428,7 @@ limitations under the License.
  * @param {Object} event.dialog
  *   [en]Component object.[/en]
  *   [ja]コンポーネントのオブジェクト。[/ja]
- * @param {Function} event.cancel 
+ * @param {Function} event.cancel
  *   [en]Execute this function to stop the dialog from being shown.[/en]
  *   [ja]この関数を実行すると、ダイアログの表示がキャンセルされます。[/ja]
  */
@@ -15455,7 +15455,7 @@ limitations under the License.
  * @param {Object} event.dialog
  *   [en]Component object.[/en]
  *   [ja]コンポーネントのオブジェクト。[/ja]
- * @param {Function} event.cancel 
+ * @param {Function} event.cancel
  *   [en]Execute this function to stop the dialog from being hidden.[/en]
  *   [ja]この関数を実行すると、ダイアログの非表示がキャンセルされます。[/ja]
  */
@@ -16371,7 +16371,7 @@ limitations under the License.
  * @id lazy-repeat
  * @name ons-lazy-repeat
  * @category control
- * @description 
+ * @description
  *   [en]
  *     Using this component a list with millions of items can be rendered without a drop in performance.
  *     It does that by "lazily" loading elements into the DOM when they come into view and
@@ -16383,7 +16383,7 @@ limitations under the License.
  *     このコンポーネントを使うことで、パフォーマンスを劣化させること無しに巨大な数の要素を描画できます。
  *   [/ja]
  * @codepen QwrGBm
- * @guide UsingLazyRepeat 
+ * @guide UsingLazyRepeat
  *   [en]How to use Lazy Repeat[/en]
  *   [ja]レイジーリピートの使い方[/ja]
  * @example
@@ -16636,7 +16636,7 @@ limitations under the License.
  * @seealso ons-list-header
  *   [en]ons-list-header component[/en]
  *   [ja]ons-list-headerコンポーネント[/ja]
- * @guide UsingList 
+ * @guide UsingList
  *   [en]Using lists[/en]
  *   [ja]リストを使う[/ja]
  * @codepen yxcCt
@@ -16778,7 +16778,7 @@ limitations under the License.
  * @id modal
  * @name ons-modal
  * @category modal
- * @description 
+ * @description
  *   [en]
  *     Modal component that masks current screen.
  *     Underlying components are not subject to any events while the modal component is shown.
@@ -17589,7 +17589,7 @@ limitations under the License.
  * <script>
  * ons.ready(function() {
  *   ons.createPopover('popover.html').then(function(popover) {
- *     popover.show('#mybutton');   
+ *     popover.show('#mybutton');
  *   });
  * });
  * </script>
@@ -17611,7 +17611,7 @@ limitations under the License.
  * @param {Object} event.popover
  *   [en]Component object.[/en]
  *   [ja]コンポーネントのオブジェクト。[/ja]
- * @param {Function} event.cancel 
+ * @param {Function} event.cancel
  *   [en]Call this function to stop the popover from being shown.[/en]
  *   [ja]この関数を呼び出すと、ポップオーバーの表示がキャンセルされます。[/ja]
  */
@@ -17638,7 +17638,7 @@ limitations under the License.
  * @param {Object} event.popover
  *   [en]Component object.[/en]
  *   [ja]コンポーネントのオブジェクト。[/ja]
- * @param {Function} event.cancel 
+ * @param {Function} event.cancel
  *   [en]Call this function to stop the popover from being hidden.[/en]
  *   [ja]この関数を呼び出すと、ポップオーバーが隠れる処理をキャンセルします。[/ja]
  */
@@ -17970,7 +17970,7 @@ limitations under the License.
  *   [en]Component that adds "pull-to-refresh" to an <ons-page> element.[/en]
  *   [ja]ons-page要素以下でいわゆるpull to refreshを実装するためのコンポーネントです。[/ja]
  * @codepen WbJogM
- * @guide UsingPullHook 
+ * @guide UsingPullHook
  *   [en]How to use Pull Hook[/en]
  *   [ja]プルフックを使う[/ja]
  * @example
@@ -18319,7 +18319,7 @@ limitations under the License.
             throw new Error('"ons-scroller" can\'t accept "ng-controller" directive.');
           }
 
-          var wrapper = angular.element('<div></div>');
+          var wrapper = angular.element('<div id="chatList"></div>');
           wrapper.addClass('ons-scroller__content ons-scroller-inner');
           element.append(wrapper);
 
@@ -20425,7 +20425,7 @@ limitations under the License.
   var module = angular.module('onsen');
 
   var ComponentCleaner = {
-    
+
     /**
      * @param {jqLite} element
      */
@@ -20769,7 +20769,7 @@ limitations under the License.
       function find(node) {
         if (node.children.length === 0) {
           return node.element;
-        } 
+        }
 
         if (node.children.length === 1) {
           return find(node.children[0]);
@@ -20962,7 +20962,7 @@ limitations under the License.
             deferred.resolve(this.normalizePageHTML(html));
 
             return deferred.promise;
-            
+
           } else {
             return $http({
               url: page,
@@ -20985,7 +20985,7 @@ limitations under the License.
           if (!html.match(/^<(ons-page|ons-navigator|ons-tabbar|ons-sliding-menu|ons-split-view)/)) {
             html = '<ons-page>' + html + '</ons-page>';
           }
-          
+
           return html;
         },
 
@@ -20994,7 +20994,7 @@ limitations under the License.
          *
          * @param {Object} attrs
          * @param {Array} [modifiers] an array of appendix modifier
-         * @return {Function} 
+         * @return {Function}
          */
         generateModifierTemplater: function(attrs, modifiers) {
           var attrModifiers = attrs && typeof attrs.modifier === 'string' ? attrs.modifier.trim().split(/ +/) : [];
@@ -21016,7 +21016,7 @@ limitations under the License.
          *
          * @param {Object} view object
          * @param {String} template
-         * @param {jqLite} element 
+         * @param {jqLite} element
          */
         addModifierMethods: function(view, template, element) {
           var _tr = function(modifier) {
@@ -21033,7 +21033,7 @@ limitations under the License.
             },
 
             addModifier: function(modifier) {
-              element.addClass(_tr(modifier)); 
+              element.addClass(_tr(modifier));
             },
 
             setModifier: function(modifier) {
@@ -21054,7 +21054,7 @@ limitations under the License.
             toggleModifier: function(modifier) {
               var cls = _tr(modifier);
               if (element.hasClass(cls)) {
-                element.removeClass(cls);  
+                element.removeClass(cls);
               } else {
                 element.addClass(cls);
               }
@@ -21577,7 +21577,7 @@ window.animit = (function(){
     var styles = window.getComputedStyle(document.documentElement, ''),
       pre = (Array.prototype.slice
         .call(styles)
-        .join('') 
+        .join('')
         .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
       )[1];
     return pre;
@@ -21800,7 +21800,7 @@ limitations under the License.
  * @name ons.notification
  * @category dialog
  * @codepen Qwwxyp
- * @description 
+ * @description
  *   [en]Utility methods to create different kinds of alert dialogs. There are three methods available: alert, confirm and prompt.[/en]
  *   [ja]いくつかの種類のアラートダイアログを作成するためのユーティリティメソッドを収めたオブジェクトです。[/ja]
  * @example
@@ -21854,7 +21854,7 @@ limitations under the License.
  * @param {Function} [options.callback]
  *   [en]Function that executes after dialog has been closed.[/en]
  *   [ja]アラートダイアログが閉じられた時に呼び出される関数オブジェクトを指定します。[/ja]
- * @description 
+ * @description
  *   [en]
  *     Display an alert dialog to show the user a message.
  *     The content of the message can be either simple text or HTML.
@@ -21906,7 +21906,7 @@ limitations under the License.
  *     この関数の引数として、押されたボタンのインデックス値が渡されます。
  *     もしダイアログがキャンセルされた場合には-1が渡されます。
  *   [/ja]
- * @description 
+ * @description
  *   [en]
  *     Display a dialog to ask the user for confirmation.
  *     The default button labels are "Cancel" and "OK" but they can be customized.
@@ -21958,9 +21958,9 @@ limitations under the License.
  *     ダイアログが閉じられた後に実行される関数オブジェクトを指定します。
  *     関数の引数として、インプット要素の中の値が渡されます。ダイアログがキャンセルされた場合には、nullが渡されます。
  *   [/ja]
- * @description 
+ * @description
  *   [en]
- *     Display a dialog with a prompt to ask the user a question. 
+ *     Display a dialog with a prompt to ask the user a question.
  *     Must specify either message or messageHTML.
  *   [/en]
  *   [ja]
@@ -22067,7 +22067,7 @@ window.ons.notification = (function() {
       }
     });
 
-    dialogEl = titleEl = messageEl = footerEl = null; 
+    dialogEl = titleEl = messageEl = footerEl = null;
   };
 
   return {
@@ -22094,9 +22094,9 @@ window.ons.notification = (function() {
         throw new Error('Alert dialog must contain a message.');
       }
       createAlertDialog(
-        options.title, 
-        options.message || options.messageHTML, 
-        [options.buttonLabel], 
+        options.title,
+        options.message || options.messageHTML,
+        [options.buttonLabel],
         0,
         options.modifier,
         options.animation,
@@ -22216,7 +22216,7 @@ limitations under the License.
  * @ngdoc object
  * @name ons.orientation
  * @category util
- * @description 
+ * @description
  *   [en]Utility methods for orientation detection.[/en]
  *   [ja]画面のオリエンテーション検知のためのユーティリティメソッドを収めているオブジェクトです。[/ja]
  */
@@ -22241,7 +22241,7 @@ limitations under the License.
  * @return {Boolean}
  *   [en]Will be true if the current orientation is portrait mode.[/en]
  *   [ja]オリエンテーションがportraitモードの場合にtrueになります。[/ja]
- * @description 
+ * @description
  *   [en]Returns whether the current screen orientation is portrait or not.[/en]
  *   [ja]オリエンテーションがportraitモードかどうかを返します。[/ja]
  */
@@ -22252,7 +22252,7 @@ limitations under the License.
  * @return {Boolean}
  *   [en]Will be true if the current orientation is landscape mode.[/en]
  *   [ja]オリエンテーションがlandscapeモードの場合にtrueになります。[/ja]
- * @description 
+ * @description
  *   [en]Returns whether the current screen orientation is landscape or not.[/en]
  *   [ja]オリエンテーションがlandscapeモードかどうかを返します。[/ja]
  */
@@ -22418,7 +22418,7 @@ limitations under the License.
  * @ngdoc object
  * @name ons.platform
  * @category util
- * @description 
+ * @description
  *   [en]Utility methods to detect current platform.[/en]
  *   [ja]現在実行されているプラットフォームを検知するためのユーティリティメソッドを収めたオブジェクトです。[/ja]
  */
@@ -22426,7 +22426,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isWebView()
- * @description 
+ * @description
  *   [en]Returns whether app is running in Cordova.[/en]
  *   [ja]Cordova内で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22435,7 +22435,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isIOS()
- * @description 
+ * @description
  *   [en]Returns whether the OS is iOS.[/en]
  *   [ja]iOS上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22444,7 +22444,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isAndroid()
- * @description 
+ * @description
  *   [en]Returns whether the OS is Android.[/en]
  *   [ja]Android上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22453,7 +22453,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isIPhone()
- * @description 
+ * @description
  *   [en]Returns whether the device is iPhone.[/en]
  *   [ja]iPhone上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22462,7 +22462,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isIPad()
- * @description 
+ * @description
  *   [en]Returns whether the device is iPad.[/en]
  *   [ja]iPad上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22471,7 +22471,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isBlackBerry()
- * @description 
+ * @description
  *   [en]Returns whether the device is BlackBerry.[/en]
  *   [ja]BlackBerry上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22480,7 +22480,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isOpera()
- * @description 
+ * @description
  *   [en]Returns whether the browser is Opera.[/en]
  *   [ja]Opera上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22489,7 +22489,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isFirefox()
- * @description 
+ * @description
  *   [en]Returns whether the browser is Firefox.[/en]
  *   [ja]Firefox上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22498,7 +22498,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isSafari()
- * @description 
+ * @description
  *   [en]Returns whether the browser is Safari.[/en]
  *   [ja]Safari上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22507,7 +22507,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isChrome()
- * @description 
+ * @description
  *   [en]Returns whether the browser is Chrome.[/en]
  *   [ja]Chrome上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22516,7 +22516,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isIE()
- * @description 
+ * @description
  *   [en]Returns whether the browser is Internet Explorer.[/en]
  *   [ja]Internet Explorer上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}
@@ -22525,7 +22525,7 @@ limitations under the License.
 /**
  * @ngdoc method
  * @signature isIOS7above()
- * @description 
+ * @description
  *   [en]Returns whether the iOS version is 7 or above.[/en]
  *   [ja]iOS7以上で実行されているかどうかを返します。[/ja]
  * @return {Boolean}

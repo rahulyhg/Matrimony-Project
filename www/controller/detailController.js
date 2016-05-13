@@ -203,7 +203,7 @@ module.controller("DetailController", function($scope, $rootScope, $timeout, $ht
       showMessage('chatPermissionErr');
       break;
       case 'friend':
-      alert('can chat!');
+      navi.pushPage('chat.html');
       break;
       default:
       return false;

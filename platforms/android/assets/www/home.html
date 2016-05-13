@@ -54,6 +54,7 @@
   <script src="controller/cameraController.js"></script>
   <script src="controller/editController.js"></script>
   <script src="controller/surveyController.js"></script>
+  <script src="controller/chatController.js"></script>
   <script src="cordova.js"></script>
   <title>Home</title>
 
@@ -623,7 +624,7 @@
         </div>
         <div id="tab-2" class="tab-content customize-boxshadow profile-tab-content">
           <div class="material-container container full-bottom" style="font-size: 14px;">
-            <a href="#" class="button button-red red-3d button-image"><i class="fa fa-picture-o"></i>Add image</a>
+            <a href="#" class="button button-red red-3d button-image" ng-click="uploadImg()"><i class="fa fa-picture-o"></i>Add image</a>
             <div class="gallery-justified" id="userGallery">
             </div>
           </div>
@@ -1460,16 +1461,21 @@
   </ons-template>
   <!-- Edit Basic Information page end -->
 
-  <!-- Edit Hobby page start -->
-  <ons-template id="editHobby.html">
-    <ons-page class="page-boxshadow" ng-controller="EditHobbyController">
+  <!-- Chat page start -->
+  <ons-template id="chat.html">
+    <ons-page class="page-boxshadow" ng-controller="ChatController">
       <ons-toolbar modifier="transparent">
-        <div class="left" ng-controller="ProfileController">
+        <div class="left">
           <ons-toolbar-button>
-            <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backEditHandler()"></ons-icon>
+            <ons-icon icon="ion-ios-arrow-left" style="color: black; font-size: 28px;" fixed-width="false" ng-click="backBtn()"></ons-icon>
           </ons-toolbar-button>
         </div>
-        <div class="center" style="color: black">Hobby</div>
+        <div class="center" style="color: black">Chat with {{nameOfUser}}</div>
+        <div class="right">
+          <ons-toolbar-button ng-click="rightButtonRematching()">
+            <ons-icon icon="ion-ios-loop" size="28px" fixed-width="false" style="color: black" spin="false" id="rightIcon"></ons-icon>
+          </ons-toolbar-button>
+        </div>
       </ons-toolbar>
       <!-- Error message -->
       <div class="bottom-notification-1 bottom-notification bg-red-dark timeout-notification timer-notification" id="errorMess">
@@ -1478,21 +1484,37 @@
         </p>
         <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
       </div>
-      <!-- success message -->
-      <div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
-        <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
-        <p>
-          Save your information success!
-        </p>
+      <div class="material-container" style="height: 95%; margin-bottom: 0px!important;">
+        <ons-scroller style="width: 100%">
+        </ons-scroller>
       </div>
-      <div class="material-container">
-        <div class="formSubmitButtonErrorsWrap contactFormButton">
-          <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Next"/>
-        </div>
+      <div class="container one-half-responsive" style="margin-bottom: 0px; position: fixed; bottom: -20px">
+        <fieldset>
+          <div class="formFieldWrap">
+            <ons-row>
+              <ons-col width="90%">
+                <input type="text" placeholder="Message" name="contactNameField" value="" class="contactField3 requiredField" id="txtMess" maxlength="120"/>
+              </ons-col>
+              <ons-col width="10%">
+                <ons-button modifier="light" class="button button--light" style="height: 40px; border: none!important; padding-left: 6px;" ng-click="send()"><i class="fa fa-paper-plane" aria-hidden="true" style="color: #0b84fe; font-size: 20px"></i></ons-button>
+              </ons-col>
+            </ons-row>
+          </div>
+        </fieldset>
       </div>
+      <script type="text/javascript">
+        function showTime() {
+          var id = $(event.target)[0].id;
+          timeID = "date-time-" + id;
+          $('#'+timeID).show();
+          setTimeout(function(){
+            $('#'+timeID).hide();
+          }, 3000);
+        }
+      </script>
     </ons-page>
   </ons-template>
-  <!-- Edit Hobby page end -->
+  <!-- Chat page end -->
 
   <!-- Menu template start -->
   <ons-template id="menu.html">
@@ -1573,7 +1595,7 @@
         <p>Avatar</p>
       </div>
       <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="ViewImg()">View</a>
-      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Edit</a>
+      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="editAva()">Edit</a>
       <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
     </div>
   </ons-modal>
@@ -1586,7 +1608,7 @@
         <p>Cover image</p>
       </div>
       <a href="#" class="button button-green button-small round-button modal-close button-center modal-header-button-first-child" ng-click="ViewCoverImg()">View</a>
-      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" onclick="capturePhoto();">Edit</a>
+      <a href="#" class="button button-dark button-small round-button modal-close button-center modal-header-button" ng-click="editCover();">Edit</a>
       <a href="#" class="button button-red button-small round-button modal-close button-center modal-header-button" ng-click="closeModal()">Close</a>
     </div>
   </ons-modal>

@@ -164,7 +164,7 @@
       <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-green contactSubmitButton" id="btnNext" value="Save"/>
     </div>
     <div class="formSubmitButtonErrorsWrap contactFormButton">
-      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-red contactSubmitButton" id="btnCancel" value="Cancel"/>
+      <input type="submit" onclick="nextButtonHandler()" class="buttonWrap button button-red contactSubmitButton" id="btnCancel" value="Back"/>
     </div>
   </div>
   <!-- <div id="footer">
@@ -196,10 +196,18 @@
   </p>
   <a href="#" class="close-top-notification"><i class="fa fa-times"></i></a>
 </div>
+<!-- success -->
+<div class="bottom-notification-1 bottom-notification bg-green-dark" id="success">
+  <a href="#" class="close-bottom-notification"><i class="fa fa-times"></i></a>
+  <p>
+    Your hobby is updated!
+  </p>
+</div>
 <a href="#" class="back-to-top-badge"><i class="fa fa-caret-up"></i>Back to top</a>
 <script>
 
 $('#btnCancel').click(function () {
+  console.log('click');
   window.location.replace("home.html");
 });
 
@@ -290,7 +298,7 @@ function saveToServer(hobbyArr) {
       // save success
       if (data=="saveSuccess") {
         enableAll();
-        window.location.replace("home.html");
+        showMessage("success");
       }else if (data=="saveError") {
         // save error
         enableAll();
@@ -336,6 +344,13 @@ function checkConnection() {
 // Show message
 function showMessage(messType) {
   switch(messType) {
+    case 'success':
+    $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
+    $('#success').slideDown(200);
+    setTimeout(function(){
+      $('#success').slideUp(200);
+    }, 4000);
+    break;
     case 'hobbyRequire':
     $('top-notification-2, top-notification, bg-red-dark, timeout-notification, timer-notification').slideUp(200);
     $('#hobbyRequire').slideDown(200);

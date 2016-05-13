@@ -298,4 +298,34 @@ if(isset($_POST['edithobby']))
     echo "saveError";
   }
 }
+
+if(isset($_POST['editavatar']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $imgUrl=mysql_real_escape_string(htmlspecialchars(trim($_POST['imgurl'])));
+  $imgUrlFormated = "http://139.59.254.92/upload/".$imgUrl;
+  $query = "UPDATE `Information_TBL` SET `avatarUrl`= '$imgUrlFormated' WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
+
+if(isset($_POST['editcover']))
+{
+  $userName=mysql_real_escape_string(htmlspecialchars(trim($_POST['userName'])));
+  $imgUrl=mysql_real_escape_string(htmlspecialchars(trim($_POST['imgurl'])));
+  $imgUrlFormated = "http://139.59.254.92/upload/".$imgUrl;
+  $query = "UPDATE `Information_TBL` SET `coverImageUrl`= '$imgUrlFormated' WHERE userName = '$userName'";
+  $q=mysql_query($query);
+  if($q){
+    echo "saveSuccess";
+  }
+  else{
+    echo "saveError";
+  }
+}
 ?>

@@ -8,8 +8,12 @@ module.controller("ProfileController", function($scope, $rootScope, $http) {
   checkConnection();
   getUserImage();
   reloadCameraScript();
-  // updateData();
   getData();
+  $scope.uploadImg  = function () {
+    window.location.replace("uploadImage.html");
+  };
+
+  // updateData();
   function updateData() {
     $timeout(function () {
       getData();
@@ -82,6 +86,12 @@ module.controller("ProfileController", function($scope, $rootScope, $http) {
       console.log(data);
       $scope.userImage = data;
       for (var i = 0; i < $scope.userImage.length; i++) {
+        var unformatUrl = $scope.userImage[i]["imageUrl"];
+        var formatedUrl = unformatUrl.replace("?", "%3f");
+        $scope.userImage[i]["imageUrl"] = formatedUrl;
+      }
+
+      for (var i = 0; i < $scope.userImage.length; i++) {
         $('<a href="'+$scope.userImage[i]["imageUrl"]+'" class="show-gallery" title="Image"><img alt="img" src="'+$scope.userImage[i]["imageUrl"]+'"></a>').appendTo('#userGallery');
       }
       apply_gallery_justification();
@@ -94,6 +104,16 @@ module.controller("ProfileController", function($scope, $rootScope, $http) {
   function setCoverImage() {
     $('#coverImage').css('background-image', 'url("' + $scope.coverUrl + '")');
   }
+
+  // Edit avatar
+  $scope.editAva = function () {
+    window.location.replace("editAvatar.html");
+  };
+
+  // Edit cover
+  $scope.editCover = function () {
+    window.location.replace("editCover.html");
+  };
 
   // Click on avatar Handler
   $scope.avatarMenu = function () {
